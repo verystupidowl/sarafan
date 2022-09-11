@@ -3,6 +3,7 @@ package com.tgc.Sarafan.domain;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "usr")
 @Getter
 @Setter
+@ToString
 public class User {
 
     @Id
