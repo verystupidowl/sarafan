@@ -27,13 +27,16 @@ public class WebSocketSender {
         ObjectWriter writer = mapper
                 .setConfig(mapper.getSerializationConfig())
                 .writerWithView(view);
+
         return (EventType eventType, T payload) -> {
             String value;
+
             try {
                 value = writer.writeValueAsString(payload);
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
+
             template.convertAndSend(
                     "/topic/activity",
                     new WsEventDto(objectType, eventType, value)
