@@ -4,25 +4,29 @@ package com.tgc.Sarafan.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.tgc.Sarafan.domain.Message;
 import com.tgc.Sarafan.domain.Views;
+import com.tgc.Sarafan.dto.EventType;
+import com.tgc.Sarafan.dto.ObjectType;
 import com.tgc.Sarafan.repositories.MessageRepository;
+import com.tgc.Sarafan.utils.WebSocketSender;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 @RestController
 @RequestMapping("/message")
 public class MessageController {
 
     private final MessageRepository messageRepository;
+    private final BiConsumer<EventType, Message> webSocketSender;
 
     @Autowired
-    public MessageController(MessageRepository messageRepository) {
+    public MessageController(MessageRepository messageRepository, WebSocketSender webSocketSender) {
         this.messageRepository = messageRepository;
+        this.webSocketSender = webSocketSender.getSender(ObjectType.MESSAGE, Views.IdName.class);
     }
 
     @GetMapping
@@ -39,24 +43,25 @@ public class MessageController {
     @PostMapping
     public Message create(@RequestBody Message message) {
         message.setCreationDate(LocalDateTime.now());
-        return messageRepository.save(message);
+        Message updatedMessage = messageRepository.save(message);
+        webSocketSender.accept(EventType.CREATE, updatedMessage);
+        return updatedMessage;
     }
 
     @PutMapping("{id}")
     public Message update(@PathVariable("id") Message messageFromDb, @RequestBody Message message) {
         BeanUtils.copyProperties(message, messageFromDb, "id");
 
-        return messageRepository.save(messageFromDb);
+        Message updatedMessage = messageRepository.save(messageFromDb);
+
+        webSocketSender.accept(EventType.UPDATE, updatedMessage);
+
+        return updatedMessage;
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Message message) {
         messageRepository.delete(message);
-    }
-
-    @MessageMapping("/changeMessage")
-    @SendTo("/topic/activity")
-    public Message change(Message message) {
-        return messageRepository.save(message);
+        webSocketSender.accept(EventType.REMOVE, message);
     }
 }
