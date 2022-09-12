@@ -12,20 +12,30 @@
 
 <script>
 import MessagesList from "../components/messages/MessagesList.vue";
+import {addHandler} from "../utils/ws";
+import {getIndex} from "../utils/Collections";
 
 export default {
+  components: {MessagesList},
   comments: {
     MessagesList
   },
   data() {
     return {
-      messages: frontendData.meggages,
+      messages: frontendData.messages,
       profile: frontendData.profile
     }
   },
-  // created() {
-  //   this.$resource('/api/getData').get({}).then(result => result.json().then(data => ))
-  // }
+  created() {
+    addHandler(data => {
+      let index = getIndex(this.messages, data.id)
+      if (index > -1) {
+        this.messages.splice(index, 1, data)
+      } else {
+        this.messages.push(data)
+      }
+    })
+  }
 }
 </script>
 
