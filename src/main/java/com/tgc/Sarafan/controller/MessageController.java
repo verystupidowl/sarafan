@@ -3,6 +3,7 @@ package com.tgc.Sarafan.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.tgc.Sarafan.domain.Message;
+import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.domain.Views;
 import com.tgc.Sarafan.dto.EventType;
 import com.tgc.Sarafan.dto.MetaDto;
@@ -15,6 +16,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -55,9 +57,11 @@ public class MessageController {
     }
 
     @PostMapping
-    public Message create(@RequestBody Message message) throws IOException {
+    public Message create(@AuthenticationPrincipal User user, @RequestBody Message message) throws IOException {
+        System.out.println(message);
         message.setCreationDate(LocalDateTime.now());
         fillMeta(message);
+        message.setAuthor(user);
         Message updatedMessage = messageRepository.save(message);
         webSocketSender.accept(EventType.CREATE, updatedMessage);
         return updatedMessage;
