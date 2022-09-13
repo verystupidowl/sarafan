@@ -3,7 +3,6 @@ package com.tgc.Sarafan.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -36,4 +35,15 @@ public class Message {
     @JsonView(Views.FullMessage.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime creationDate;
+
+    @JsonView(Views.FullMessage.class)
+    private String link;
+    @JsonView(Views.FullMessage.class)
+    private String linkTitle;
+    @JsonView(Views.FullMessage.class)
+    private String linkDescription;
+    @JsonView(Views.FullMessage.class)
+    private String linkCover;
+
+
 }

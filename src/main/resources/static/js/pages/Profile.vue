@@ -9,11 +9,11 @@
           </v-flex>
           <v-flex class="px-1">
             <v-layout column>
-              <v-flex>{{ profile.name }}</v-flex>
-              <v-flex>{{ profile.locale }}</v-flex>
-              <v-flex>{{ profile.gender ? profile.gender : 'Не указан' }}</v-flex>
-              <v-flex>{{ profile.email }}</v-flex>
-              <v-flex>{{ profile.lastVisit }}</v-flex>
+              <v-flex>Имя: {{ profile.name }}</v-flex>
+              <v-flex>Регион: {{ profile.locale }}</v-flex>
+              <v-flex>Пол: {{ profile.gender ? profile.gender : 'Не указан' }}</v-flex>
+              <v-flex>Электронная почта: {{ profile.email }}</v-flex>
+              <v-flex>Последний раз заходил: {{ profile.lastVisit }}</v-flex>
             </v-layout>
           </v-flex>
         </v-layout>
