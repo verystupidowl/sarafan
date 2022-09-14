@@ -1,10 +1,7 @@
 package com.tgc.Sarafan.domain;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,8 +9,10 @@ import javax.persistence.*;
 @Table
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@EqualsAndHashCode(of = {"id"})
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class Comment {
     @Id
     @JsonView(Views.IdName.class)
@@ -32,4 +31,19 @@ public class Comment {
     @JoinColumn(name = "usr_id", nullable = false, updatable = false)
     @JsonView(Views.IdName.class)
     private User author;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Comment comment = (Comment) o;
+
+        return id.equals(comment.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

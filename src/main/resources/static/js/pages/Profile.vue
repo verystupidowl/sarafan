@@ -5,7 +5,9 @@
         <div class="title mb-3">User Profile</div>
         <v-layout row justify-space-between>
           <v-flex class="px-1">
-            <v-img :src="profile.userpic"></v-img>
+            <v-avatar :color="avatarColor" size="100px">
+              <v-icon dark>account_circle</v-icon>
+            </v-avatar>
           </v-flex>
           <v-flex class="px-1">
             <v-layout column>
@@ -28,6 +30,11 @@ import {mapState} from "vuex";
 export default {
   name: "Profile",
   computed: mapState(['profile']),
+  data() {
+    const colors = ['pink', 'purple', 'deep-purple',
+      'indigo', 'blue', 'cyan', 'teal', 'orange', 'yellow', 'amber']
+    return {avatarColor: colors[Math.floor(Math.random() * (9 + 1))]}
+  },
 
 }
 </script>
