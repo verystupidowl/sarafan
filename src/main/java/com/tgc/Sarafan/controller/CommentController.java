@@ -28,8 +28,10 @@ public class CommentController {
 
     @PostMapping
     @JsonView(Views.FullComment.class)
-    public CommentDto create(@RequestBody Comment comment, @AuthenticationPrincipal User user) {
+    public CommentDto create(@RequestBody CommentDto comment, @AuthenticationPrincipal User user) {
         log.info(comment.toString());
-        return commentService.create(comment, user);
+        CommentDto commentDto = commentService.create(comment, user);
+        log.info(commentDto.toString());
+        return commentDto;
     }
 }

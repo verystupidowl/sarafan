@@ -1,6 +1,7 @@
 package com.tgc.Sarafan.service;
 
 import com.tgc.Sarafan.domain.Comment;
+import com.tgc.Sarafan.domain.Message;
 import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.domain.Views;
 import com.tgc.Sarafan.dto.CommentDto;
@@ -17,7 +18,7 @@ import java.util.function.BiConsumer;
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private final BiConsumer<EventType, Comment> wsSender;
+    private final BiConsumer<EventType, CommentDto> wsSender;
 
     @Autowired
     public CommentService(CommentRepository commentRepository, WebSocketSender webSocketSender) {
@@ -25,17 +26,40 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public CommentDto create(Comment comment, User user) {
-        comment.setAuthor(user);
+    public CommentDto create(CommentDto commentDto, User user) {
+        commentDto.setAuthor(user);
+
+        Message message = new Message(
+                commentDto.getMessageId(),
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        Comment comment = new Comment(
+                commentDto.getId(),
+                commentDto.getText(),
+                message,
+                commentDto.getAuthor()
+        );
 
         Comment commentFromDb = commentRepository.save(comment);
 
-        wsSender.accept(EventType.CREATE, commentFromDb);
-        return new CommentDto(
+        CommentDto commentDtoFromDb = new CommentDto(
                 commentFromDb.getId(),
                 commentFromDb.getText(),
                 commentFromDb.getMessage().getId(),
                 commentFromDb.getAuthor()
         );
+
+        wsSender.accept(EventType.CREATE, commentDtoFromDb);
+
+
+        return commentDtoFromDb;
     }
 }

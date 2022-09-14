@@ -1,16 +1,19 @@
 package com.tgc.Sarafan.domain;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-@EqualsAndHashCode(of = { "id" })
+@EqualsAndHashCode(of = {"id"})
 public class Comment {
     @Id
     @JsonView(Views.IdName.class)

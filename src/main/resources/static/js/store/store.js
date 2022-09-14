@@ -43,6 +43,10 @@ export default new Vuex.Store({
             const updateIndex = state.messages.findIndex(item => item.id === comment.messageId)
             const message = state.messages[updateIndex]
 
+            if (!message.comments) {
+                message.comments = []
+            }
+
             if (!message.comments.find(it => it.id === comment.id)) {
                 state.messages = [
                     ...state.messages.slice(0, updateIndex),

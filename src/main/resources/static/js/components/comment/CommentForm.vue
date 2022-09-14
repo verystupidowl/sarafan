@@ -28,9 +28,7 @@ export default {
     async save() {
       await this.addCommentAction({
         text: this.text,
-        message: {
-          id: this.messageId
-        }
+        messageId: this.messageId
       })
       this.text = ''
     }
