@@ -25,7 +25,7 @@ public class CommentService {
     }
 
     public Comment create(Comment comment, User user) {
-        comment.setUser(user);
+        comment.setAuthor(user);
 
         Comment commentFromDb = commentRepository.save(comment);
 

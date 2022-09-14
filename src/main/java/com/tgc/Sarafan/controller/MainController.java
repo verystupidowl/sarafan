@@ -3,12 +3,14 @@ package com.tgc.Sarafan.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.domain.Views;
-import com.tgc.Sarafan.repositories.MessageRepository;
+import com.tgc.Sarafan.dto.MessagePageDto;
+import com.tgc.Sarafan.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,15 +22,16 @@ import java.util.HashMap;
 @Controller
 @RequestMapping("/")
 public class MainController {
-    private final MessageRepository messageRepository;
+
+    private final MessageService messageService;
 
     @Value("${spring.profile.active}")
     private String profile;
     private final ObjectWriter writer;
 
     @Autowired
-    public MainController(MessageRepository messageRepository, ObjectMapper mapper) {
-        this.messageRepository = messageRepository;
+    public MainController(MessageService messageService, ObjectMapper mapper) {
+        this.messageService = messageService;
         this.writer = mapper
                 .setConfig(mapper.getSerializationConfig())
                 .writerWithView(Views.FullMessage.class);
@@ -44,8 +47,15 @@ public class MainController {
         if (user != null) {
             data.put("profile", user);
 
-            String messages = writer.writeValueAsString(messageRepository.findAll());
+            Sort sort = Sort.by(Sort.Direction.DESC, "id");
+            PageRequest pageRequest = PageRequest.of(0, MessageController.MESSAGES_PER_PAGE, sort);
+            MessagePageDto messagePageDto = messageService.findAll(pageRequest);
+
+            String messages = writer.writeValueAsString(messagePageDto.getMessages());
+
             model.addAttribute("messages", messages);
+            data.put("currentPage", messagePageDto.getCurrentPage());
+            data.put("totalPages", messagePageDto.getTotalPage());
         }
 
         model.addAttribute("frontendData", data);

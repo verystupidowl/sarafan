@@ -10,13 +10,12 @@ import java.io.Serializable;
 @Entity
 @Table
 @Data
-@EqualsAndHashCode(of = {"id"})
-public class Comment implements Serializable {
-
+@EqualsAndHashCode(of = { "id" })
+public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @JsonView(Views.IdName.class)
-    private long id;
+    private Long id;
 
     @JsonView(Views.IdName.class)
     private String text;
@@ -29,5 +28,5 @@ public class Comment implements Serializable {
     @ManyToOne
     @JoinColumn(name = "usr_id", nullable = false, updatable = false)
     @JsonView(Views.IdName.class)
-    private User user;
+    private User author;
 }
