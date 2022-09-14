@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.tgc.Sarafan.domain.Comment;
 import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.domain.Views;
+import com.tgc.Sarafan.dto.CommentDto;
 import com.tgc.Sarafan.service.CommentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class CommentController {
 
     @PostMapping
     @JsonView(Views.FullComment.class)
-    public Comment create(@RequestBody Comment comment, @AuthenticationPrincipal User user) {
+    public CommentDto create(@RequestBody Comment comment, @AuthenticationPrincipal User user) {
         log.info(comment.toString());
         return commentService.create(comment, user);
     }

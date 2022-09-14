@@ -13,8 +13,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(of = { "id" })
 public class Comment {
     @Id
-    @GeneratedValue
     @JsonView(Views.IdName.class)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JsonView(Views.IdName.class)

@@ -3,6 +3,7 @@ package com.tgc.Sarafan.service;
 import com.tgc.Sarafan.domain.Comment;
 import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.domain.Views;
+import com.tgc.Sarafan.dto.CommentDto;
 import com.tgc.Sarafan.dto.EventType;
 import com.tgc.Sarafan.dto.ObjectType;
 import com.tgc.Sarafan.repositories.CommentRepository;
@@ -24,12 +25,17 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public Comment create(Comment comment, User user) {
+    public CommentDto create(Comment comment, User user) {
         comment.setAuthor(user);
 
         Comment commentFromDb = commentRepository.save(comment);
 
         wsSender.accept(EventType.CREATE, commentFromDb);
-        return commentFromDb;
+        return new CommentDto(
+                commentFromDb.getId(),
+                commentFromDb.getText(),
+                commentFromDb.getMessage().getId(),
+                commentFromDb.getAuthor()
+        );
     }
 }

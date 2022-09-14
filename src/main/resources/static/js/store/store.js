@@ -40,7 +40,7 @@ export default new Vuex.Store({
             }
         },
         addCommentMutation(state, comment) {
-            const updateIndex = state.messages.findIndex(item => item.id === comment.message.id)
+            const updateIndex = state.messages.findIndex(item => item.id === comment.messageId)
             const message = state.messages[updateIndex]
 
             if (!message.comments.find(it => it.id === comment.id)) {

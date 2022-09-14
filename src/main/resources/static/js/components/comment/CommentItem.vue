@@ -5,7 +5,7 @@
     </v-avatar>
     <v-list-tile-content class="pl-3">
       <v-list-tile-title>{{comment.text}}</v-list-tile-title>
-      <v-list-tile-sub-title>{{comment.user.name}}</v-list-tile-sub-title>
+      <v-list-tile-sub-title>{{comment.author.name}}</v-list-tile-sub-title>
     </v-list-tile-content>
   </v-list-tile>
 </template>
