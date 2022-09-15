@@ -5,17 +5,17 @@
         <div class="title mb-3">User Profile</div>
         <v-layout row justify-space-between>
           <v-flex class="px-1">
-            <v-avatar :color="avatarColor" size="100px">
+            <v-avatar :color="avatarColor" size="106px">
               <v-icon dark>account_circle</v-icon>
             </v-avatar>
           </v-flex>
           <v-flex class="px-1">
             <v-layout column>
-              <v-flex>Имя: {{ profile.name }}</v-flex>
-              <v-flex>Регион: {{ profile.locale }}</v-flex>
-              <v-flex>Пол: {{ profile.gender ? profile.gender : 'Не указан' }}</v-flex>
-              <v-flex>Электронная почта: {{ profile.email }}</v-flex>
-              <v-flex>Последний раз заходил: {{ profile.lastVisit }}</v-flex>
+              <v-flex>Name: {{ profile.name }}</v-flex>
+              <v-flex>Region: {{ profile.locale }}</v-flex>
+              <v-flex>Gender: {{ profile.gender ? profile.gender : 'Не указан' }}</v-flex>
+              <v-flex>Email: {{ profile.email }}</v-flex>
+              <v-flex>Last Visit: {{ profile.lastVisit }}</v-flex>
             </v-layout>
           </v-flex>
         </v-layout>

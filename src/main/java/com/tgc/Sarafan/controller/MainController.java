@@ -7,6 +7,7 @@ import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.domain.Views;
 import com.tgc.Sarafan.dto.MessagePageDto;
 import com.tgc.Sarafan.service.MessageService;
+import com.tgc.Sarafan.service.MessageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +31,7 @@ public class MainController {
     private final ObjectWriter writer;
 
     @Autowired
-    public MainController(MessageService messageService, ObjectMapper mapper) {
+    public MainController(MessageServiceImpl messageService, ObjectMapper mapper) {
         this.messageService = messageService;
         this.writer = mapper
                 .setConfig(mapper.getSerializationConfig())
