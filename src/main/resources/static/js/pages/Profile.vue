@@ -16,25 +16,69 @@
               <v-flex>Gender: {{ profile.gender ? profile.gender : 'Не указан' }}</v-flex>
               <v-flex>Email: {{ profile.email }}</v-flex>
               <v-flex>Last Visit: {{ profile.lastVisit }}</v-flex>
+              <v-flex>{{ profile.subscriptions && profile.subscriptions.length }} subscriptions</v-flex>
+              <v-flex>{{ profile.subscribers && profile.subscribers.length }} subscribers</v-flex>
             </v-layout>
           </v-flex>
         </v-layout>
+        <v-btn v-if="!isMyProfile" @click="changeSubscription">
+          {{ isISubscribed ? 'Unsubscribe' : 'Subscribe' }}
+        </v-btn>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import {mapState} from "vuex";
+import profileApi from 'api/profile'
 
 export default {
   name: "Profile",
-  computed: mapState(['profile']),
-  data() {
-    const colors = ['pink', 'purple', 'deep-purple',
-      'indigo', 'blue', 'cyan', 'teal', 'orange', 'yellow', 'amber']
-    return {avatarColor: colors[Math.floor(Math.random() * (9 + 1))]}
+  computed: {
+    isMyProfile() {
+      console.log('PARAM ' + this.$route.params.id)
+      console.log()
+      return !this.$route.params.id || this.$store.state.profile.id ===this.$route.params.id
+    },
+    isISubscribed() {
+      return this.profile.subscribers &&
+          this.profile.subscribers.find(subscriptions => {
+            return subscriptions.id === this.$store.state.profile.id
+          })
+    },
+    avatarColor() {
+      const colors = ['pink', 'purple', 'deep-purple',
+        'indigo', 'blue', 'cyan', 'teal', 'orange', 'yellow', 'amber']
+      return colors[Math.floor(Math.random() * (9 + 1))]
+    },
   },
+  watch: {
+    '$route'() {
+      this.updateProfile()
+    }
+  },
+  methods: {
+    async changeSubscription() {
+      const data = await profileApi.changeSubscription(this.profile.id)
+      this.profile = await data.json()
+    },
+    async updateProfile() {
+      const id = this.$route.params.id || this.$store.state.profile.id
+
+      const data = await profileApi.get(id)
+      this.profile = await data.json()
+
+      this.$forceUpdate()
+    },
+  },
+  beforeMount() {
+    this.updateProfile()
+  },
+  data() {
+    return {
+      profile: {}
+    }
+  }
 
 }
 </script>

@@ -1,18 +1,19 @@
 <template>
   <v-list-tile>
-    <v-avatar :color="avatarColor" size="36px">
-      <v-icon dark>account_circle</v-icon>
-    </v-avatar>
+    <user-link
+        :user="comment.author"
+    ></user-link>
     <v-list-tile-content class="pl-3">
       <v-list-tile-title>{{comment.text}}</v-list-tile-title>
-      <v-list-tile-sub-title>{{comment.author.name}}</v-list-tile-sub-title>
     </v-list-tile-content>
   </v-list-tile>
 </template>
 
 <script>
+import UserLink from "./UserLink.vue";
 export default {
   name: "CommentItem",
+  components: {UserLink},
   props: ['comment'],
   computed: {
     avatarColor() {

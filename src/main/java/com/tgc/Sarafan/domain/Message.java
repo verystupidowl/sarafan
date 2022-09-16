@@ -14,10 +14,9 @@ import java.util.List;
 @Table
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(of = {"id", "text"})
+@ToString
 @Getter
 @Setter
-@RequiredArgsConstructor
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +29,13 @@ public class Message {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonView(Views.FullMessage.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @ToString.Exclude
     private LocalDateTime creationDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonView(Views.FullMessage.class)
+    @ToString.Exclude
     private User author;
 
     @OneToMany(mappedBy = "message", orphanRemoval = true)
@@ -43,12 +44,16 @@ public class Message {
     private List<Comment> comments;
 
     @JsonView(Views.FullMessage.class)
+    @ToString.Exclude
     private String link;
     @JsonView(Views.FullMessage.class)
+    @ToString.Exclude
     private String linkTitle;
     @JsonView(Views.FullMessage.class)
+    @ToString.Exclude
     private String linkDescription;
     @JsonView(Views.FullMessage.class)
+    @ToString.Exclude
     private String linkCover;
 
     @Override

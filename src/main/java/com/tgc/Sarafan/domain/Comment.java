@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 public class Comment {
     @Id
     @JsonView(Views.IdName.class)
