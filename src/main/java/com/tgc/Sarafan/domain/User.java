@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,45 +19,46 @@ import java.util.Set;
 @Setter
 public class User implements Serializable {
 
+    @ToString.Include
     @Id
+    @Column(nullable = false)
     @JsonView(Views.IdName.class)
     private String id;
+    @ToString.Include
     @JsonView(Views.IdName.class)
     private String name;
+    @ToString.Include
     @JsonView(Views.IdName.class)
     private String userpic;
+    @ToString.Include
     private String email;
+    @ToString.Include
     @JsonView(Views.FullProfile.class)
     private String gender;
+    @ToString.Include
     @JsonView(Views.FullProfile.class)
     private String locale;
+    @ToString.Include
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonView(Views.FullProfile.class)
     private LocalDateTime lastVisit;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_subscriptions",
-            joinColumns = @JoinColumn(name = "subscriber_id"),
-            inverseJoinColumns = @JoinColumn(name = "channel_id")
-    )
-    @JsonView(Views.FullProfile.class)
-    @JsonIdentityReference
-    @JsonIdentityInfo(
-            property = "id",
-            generator = ObjectIdGenerators.PropertyGenerator.class
-    )
-    private Set<User> subscriptions = new HashSet<>();
 
-    @ManyToMany(mappedBy = "subscriptions", fetch = FetchType.EAGER)
     @JsonView(Views.FullProfile.class)
-    @JsonIdentityReference
-    @JsonIdentityInfo(
-            property = "id",
-            generator = ObjectIdGenerators.PropertyGenerator.class
+    @OneToMany(
+            mappedBy = "channel",
+            orphanRemoval = true,
+            cascade = CascadeType.ALL
     )
-    private Set<User> subscribers = new HashSet<>();
+    private Set<UserSubscription> subscriptions = new HashSet<>();
+
+    @OneToMany(
+            mappedBy = "subscriber",
+            orphanRemoval = true
+    )
+    @JsonView(Views.FullProfile.class)
+    private Set<UserSubscription> subscribers = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

@@ -31,7 +31,6 @@ public class ProfileController {
         if(subscriber.equals(channel)) {
             return channel;
         }
-        User user = profileService.changeSubscription(channel, subscriber);
-        return user;
+        return profileService.changeSubscription(channel, subscriber);
     }
 }

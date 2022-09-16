@@ -1,11 +1,14 @@
 package com.tgc.Sarafan.service;
 
 import com.tgc.Sarafan.domain.User;
+import com.tgc.Sarafan.domain.UserSubscription;
 import com.tgc.Sarafan.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProfileService {
@@ -18,12 +21,16 @@ public class ProfileService {
     }
 
     public User changeSubscription(User channel, User subscriber) {
-        Set<User> subscribers = channel.getSubscribers();
+        List<UserSubscription> subscriptions = channel.getSubscribers()
+                .stream()
+                .filter(subscription -> subscriber.getSubscribers().equals(subscriber))
+                .collect(Collectors.toList());
 
-        if (subscribers.contains(subscriber)) {
-            subscribers.remove(subscriber);
+        if (subscriptions.isEmpty()) {
+            UserSubscription subscription = new UserSubscription(channel, subscriber);
+            channel.getSubscribers().add(subscription);
         } else {
-            subscribers.add(subscriber);
+            channel.getSubscribers().retainAll(subscriptions);
         }
 
         return userRepository.save(channel);

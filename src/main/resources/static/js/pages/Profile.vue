@@ -43,7 +43,7 @@ export default {
     isISubscribed() {
       return this.profile.subscribers &&
           this.profile.subscribers.find(subscriptions => {
-            return subscriptions.id === this.$store.state.profile.id
+            return subscriptions.subscriber === this.$store.state.profile.id
           })
     },
     avatarColor() {

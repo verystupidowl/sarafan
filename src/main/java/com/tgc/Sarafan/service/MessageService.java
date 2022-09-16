@@ -15,6 +15,6 @@ public interface MessageService {
 
     Message create(Message message, User user) throws IOException;
 
-    MessagePageDto findAll(Pageable pageable);
+    MessagePageDto findForUser(Pageable pageable, User user);
 
 }
