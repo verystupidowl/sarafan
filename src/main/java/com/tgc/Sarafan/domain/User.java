@@ -49,14 +49,12 @@ public class User implements Serializable {
     @OneToMany(
             mappedBy = "channel",
             orphanRemoval = true,
-            cascade = CascadeType.ALL
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
     )
     private Set<UserSubscription> subscriptions = new HashSet<>();
 
-    @OneToMany(
-            mappedBy = "subscriber",
-            orphanRemoval = true
-    )
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonView(Views.FullProfile.class)
     private Set<UserSubscription> subscribers = new HashSet<>();
 

@@ -5,10 +5,9 @@ import com.tgc.Sarafan.domain.UserSubscription;
 import com.tgc.Sarafan.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class ProfileService {
@@ -20,19 +19,21 @@ public class ProfileService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public User changeSubscription(User channel, User subscriber) {
         List<UserSubscription> subscriptions = channel.getSubscribers()
                 .stream()
-                .filter(subscription -> subscriber.getSubscribers().equals(subscriber))
-                .collect(Collectors.toList());
-
+                .filter(subscription ->
+                        subscription.getSubscriber().equals(subscriber)
+                ).toList();
         if (subscriptions.isEmpty()) {
-            UserSubscription subscription = new UserSubscription(channel, subscriber);
+            UserSubscription subscription = new UserSubscription();
+            subscription.setSubscriber(subscriber);
+            subscription.setChannel(channel);
             channel.getSubscribers().add(subscription);
         } else {
-            channel.getSubscribers().retainAll(subscriptions);
+            subscriptions.forEach(channel.getSubscribers()::remove);
         }
-
         return userRepository.save(channel);
     }
 }

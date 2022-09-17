@@ -21,4 +21,22 @@ public class UserSubscriptionId implements Serializable {
     private String channelId;
     @JsonView(Views.IdName.class)
     private String subscriberId;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserSubscriptionId that = (UserSubscriptionId) o;
+
+        if (!channelId.equals(that.channelId)) return false;
+        return subscriberId.equals(that.subscriberId);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = channelId.hashCode();
+        result = 31 * result + subscriberId.hashCode();
+        return result;
+    }
 }
