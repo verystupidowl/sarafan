@@ -24,6 +24,7 @@ public class User implements Serializable {
     @Column(nullable = false)
     @JsonView(Views.IdName.class)
     private String id;
+
     @ToString.Include
     @JsonView(Views.IdName.class)
     private String name;
@@ -47,15 +48,19 @@ public class User implements Serializable {
 
     @JsonView(Views.FullProfile.class)
     @OneToMany(
+            mappedBy = "subscriber",
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
+    )
+    private Set<UserSubscription> subscriptions = new HashSet<>();
+
+    @JsonView(Views.FullProfile.class)
+    @OneToMany(
             mappedBy = "channel",
             orphanRemoval = true,
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
-    private Set<UserSubscription> subscriptions = new HashSet<>();
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonView(Views.FullProfile.class)
     private Set<UserSubscription> subscribers = new HashSet<>();
 
     @Override

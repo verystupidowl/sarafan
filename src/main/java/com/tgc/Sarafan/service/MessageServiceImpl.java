@@ -11,6 +11,7 @@ import com.tgc.Sarafan.dto.ObjectType;
 import com.tgc.Sarafan.repositories.MessageRepository;
 import com.tgc.Sarafan.repositories.UserSubscriptionRepository;
 import com.tgc.Sarafan.utils.WebSocketSender;
+import org.hibernate.Hibernate;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -69,10 +71,13 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @Transactional
     public Message create(Message message, User user) throws IOException {
         message.setCreationDate(LocalDateTime.now());
         fillMeta(message);
         message.setAuthor(user);
+        Hibernate.initialize(user.getSubscribers());
+        Hibernate.initialize(user.getSubscriptions());
         Message updatedMessage = messageRepository.save(message);
         webSocketSender.accept(EventType.CREATE, updatedMessage);
         return updatedMessage;
