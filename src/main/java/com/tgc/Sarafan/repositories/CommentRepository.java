@@ -1,6 +1,6 @@
 package com.tgc.Sarafan.repositories;
 
-import com.tgc.Sarafan.domain.Comment;
+import com.tgc.Sarafan.model.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

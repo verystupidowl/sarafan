@@ -1,4 +1,4 @@
-package com.tgc.Sarafan.domain;
+package com.tgc.Sarafan.model;
 
 public final class Views {
     public interface Id {}

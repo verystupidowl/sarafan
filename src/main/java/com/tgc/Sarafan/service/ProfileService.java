@@ -1,7 +1,7 @@
 package com.tgc.Sarafan.service;
 
-import com.tgc.Sarafan.domain.User;
-import com.tgc.Sarafan.domain.UserSubscription;
+import com.tgc.Sarafan.model.User;
+import com.tgc.Sarafan.model.UserSubscription;
 import com.tgc.Sarafan.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.tgc.Sarafan.config;
 
-import com.tgc.Sarafan.domain.User;
+import com.tgc.Sarafan.model.User;
 import com.tgc.Sarafan.repositories.UserRepository;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Configuration
 @EnableWebSecurity

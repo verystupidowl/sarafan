@@ -1,9 +1,9 @@
 package com.tgc.Sarafan.service;
 
-import com.tgc.Sarafan.domain.Comment;
-import com.tgc.Sarafan.domain.Message;
-import com.tgc.Sarafan.domain.User;
-import com.tgc.Sarafan.domain.Views;
+import com.tgc.Sarafan.model.Comment;
+import com.tgc.Sarafan.model.Message;
+import com.tgc.Sarafan.model.User;
+import com.tgc.Sarafan.model.Views;
 import com.tgc.Sarafan.dto.CommentDto;
 import com.tgc.Sarafan.dto.EventType;
 import com.tgc.Sarafan.dto.ObjectType;

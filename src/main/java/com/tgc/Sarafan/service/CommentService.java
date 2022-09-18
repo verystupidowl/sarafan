@@ -1,6 +1,6 @@
 package com.tgc.Sarafan.service;
 
-import com.tgc.Sarafan.domain.User;
+import com.tgc.Sarafan.model.User;
 import com.tgc.Sarafan.dto.CommentDto;
 
 public interface CommentService {

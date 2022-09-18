@@ -1,4 +1,4 @@
-package com.tgc.Sarafan.domain;
+package com.tgc.Sarafan.model;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
