@@ -4,9 +4,12 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.domain.UserSubscription;
 import com.tgc.Sarafan.domain.Views;
+import com.tgc.Sarafan.exceptions.UserErrorResponse;
+import com.tgc.Sarafan.exceptions.UserWithIdNotFoundException;
 import com.tgc.Sarafan.service.ProfileService;
-import org.apache.catalina.LifecycleState;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,14 +28,14 @@ public class ProfileController {
 
     @GetMapping("{id}")
     @JsonView(Views.FullProfile.class)
-    public User get(@PathVariable("id") User user) {
-        return user;
+    public User get(@PathVariable String id) {
+        return profileService.findById(id);
     }
 
     @PostMapping("change-subscription/{channelId}")
     @JsonView(Views.FullProfile.class)
     public User changeSubscription(@AuthenticationPrincipal User subscriber, @PathVariable("channelId") User channel) {
-        if(subscriber.equals(channel)) {
+        if (subscriber.equals(channel)) {
             return channel;
         }
         return profileService.changeSubscription(channel, subscriber);
@@ -53,5 +56,14 @@ public class ProfileController {
             @PathVariable("subscriberId") User subscriber
     ) {
         return profileService.changeSubscriptionStatus(channel, subscriber);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<UserErrorResponse> exceptionHandler(UserWithIdNotFoundException e) {
+        UserErrorResponse userErrorResponse = new UserErrorResponse(
+                e.getMessage(),
+                System.currentTimeMillis()
+        );
+        return new ResponseEntity<>(userErrorResponse, HttpStatus.NOT_FOUND);
     }
 }

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-layout justify-space-around>
-      <v-flex :xs6="!$vuetify.breakpoint.xsOnly">
+      <v-flex v-if="!error" :xs6="!$vuetify.breakpoint.xsOnly">
         <div class="title mb-3">User Profile</div>
         <v-layout row justify-space-between>
           <v-flex class="px-1">
@@ -12,12 +12,21 @@
           <v-flex class="px-1">
             <v-layout column>
               <v-flex>Name: {{ profile.name }}</v-flex>
+              <v-divider></v-divider>
               <v-flex>Region: {{ profile.locale }}</v-flex>
+              <v-divider></v-divider>
               <v-flex>Gender: {{ profile.gender ? profile.gender : 'Не указан' }}</v-flex>
-              <v-flex>Email: {{ profile.email }}</v-flex>
+              <v-divider v-if="isMyProfile || isIApproved"></v-divider>
+              <v-flex v-if="isMyProfile || isIApproved">Email: {{ profile.email }}</v-flex>
+              <v-divider></v-divider>
               <v-flex>Last Visit: {{ profile.lastVisit }}</v-flex>
+              <v-divider></v-divider>
               <v-flex>{{ profile.subscriptions && profile.subscriptions.length }} subscriptions</v-flex>
-              <router-link v-if="isMyProfile" :to="`/subscriptions/${profile.id}`">{{ profile.subscribers && profile.subscribers.length }} subscribers</router-link>
+              <v-divider></v-divider>
+              <router-link style="text-decoration: none; color: rgba(0, 0, 0, 0.87)" v-if="isMyProfile"
+                           :to="`/subscriptions/${profile.id}`">
+                {{ profile.subscribers && profile.subscribers.length }} subscribers
+              </router-link>
               <v-flex v-else>{{ profile.subscribers && profile.subscribers.length }} subscribers</v-flex>
             </v-layout>
           </v-flex>
@@ -25,6 +34,9 @@
         <v-btn v-if="!isMyProfile" @click="changeSubscription">
           {{ isISubscribed ? 'Unsubscribe' : 'Subscribe' }}
         </v-btn>
+      </v-flex>
+      <v-flex v-else>
+        Error {{ error.status }} <br/> {{ error.message }}
       </v-flex>
     </v-layout>
   </v-container>
@@ -37,9 +49,7 @@ export default {
   name: "Profile",
   computed: {
     isMyProfile() {
-      console.log('PARAM ' + this.$route.params.id)
-      console.log()
-      return !this.$route.params.id || this.$store.state.profile.id ===this.$route.params.id
+      return !this.$route.params.id || this.$store.state.profile.id === this.$route.params.id
     },
     isISubscribed() {
       return this.profile.subscribers &&
@@ -51,6 +61,18 @@ export default {
       const colors = ['pink', 'purple', 'deep-purple',
         'indigo', 'blue', 'cyan', 'teal', 'orange', 'yellow', 'amber']
       return colors[Math.floor(Math.random() * (9 + 1))]
+    },
+    isIApproved() {
+      let value = -1
+      if (this.profile.subscribers) {
+        this.profile.subscribers.forEach(s => {
+          console.log(s)
+          if (s.subscriber === this.$store.state.profile.id && s.active === true) {
+            value = 1
+          }
+        })
+      }
+      return value === 1;
     },
   },
   watch: {
@@ -66,9 +88,13 @@ export default {
     async updateProfile() {
       const id = this.$route.params.id || this.$store.state.profile.id
 
-      const data = await profileApi.get(id)
-      this.profile = await data.json()
-
+      profileApi.get(id).then(response => {
+        response.json().then(data => this.profile = data)
+      }, err => err.json().then(errorBody => this.error = {
+        status: err.status,
+        message: errorBody.message,
+        timestamp: errorBody.timestamp
+      }))
       this.$forceUpdate()
     },
   },
@@ -77,7 +103,8 @@ export default {
   },
   data() {
     return {
-      profile: {}
+      profile: {},
+      error: null
     }
   }
 
@@ -88,5 +115,9 @@ export default {
 img {
   max-width: 100%;
   height: auto;
+}
+
+.routerLink {
+
 }
 </style>

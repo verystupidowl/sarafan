@@ -1,4 +1,4 @@
-package com.tgc.Sarafan.service;
+package com.tgc.Sarafan.service.impl;
 
 import com.tgc.Sarafan.domain.Message;
 import com.tgc.Sarafan.domain.User;
@@ -10,7 +10,9 @@ import com.tgc.Sarafan.dto.MetaDto;
 import com.tgc.Sarafan.dto.ObjectType;
 import com.tgc.Sarafan.repositories.MessageRepository;
 import com.tgc.Sarafan.repositories.UserSubscriptionRepository;
+import com.tgc.Sarafan.service.MessageService;
 import com.tgc.Sarafan.utils.WebSocketSender;
+import io.sentry.Sentry;
 import org.hibernate.Hibernate;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -54,12 +56,14 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @Transactional
     public void delete(Message message) {
         messageRepository.delete(message);
         webSocketSender.accept(EventType.REMOVE, message);
     }
 
     @Override
+    @Transactional
     public Message update(Message messageFromDb, Message message) throws IOException {
         messageFromDb.setText(message.getText());
         fillMeta(messageFromDb);
@@ -84,6 +88,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @Transactional
     public MessagePageDto findForUser(Pageable pageable, User user) {
         List<User> channels = userSubscriptionRepository.findBySubscriber(user)
                 .stream()

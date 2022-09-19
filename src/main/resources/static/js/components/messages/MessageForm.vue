@@ -14,6 +14,7 @@
 
 <script>
 import {mapActions} from "vuex";
+import * as Sentry from "@sentry/vue";
 
 export default {
   name: "message-form",
@@ -44,6 +45,7 @@ export default {
       }
       this.text = ''
       this.id = ''
+
     }
   }
 }

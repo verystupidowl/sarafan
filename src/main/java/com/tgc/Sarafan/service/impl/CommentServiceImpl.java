@@ -1,4 +1,4 @@
-package com.tgc.Sarafan.service;
+package com.tgc.Sarafan.service.impl;
 
 import com.tgc.Sarafan.domain.Comment;
 import com.tgc.Sarafan.domain.Message;
@@ -8,6 +8,7 @@ import com.tgc.Sarafan.dto.CommentDto;
 import com.tgc.Sarafan.dto.EventType;
 import com.tgc.Sarafan.dto.ObjectType;
 import com.tgc.Sarafan.repositories.CommentRepository;
+import com.tgc.Sarafan.service.CommentService;
 import com.tgc.Sarafan.utils.WebSocketSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

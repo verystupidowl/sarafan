@@ -3,14 +3,14 @@
     <v-card-text primary-title>
       <user-link
           :user="message.author"
-          size="48px"
+          size="48"
       ></user-link>
       <div class="pt-3">
         {{ message.text }}
       </div>
     </v-card-text>
     <media v-if="message.link" :message="message"></media>
-    <v-card-actions>
+    <v-card-actions v-if="message.author.id === this.$store.state.profile.id">
       <v-btn value="Edit" @click="edit" small flat round>Edit</v-btn>
       <v-btn icon @click="del" small>
         <v-icon>delete</v-icon>

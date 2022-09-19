@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="`/user/${user.id}`" class="px-3">
+  <router-link style="text-decoration: none; color: rgba(0, 0, 0, 0.87)" :to="`/user/${user.id}`" class="px-3">
     <!--        <v-avatar v-if="message.author && message.author.userpic" size="36px">-->
     <!--          <img :src="message.author.userpic" :alt="authorName"/>-->
     <!--        </v-avatar>-->

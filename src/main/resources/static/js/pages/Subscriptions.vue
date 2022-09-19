@@ -2,7 +2,7 @@
   <v-container>
     <v-layout justify-space-around>
       <v-list>
-        <v-list-tile v-for="item in subscriptions">
+        <v-list-tile v-if="subscriptions.length !== 0" v-for="item in subscriptions">
           <user-link
               :user="item.subscriber"
               size="24"

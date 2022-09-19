@@ -7,7 +7,7 @@ import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.domain.Views;
 import com.tgc.Sarafan.dto.MessagePageDto;
 import com.tgc.Sarafan.service.MessageService;
-import com.tgc.Sarafan.service.MessageServiceImpl;
+import com.tgc.Sarafan.service.impl.MessageServiceImpl;
 import com.tgc.Sarafan.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

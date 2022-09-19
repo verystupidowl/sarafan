@@ -5,7 +5,7 @@ import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.domain.Views;
 import com.tgc.Sarafan.dto.CommentDto;
 import com.tgc.Sarafan.service.CommentService;
-import com.tgc.Sarafan.service.CommentServiceImpl;
+import com.tgc.Sarafan.service.impl.CommentServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
