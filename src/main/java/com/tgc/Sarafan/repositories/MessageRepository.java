@@ -1,7 +1,7 @@
 package com.tgc.Sarafan.repositories;
 
-import com.tgc.Sarafan.model.Message;
-import com.tgc.Sarafan.model.User;
+import com.tgc.Sarafan.domain.Message;
+import com.tgc.Sarafan.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

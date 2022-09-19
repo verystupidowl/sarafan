@@ -1,4 +1,4 @@
-package com.tgc.Sarafan.model;
+package com.tgc.Sarafan.domain;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;

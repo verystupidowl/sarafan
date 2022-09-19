@@ -1,6 +1,6 @@
 package com.tgc.Sarafan.dto;
 
-import com.tgc.Sarafan.model.User;
+import com.tgc.Sarafan.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

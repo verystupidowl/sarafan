@@ -8,7 +8,7 @@ import Vuetify from "vuetify";
 import '@babel/polyfill'
 import 'vuetify/dist/vuetify.min.css'
 
-if (frontendData.profile) {
+if (profile) {
     connect();
 }
 

@@ -1,9 +1,9 @@
 package com.tgc.Sarafan.service;
 
-import com.tgc.Sarafan.model.Message;
-import com.tgc.Sarafan.model.User;
-import com.tgc.Sarafan.model.UserSubscription;
-import com.tgc.Sarafan.model.Views;
+import com.tgc.Sarafan.domain.Message;
+import com.tgc.Sarafan.domain.User;
+import com.tgc.Sarafan.domain.UserSubscription;
+import com.tgc.Sarafan.domain.Views;
 import com.tgc.Sarafan.dto.EventType;
 import com.tgc.Sarafan.dto.MessagePageDto;
 import com.tgc.Sarafan.dto.MetaDto;
@@ -49,7 +49,7 @@ public class MessageServiceImpl implements MessageService {
     public MessageServiceImpl(MessageRepository messageRepository, WebSocketSender webSocketSender,
                               UserSubscriptionRepository userSubscriptionRepository) {
         this.messageRepository = messageRepository;
-        this.webSocketSender = webSocketSender.getSender(ObjectType.MESSAGE, Views.IdName.class);
+        this.webSocketSender = webSocketSender.getSender(ObjectType.MESSAGE, Views.FullMessage.class);
         this.userSubscriptionRepository = userSubscriptionRepository;
     }
 
@@ -61,7 +61,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Message update(Message messageFromDb, Message message) throws IOException {
-        BeanUtils.copyProperties(message, messageFromDb, "id");
+        messageFromDb.setText(message.getText());
         fillMeta(messageFromDb);
         Message updatedMessage = messageRepository.save(messageFromDb);
 
@@ -87,6 +87,7 @@ public class MessageServiceImpl implements MessageService {
     public MessagePageDto findForUser(Pageable pageable, User user) {
         List<User> channels = userSubscriptionRepository.findBySubscriber(user)
                 .stream()
+                .filter(UserSubscription::isActive)
                 .map(UserSubscription::getChannel)
                 .collect(Collectors.toList());
 

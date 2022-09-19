@@ -1,6 +1,6 @@
 package com.tgc.Sarafan.service;
 
-import com.tgc.Sarafan.model.User;
+import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.repositories.UserRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;

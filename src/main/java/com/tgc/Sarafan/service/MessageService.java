@@ -1,7 +1,7 @@
 package com.tgc.Sarafan.service;
 
-import com.tgc.Sarafan.model.Message;
-import com.tgc.Sarafan.model.User;
+import com.tgc.Sarafan.domain.Message;
+import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.dto.MessagePageDto;
 import org.springframework.data.domain.Pageable;
 
