@@ -6,11 +6,11 @@
           <user-link
               :user="item.subscriber"
               size="24"
-            ></user-link>
+          ></user-link>
           <v-btn
               @click="changeSubscriptionStatus(item.subscriber.id)"
           >
-            {{item.active ? "Dismiss" : "Approve"}}
+            {{ item.active ? "Dismiss" : "Approve" }}
           </v-btn>
         </v-list-tile>
       </v-list>
@@ -21,6 +21,7 @@
 <script>
 import profileApi from 'api/profile'
 import UserLink from "../components/comment/UserLink.vue";
+
 export default {
   name: "Subscriptions",
   components: {UserLink},
@@ -37,12 +38,12 @@ export default {
       const subscription = this.subscriptions[subscriptionIndex]
 
       this.subscriptions = [
-          ...this.subscriptions.slice(0, subscriptionIndex),
+        ...this.subscriptions.slice(0, subscriptionIndex),
         {
           ...subscription,
           active: !subscription.active
         },
-          ...this.subscriptions.slice(subscriptionIndex + 1)
+        ...this.subscriptions.slice(subscriptionIndex + 1)
       ]
     }
   },

@@ -4,13 +4,14 @@
         :user="comment.author"
     ></user-link>
     <v-list-tile-content class="pl-3">
-      <v-list-tile-title>{{comment.text}}</v-list-tile-title>
+      <v-list-tile-title>{{ comment.text }}</v-list-tile-title>
     </v-list-tile-content>
   </v-list-tile>
 </template>
 
 <script>
 import UserLink from "./UserLink.vue";
+
 export default {
   name: "CommentItem",
   components: {UserLink},

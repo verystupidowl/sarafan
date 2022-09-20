@@ -9,7 +9,7 @@ import '@babel/polyfill'
 import 'vuetify/dist/vuetify.min.css'
 
 import * as Sentry from "@sentry/vue";
-import { BrowserTracing } from "@sentry/tracing";
+import {BrowserTracing} from "@sentry/tracing";
 
 Sentry.init({
     Vue,

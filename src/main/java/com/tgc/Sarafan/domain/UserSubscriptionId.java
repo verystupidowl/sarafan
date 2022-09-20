@@ -40,7 +40,7 @@ public class UserSubscriptionId implements Serializable {
     @Override
     public int hashCode() {
         int result = channelId == null ? 0 : channelId.hashCode();
-        result = 31 * result + (subscriberId == null ? 0 :  subscriberId.hashCode());
+        result = 31 * result + (subscriberId == null ? 0 : subscriberId.hashCode());
         return result;
     }
 }

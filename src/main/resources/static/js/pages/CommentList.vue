@@ -16,6 +16,7 @@
 <script>
 import CommentItem from "../components/comment/CommentItem.vue";
 import CommentForm from "../components/comment/CommentForm.vue";
+
 export default {
   name: "CommentList",
   components: {CommentForm, CommentItem},

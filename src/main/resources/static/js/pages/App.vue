@@ -7,7 +7,8 @@
       </v-btn>
       <v-spacer></v-spacer>
       <div>
-        <v-btn flat v-if="profile" :disabled="$route.path === '/user' || $route.path === `/user/${profile.id}`" @click="showProfile">
+        <v-btn flat v-if="profile" :disabled="$route.path === '/user' || $route.path === `/user/${profile.id}`"
+               @click="showProfile">
           {{ profile.name }}
         </v-btn>
       </div>
