@@ -43,7 +43,7 @@ export default {
   created() {
     addHandler(data => {
       if (data.objectType === 'MESSAGE') {
-        switch (data.eventType) {
+        switch (data.wsEventType) {
           case 'CREATE':
             this.addMessageMutation(data.body)
             break
@@ -57,7 +57,7 @@ export default {
             console.error(`Looks like the event type if unknown "${data.eventType}"`)
         }
       } else if (data.objectType === 'COMMENT') {
-        switch (data.eventType) {
+        switch (data.wsEventType) {
           case 'CREATE':
             this.addCommentMutation(data.body)
             break
