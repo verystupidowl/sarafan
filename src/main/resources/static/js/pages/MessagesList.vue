@@ -3,8 +3,8 @@
     <v-layout align-space-around justify-start column>
       <message-form :messageAttr="message"/>
       <select v-model="selected">
-        <option>Newer first</option>
-        <option>Older first</option>
+        <option>Newest</option>
+        <option>Oldest</option>
         <option>By name</option>
         <option>By population</option>
       </select>
@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       message: null,
-      selected: 'Newer first',
+      selected: 'Newest',
       sortedMessages: [],
     }
   },

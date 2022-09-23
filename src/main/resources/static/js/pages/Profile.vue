@@ -36,7 +36,7 @@
         </v-btn>
       </v-flex>
       <v-flex v-else>
-        Error {{ error.status }} <br/> {{ error.message }}
+        <ProfileNotFound :error="error"></ProfileNotFound>
       </v-flex>
     </v-layout>
   </v-container>
@@ -44,9 +44,11 @@
 
 <script>
 import profileApi from 'api/profile'
+import ProfileNotFound from "./ProfileNotFound.vue";
 
 export default {
   name: "Profile",
+  components: {ProfileNotFound},
   computed: {
     isMyProfile() {
       return !this.$route.params.id || this.$store.state.profile.id === this.$route.params.id

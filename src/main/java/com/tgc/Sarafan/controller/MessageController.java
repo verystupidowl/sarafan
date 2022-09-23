@@ -27,7 +27,7 @@ public class MessageController {
 
     private final MessageService messageService;
 
-    public final static int MESSAGES_PER_PAGE = 3;
+    public final static int MESSAGES_PER_PAGE = 5;
 
 
     @Autowired

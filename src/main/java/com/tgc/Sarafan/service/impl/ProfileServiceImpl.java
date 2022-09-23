@@ -61,6 +61,6 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     @Transactional
     public User findById(String id) {
-        return userRepository.findById(id).orElseThrow(() -> new UserWithIdNotFoundException("User with thisId not found!"));
+        return userRepository.findById(id).orElseThrow(() -> new UserWithIdNotFoundException("User with id " + id + " not found!"));
     }
 }

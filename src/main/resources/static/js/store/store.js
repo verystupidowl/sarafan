@@ -14,9 +14,9 @@ export default new Vuex.Store({
     getters: {
         sortedMessages: state => selected => {
             switch (selected) {
-                case 'Newer first':
+                case 'Newest':
                     return (state.messages || []).sort((a, b) => -(a.id - b.id))
-                case 'Older first':
+                case 'Oldest':
                     return (state.messages || []).sort((a, b) => a.id - b.id)
                 case 'By name' :
                     return (state.messages || []).sort((a, b) => a.author.name.localeCompare(b.author.name) ||  -(a.id - b.id))
