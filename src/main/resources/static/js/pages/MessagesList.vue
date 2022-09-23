@@ -2,7 +2,13 @@
   <v-container>
     <v-layout align-space-around justify-start column>
       <message-form :messageAttr="message"/>
-      <message-row v-for="message in sortedMessages"
+      <select v-model="selected">
+        <option>Newer first</option>
+        <option>Older first</option>
+        <option>By name</option>
+        <option>By population</option>
+      </select>
+      <message-row v-for="message in (getSortedMessages || sortedMessages)"
                    :key="message.id"
                    :message="message"
                    :editMessage="editMessage"/>
@@ -12,10 +18,10 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
 import MessageRow from 'components/messages/MessageRow.vue'
 import MessageForm from 'components/messages/MessageForm.vue'
 import LazyLoader from "../components/messages/LazyLoader.vue";
+import {mapActions} from "vuex";
 
 export default {
   components: {
@@ -25,14 +31,27 @@ export default {
   },
   data() {
     return {
-      message: null
+      message: null,
+      selected: 'Newer first',
+      sortedMessages: [],
     }
   },
-  computed: mapGetters(['sortedMessages']),
+  computed: {
+    getSortedMessages() {
+      return this.$store.getters.sortedMessages(this.selected)
+    }
+  },
+  watch: {
+    selected(newVal, oldVal) {
+      this.loadPageAction()
+      this.sortedMessages = this.$store.getters.sortedMessages(newVal)
+    }
+  },
   methods: {
+    ...mapActions(['loadPageAction']),
     editMessage(message) {
       this.message = message
-    }
+    },
   }
 }
 </script>

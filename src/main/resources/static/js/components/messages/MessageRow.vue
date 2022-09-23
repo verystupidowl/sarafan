@@ -30,6 +30,7 @@ export default {
   props: ['message', 'editMessage'],
   components: {UserLink, CommentList, Media},
   methods: {
+    ...mapActions(['loadPageAction']),
     ...mapActions(['removeMessageAction']),
     edit() {
       this.editMessage(this.message)

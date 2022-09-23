@@ -12,7 +12,18 @@ export default new Vuex.Store({
         ...frontendData,
     },
     getters: {
-        sortedMessages: state => (state.messages || []).sort((a, b) => -(a.id - b.id))
+        sortedMessages: state => selected => {
+            switch (selected) {
+                case 'Newer first':
+                    return (state.messages || []).sort((a, b) => -(a.id - b.id))
+                case 'Older first':
+                    return (state.messages || []).sort((a, b) => a.id - b.id)
+                case 'By name' :
+                    return (state.messages || []).sort((a, b) => a.author.name.localeCompare(b.author.name) ||  -(a.id - b.id))
+                case 'By population' :
+                    return (state.messages || []).sort((a, b) => -(a.comments.length - b.comments.length) ||  -(a.id - b.id))
+            }
+        }
     },
     mutations: {
         addMessageMutation(state, message) {
