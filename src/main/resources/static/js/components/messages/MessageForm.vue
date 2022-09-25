@@ -33,17 +33,19 @@ export default {
   methods: {
     ...mapActions(['addMessageAction', 'updateMessageAction']),
     save() {
-      const message = {
-        id: this.id,
-        text: this.text
+      if (this.text.trim() !== '') {
+        const message = {
+          id: this.id,
+          text: this.text
+        }
+        if (this.id) {
+          this.updateMessageAction(message)
+        } else {
+          this.addMessageAction(message)
+        }
+        this.text = ''
+        this.id = ''
       }
-      if (this.id) {
-        this.updateMessageAction(message)
-      } else {
-        this.addMessageAction(message)
-      }
-      this.text = ''
-      this.id = ''
     }
   }
 }

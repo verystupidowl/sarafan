@@ -26,11 +26,14 @@ export default {
   methods: {
     ...mapActions(['addCommentAction']),
     async save() {
-      await this.addCommentAction({
-        text: this.text,
-        messageId: this.messageId
-      })
-      this.text = ''
+      console.log(this.text)
+      if (this.text.trim() !== '') {
+        await this.addCommentAction({
+          text: this.text,
+          messageId: this.messageId
+        })
+        this.text = ''
+      }
     }
   }
 }
