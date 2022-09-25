@@ -62,7 +62,7 @@ export default {
             this.addCommentMutation(data.body)
             break
           default:
-            console.error(`Looks like the event type if unknown "${data.eventType}"`)
+            console.error(`Looks like the event type if unknown "${data.wsEventType}"`)
         }
       } else {
         console.error(`Looks like the object type if unknown "${data.objectType}"`)
