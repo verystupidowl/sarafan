@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/")
@@ -51,22 +52,10 @@ public class MainController {
             Model model,
             @AuthenticationPrincipal User user
     ) throws JsonProcessingException {
-        HashMap<Object, Object> data = new HashMap<>();
+        Map<Object, Object> data = new HashMap<>();
 
         if (user != null) {
-            User userFromDb = userService.findById(user.getId());
-            String serializedProfile = profileWriter.writeValueAsString(userFromDb);
-            model.addAttribute("profile", serializedProfile);
-
-            Sort sort = Sort.by(Sort.Direction.DESC, "id");
-            PageRequest pageRequest = PageRequest.of(0, MessageController.MESSAGES_PER_PAGE, sort);
-            MessagePageDto messagePageDto = messageService.findForUser(pageRequest, user);
-
-            String messages = messageWriter.writeValueAsString(messagePageDto.getMessages());
-
-            model.addAttribute("messages", messages);
-            data.put("currentPage", messagePageDto.getCurrentPage());
-            data.put("totalPages", messagePageDto.getTotalPage());
+            data = extracted(model, user);
         } else {
             model.addAttribute("messages", "[]");
             model.addAttribute("profile", "null");
@@ -76,5 +65,24 @@ public class MainController {
         model.addAttribute("isDevMode", "dev".equals(profile));
 
         return "index";
+    }
+
+    private Map<Object, Object> extracted(Model model, User user) throws JsonProcessingException {
+        Map<Object, Object> data = new HashMap<>();
+        User userFromDb = userService.findById(user.getId());
+        String serializedProfile = profileWriter.writeValueAsString(userFromDb);
+        model.addAttribute("profile", serializedProfile);
+
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        PageRequest pageRequest = PageRequest.of(0, MessageController.MESSAGES_PER_PAGE, sort);
+        MessagePageDto messagePageDto = messageService.findForUser(pageRequest, user);
+
+        String messages = messageWriter.writeValueAsString(messagePageDto.getMessages());
+
+        model.addAttribute("messages", messages);
+        data.put("currentPage", messagePageDto.getCurrentPage());
+        data.put("totalPages", messagePageDto.getTotalPage());
+
+        return data;
     }
 }
