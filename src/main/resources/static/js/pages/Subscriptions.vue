@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import profileApi from 'api/profile'
+import profileApi from 'api/profile';
 import UserLink from "../components/comment/UserLink.vue";
 
 export default {
@@ -32,10 +32,10 @@ export default {
   },
   methods: {
     async changeSubscriptionStatus(subscriberId) {
-      await profileApi.changeSubscriptionStatus(subscriberId)
+      await profileApi.changeSubscriptionStatus(subscriberId);
 
-      const subscriptionIndex = this.subscriptions.findIndex(item => item.subscriber.id === subscriberId)
-      const subscription = this.subscriptions[subscriptionIndex]
+      const subscriptionIndex = this.subscriptions.findIndex(item => item.subscriber.id === subscriberId);
+      const subscription = this.subscriptions[subscriptionIndex];
 
       this.subscriptions = [
         ...this.subscriptions.slice(0, subscriptionIndex),
@@ -44,12 +44,12 @@ export default {
           active: !subscription.active
         },
         ...this.subscriptions.slice(subscriptionIndex + 1)
-      ]
+      ];
     }
   },
   async beforeMount() {
-    const response = await profileApi.subscriberList(this.$store.state.profile.id)
-    this.subscriptions = await response.json()
+    const response = await profileApi.subscriberList(this.$store.state.profile.id);
+    this.subscriptions = await response.json();
   }
 }
 </script>

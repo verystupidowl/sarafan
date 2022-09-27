@@ -25,9 +25,9 @@ export default {
     }
   },
   watch: {
-    messageAttr(newVal, oldVal) {
-      this.text = newVal.text
-      this.id = newVal.id
+    messageAttr(newVal) {
+      this.text = newVal.text;
+      this.id = newVal.id;
     }
   },
   methods: {
@@ -36,15 +36,15 @@ export default {
       if (this.text.trim() !== '') {
         const message = {
           id: this.id,
-          text: this.text
+          text: this.text,
         }
         if (this.id) {
-          this.updateMessageAction(message)
+          this.updateMessageAction(message);
         } else {
-          this.addMessageAction(message)
+          this.addMessageAction(message);
         }
-        this.text = ''
-        this.id = ''
+        this.text = '';
+        this.id = '';
       }
     }
   }

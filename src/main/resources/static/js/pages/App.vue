@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import {mapMutations, mapState} from 'vuex'
+import {mapMutations, mapState} from 'vuex';
 import {addHandler} from "../utils/ws";
 
 export default {
@@ -34,10 +34,10 @@ export default {
       'updateMessageMutation',
       'removeMessageMutation']),
     showMessages() {
-      this.$router.push('/')
+      this.$router.push('/');
     },
     showProfile() {
-      this.$router.push('/user')
+      this.$router.push('/user');
     },
   },
   created() {
@@ -45,33 +45,33 @@ export default {
       if (data.objectType === 'MESSAGE') {
         switch (data.wsEventType) {
           case 'CREATE':
-            this.addMessageMutation(data.body)
-            break
+            this.addMessageMutation(data.body);
+            break;
           case 'UPDATE':
-            this.updateMessageMutation(data.body)
-            break
+            this.updateMessageMutation(data.body);
+            break;
           case 'REMOVE':
-            this.removeMessageMutation(data.body)
-            break
+            this.removeMessageMutation(data.body);
+            break;
           default:
-            console.error(`Looks like the event type if unknown "${data.eventType}"`)
+            console.error(`Looks like the event type if unknown "${data.eventType}"`);
         }
       } else if (data.objectType === 'COMMENT') {
         switch (data.wsEventType) {
           case 'CREATE':
-            this.addCommentMutation(data.body)
-            break
+            this.addCommentMutation(data.body);
+            break;
           default:
-            console.error(`Looks like the event type if unknown "${data.wsEventType}"`)
+            console.error(`Looks like the event type if unknown "${data.wsEventType}"`);
         }
       } else {
-        console.error(`Looks like the object type if unknown "${data.objectType}"`)
+        console.error(`Looks like the object type if unknown "${data.objectType}"`);
       }
     })
   },
   beforeMount() {
     if (!this.profile) {
-      this.$router.replace('/auth')
+      this.$router.replace('/auth');
     }
   }
 }

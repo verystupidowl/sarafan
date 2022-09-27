@@ -12,13 +12,13 @@ export function connect() {
     stompClient.connect({}, frame => {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/activity', message => {
-            handlers.forEach(handler => handler(JSON.parse(message.body)))
+            handlers.forEach(handler => handler(JSON.parse(message.body)));
         });
     });
 }
 
 export function addHandler(handler) {
-    handlers.push(handler)
+    handlers.push(handler);
 }
 
 export function disconnect() {

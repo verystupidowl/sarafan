@@ -14,7 +14,7 @@ export default {
   computed: {
     targetSrc() {
       let parts = this.src.split('/');
-      return `https://www.youtube.com/embed/${parts[parts.length - 1]}`
+      return `https://www.youtube.com/embed/${parts[parts.length - 1]}`;
     }
   }
 }

@@ -36,16 +36,16 @@ export default {
   props: ['message'],
   data() {
     return {
-      type: 'href'
+      type: 'href',
     }
   },
   beforeMount() {
     if (this.message.link.indexOf('youtu') > -1) {
-      this.type = 'youtube'
+      this.type = 'youtube';
     } else if (this.message.link.match("\\.(jpeg|jpg|gif|png)$") !== null) {
-      this.type = 'image'
+      this.type = 'image';
     } else {
-      this.type = 'href'
+      this.type = 'href';
     }
   }
 }

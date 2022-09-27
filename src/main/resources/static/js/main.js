@@ -1,12 +1,12 @@
-import Vue from 'vue'
-import App from 'pages/App.vue'
+import Vue from 'vue';
+import App from 'pages/App.vue';
 import store from "store/store.js";
 import router from "./router/router";
-import 'api/resource'
+import 'api/resource';
 import {connect} from "./utils/ws";
 import Vuetify from "vuetify";
-import '@babel/polyfill'
-import 'vuetify/dist/vuetify.min.css'
+import '@babel/polyfill';
+import 'vuetify/dist/vuetify.min.css';
 
 import * as Sentry from "@sentry/vue";
 import {BrowserTracing} from "@sentry/tracing";

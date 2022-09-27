@@ -23,6 +23,7 @@ public class UserSubscriptionId implements Serializable {
 
     @JsonView(Views.IdName.class)
     private String channelId;
+
     @JsonView(Views.IdName.class)
     private String subscriberId;
 

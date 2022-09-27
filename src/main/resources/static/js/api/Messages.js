@@ -1,9 +1,9 @@
 import Vue from "vue";
-import VueResource from 'vue-resource'
+import VueResource from 'vue-resource';
 
-Vue.use(VueResource)
+Vue.use(VueResource);
 
-const messages = Vue.resource('/message{/id}')
+const messages = Vue.resource('/message{/id}');
 
 export default {
     add: message => messages.save({}, message),

@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
-import Media from 'components/media/Media.vue'
+import {mapActions} from 'vuex';
+import Media from 'components/media/Media.vue';
 import CommentList from "../../pages/CommentList.vue";
 import UserLink from "../comment/UserLink.vue";
 
@@ -33,10 +33,10 @@ export default {
     ...mapActions(['loadPageAction']),
     ...mapActions(['removeMessageAction']),
     edit() {
-      this.editMessage(this.message)
+      this.editMessage(this.message);
     },
     del() {
-      this.removeMessageAction(this.message)
+      this.removeMessageAction(this.message);
     }
   }
 }

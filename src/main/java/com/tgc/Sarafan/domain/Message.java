@@ -46,12 +46,15 @@ public class Message {
     @JsonView(Views.FullMessage.class)
     @ToString.Exclude
     private String link;
+
     @JsonView(Views.FullMessage.class)
     @ToString.Exclude
     private String linkTitle;
+
     @JsonView(Views.FullMessage.class)
     @ToString.Exclude
     private String linkDescription;
+
     @JsonView(Views.FullMessage.class)
     @ToString.Exclude
     private String linkCover;

@@ -20,19 +20,18 @@ export default {
   props: ['messageId'],
   data() {
     return {
-      text: ''
+      text: '',
     }
   },
   methods: {
     ...mapActions(['addCommentAction']),
     async save() {
-      console.log(this.text)
       if (this.text.trim() !== '') {
         await this.addCommentAction({
           text: this.text,
-          messageId: this.messageId
-        })
-        this.text = ''
+          messageId: this.messageId,
+        });
+        this.text = '';
       }
     }
   }

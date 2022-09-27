@@ -19,8 +19,8 @@ export default {
   computed: {
     avatarColor() {
       const colors = ['pink', 'purple', 'deep-purple',
-        'indigo', 'blue', 'cyan', 'teal', 'orange', 'yellow', 'amber']
-      return colors[Math.floor(Math.random() * (9 + 1))]
+        'indigo', 'blue', 'cyan', 'teal', 'orange', 'yellow', 'amber'];
+      return colors[Math.floor(Math.random() * (9 + 1))];
     },
   }
 }

@@ -51,26 +51,25 @@ export default {
   components: {ProfileNotFound},
   computed: {
     isMyProfile() {
-      return !this.$route.params.id || this.$store.state.profile.id === this.$route.params.id
+      return !this.$route.params.id || this.$store.state.profile.id === this.$route.params.id;
     },
     isISubscribed() {
       return this.profile.subscribers &&
           this.profile.subscribers.find(subscriptions => {
-            return subscriptions.subscriber === this.$store.state.profile.id
+            return subscriptions.subscriber === this.$store.state.profile.id;
           })
     },
     avatarColor() {
       const colors = ['pink', 'purple', 'deep-purple',
-        'indigo', 'blue', 'cyan', 'teal', 'orange', 'yellow', 'amber']
-      return colors[Math.floor(Math.random() * (9 + 1))]
+        'indigo', 'blue', 'cyan', 'teal', 'orange', 'yellow', 'amber'];
+      return colors[Math.floor(Math.random() * (9 + 1))];
     },
     isIApproved() {
-      let value = -1
+      let value = -1;
       if (this.profile.subscribers) {
         this.profile.subscribers.forEach(s => {
-          console.log(s)
           if (s.subscriber === this.$store.state.profile.id && s.active === true) {
-            value = 1
+            value = 1;
           }
         })
       }
@@ -79,29 +78,29 @@ export default {
   },
   watch: {
     '$route'() {
-      this.updateProfile()
+      this.updateProfile();
     }
   },
   methods: {
     async changeSubscription() {
-      const data = await profileApi.changeSubscription(this.profile.id)
-      this.profile = await data.json()
+      const data = await profileApi.changeSubscription(this.profile.id);
+      this.profile = await data.json();
     },
     async updateProfile() {
-      const id = this.$route.params.id || this.$store.state.profile.id
+      const id = this.$route.params.id || this.$store.state.profile.id;
 
       profileApi.get(id).then(response => {
-        response.json().then(data => this.profile = data)
+        response.json().then(data => this.profile = data);
       }, err => err.json().then(errorBody => this.error = {
         status: err.status,
         message: errorBody.message,
         timestamp: errorBody.timestamp
       }))
-      this.$forceUpdate()
+      this.$forceUpdate();
     },
   },
   beforeMount() {
-    this.updateProfile()
+    this.updateProfile();
   },
   data() {
     return {
@@ -117,9 +116,5 @@ export default {
 img {
   max-width: 100%;
   height: auto;
-}
-
-.routerLink {
-
 }
 </style>

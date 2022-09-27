@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import MessageRow from 'components/messages/MessageRow.vue'
-import MessageForm from 'components/messages/MessageForm.vue'
+import MessageRow from 'components/messages/MessageRow.vue';
+import MessageForm from 'components/messages/MessageForm.vue';
 import LazyLoader from "../components/messages/LazyLoader.vue";
 import {mapActions} from "vuex";
 
@@ -38,19 +38,19 @@ export default {
   },
   computed: {
     getSortedMessages() {
-      return this.$store.getters.sortedMessages(this.selected)
+      return this.$store.getters.sortedMessages(this.selected);
     }
   },
   watch: {
-    selected(newVal, oldVal) {
-      this.loadPageAction()
-      this.sortedMessages = this.$store.getters.sortedMessages(newVal)
+    selected(newVal) {
+      this.loadPageAction();
+      this.sortedMessages = this.$store.getters.sortedMessages(newVal);
     }
   },
   methods: {
     ...mapActions(['loadPageAction']),
     editMessage(message) {
-      this.message = message
+      this.message = message;
     },
   }
 }

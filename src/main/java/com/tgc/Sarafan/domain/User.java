@@ -29,17 +29,22 @@ public class User implements Serializable {
     @ToString.Include
     @JsonView(Views.IdName.class)
     private String name;
+
     @ToString.Include
     @JsonView(Views.IdName.class)
     private String userpic;
+
     @ToString.Include
     private String email;
+
     @ToString.Include
     @JsonView(Views.FullProfile.class)
     private String gender;
+
     @ToString.Include
     @JsonView(Views.FullProfile.class)
     private String locale;
+
     @ToString.Include
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
