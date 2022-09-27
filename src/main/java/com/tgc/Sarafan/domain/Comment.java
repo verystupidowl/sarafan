@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 public class Comment {
+
     @Id
     @JsonView(Views.IdName.class)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

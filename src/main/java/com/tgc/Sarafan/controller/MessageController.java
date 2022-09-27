@@ -6,6 +6,8 @@ import com.tgc.Sarafan.domain.Message;
 import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.domain.Views;
 import com.tgc.Sarafan.dto.MessagePageDto;
+import com.tgc.Sarafan.exceptions.MessageErrorResponse;
+import com.tgc.Sarafan.exceptions.MessageNotCreatedException;
 import com.tgc.Sarafan.exceptions.UserErrorResponse;
 import com.tgc.Sarafan.exceptions.UserNotAuthenticatedException;
 import com.tgc.Sarafan.service.MessageService;
@@ -17,9 +19,13 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/message")
@@ -53,14 +59,26 @@ public class MessageController {
 
     @PostMapping
     @JsonView(Views.FullMessage.class)
-    public Message create(@AuthenticationPrincipal User user, @RequestBody Message message) throws IOException {
-        return messageService.create(message, user);
+    public Message create(@AuthenticationPrincipal User user, @RequestBody @Valid Message message, BindingResult bindingResult) throws IOException {
+        if (!bindingResult.hasErrors()) {
+            return messageService.create(message, user);
+        } else {
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            String errorMessage = exceptionMsgBuilder(fieldErrors);
+            throw new MessageNotCreatedException(errorMessage);
+        }
     }
 
     @PutMapping("{id}")
     @JsonView(Views.FullMessage.class)
-    public Message update(@PathVariable("id") Message messageFromDb, @RequestBody Message message) throws IOException {
-        return messageService.update(messageFromDb, message);
+    public Message update(@PathVariable("id") Message messageFromDb, @RequestBody @Valid Message message, BindingResult bindingResult) throws IOException {
+        if (!bindingResult.hasErrors()) {
+            return messageService.update(messageFromDb, message);
+        } else {
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            String errorMessage = exceptionMsgBuilder(fieldErrors);
+            throw new MessageNotCreatedException(errorMessage);
+        }
     }
 
     @DeleteMapping("{id}")
@@ -76,6 +94,29 @@ public class MessageController {
         );
 
         return new ResponseEntity<>(userErrorResponse, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<MessageErrorResponse> exceptionHandler(MessageNotCreatedException e) {
+        MessageErrorResponse response = new MessageErrorResponse(
+                e.getMessage(),
+                System.currentTimeMillis()
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    private String exceptionMsgBuilder(List<FieldError> errors) {
+        StringBuilder errorMsg = new StringBuilder();
+
+        for (FieldError error : errors) {
+            errorMsg
+                    .append(error.getField())
+                    .append(" - ")
+                    .append(error.getDefaultMessage())
+                    .append(";");
+        }
+        return errorMsg.toString();
     }
 
 }

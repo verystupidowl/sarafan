@@ -7,6 +7,8 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,7 +24,10 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView(Views.Id.class)
     private Long id;
+
     @JsonView(Views.IdName.class)
+    @NotEmpty(message = "Message text should not be empty!")
+    @Size(min = 1, max = 20, message = "Message text size should be between 1 and 20 characters!")
     private String text;
 
     @Column(updatable = false)
