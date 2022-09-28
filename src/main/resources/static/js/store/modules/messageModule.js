@@ -1,8 +1,9 @@
 import messagesApi from "../../api/Messages";
 
 export default {
-    state:{
-        messages
+    state: {
+        messages,
+        error: {}
     },
     getters: {
         sortedMessages: state => selected => {
@@ -16,6 +17,9 @@ export default {
                 case 'By population' :
                     return (state.messages || []).sort((a, b) => -(a.comments.length - b.comments.length) || -(a.id - b.id));
             }
+        },
+        errorGetter: state => {
+            return state.error;
         }
     },
     mutations: {
@@ -44,20 +48,31 @@ export default {
                 ];
             }
         },
+        errorMessageMutation: (state, err) => {
+            state.error = err;
+        }
     },
     actions: {
-        async addMessageAction({commit, state}, message) {
-            const result = await messagesApi.add(message);
-            if (result.ok) {
-                const data = await result.json();
-                const index = state.messages.findIndex(item => item.id === data.id);
-
-                if (index > -1) {
-                    commit('updateMessageMutation', data);
-                } else {
-                    commit('addMessageMutation', data);
-                }
-            }
+        addMessageAction({commit, state}, message) {
+            messagesApi.add(message).then(result => {
+                result.json().then(data => {
+                    const index = state.messages.findIndex(item => item.id === data.id);
+                    if (index > -1) {
+                        commit('updateMessageMutation', data);
+                    } else {
+                        commit('addMessageMutation', data);
+                    }
+                });
+            }, err => {
+                err.json().then(errorData => {
+                    commit('errorMessageMutation', {
+                        status: err.status,
+                        message: errorData.message,
+                        timestamp: errorData.timestamp
+                    });
+                })
+            });
+            setTimeout(() => state.error = null, 3000);
         },
         async updateMessageAction({commit}, message) {
             const result = await messagesApi.update(message);

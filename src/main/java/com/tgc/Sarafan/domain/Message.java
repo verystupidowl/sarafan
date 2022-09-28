@@ -27,7 +27,7 @@ public class Message {
 
     @JsonView(Views.IdName.class)
     @NotEmpty(message = "Message text should not be empty!")
-    @Size(min = 1, max = 20, message = "Message text size should be between 1 and 20 characters!")
+    @Size(min = 1, max = 3, message = "Message text size should be between 1 and 20 characters!")
     private String text;
 
     @Column(updatable = false)

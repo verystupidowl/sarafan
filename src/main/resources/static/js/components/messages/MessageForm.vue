@@ -1,19 +1,24 @@
 <template>
-  <v-layout row>
-    <v-text-field
-        label="New message"
-        placeholder="Write something"
-        v-model="text"
-        v-on:keyup.enter="save"
-    />
-    <v-btn @click="save">
-      Save
-    </v-btn>
-  </v-layout>
+  <div>
+    <v-layout row>
+      <v-text-field
+          label="New message"
+          placeholder="Write something"
+          v-model="text"
+          v-on:keyup.enter="save"
+      />
+      <v-btn @click="save">
+        Save
+      </v-btn>
+    </v-layout>
+    <div v-if="error">
+      <p style="color: red">Error {{ errorHandler.status }} {{ errorHandler.message }}</p>
+    </div>
+  </div>
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "message-form",
@@ -21,7 +26,8 @@ export default {
   data() {
     return {
       text: '',
-      id: ''
+      id: '',
+      error: null
     }
   },
   watch: {
@@ -32,6 +38,7 @@ export default {
   },
   methods: {
     ...mapActions(['addMessageAction', 'updateMessageAction']),
+    ...mapGetters(['errorGetter']),
     save() {
       if (this.text.trim() !== '') {
         const message = {
@@ -42,10 +49,17 @@ export default {
           this.updateMessageAction(message);
         } else {
           this.addMessageAction(message);
+          this.error = this.errorGetter;
+          setTimeout(() => this.error = null, 5000);
         }
         this.text = '';
         this.id = '';
       }
+    },
+  },
+  computed: {
+    errorHandler() {
+      return this.$store.getters.errorGetter;
     }
   }
 }
