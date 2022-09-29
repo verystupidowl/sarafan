@@ -21,7 +21,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("comment")
+@RequestMapping("/comment")
 @Slf4j
 public class CommentController {
 
@@ -34,7 +34,8 @@ public class CommentController {
 
     @PostMapping
     @JsonView(Views.FullComment.class)
-    public CommentDto create(@RequestBody @Valid CommentDto comment, @AuthenticationPrincipal User user, BindingResult bindingResult) {
+    public CommentDto create(@RequestBody @Valid CommentDto comment, BindingResult bindingResult, @AuthenticationPrincipal User user) {
+        System.out.println(comment);
         if (!bindingResult.hasErrors())
             return commentService.create(comment, user);
         else {
@@ -64,6 +65,7 @@ public class CommentController {
                     .append(error.getDefaultMessage())
                     .append(";");
         }
+        System.out.println(errorMsg);
         return errorMsg.toString();
     }
 }

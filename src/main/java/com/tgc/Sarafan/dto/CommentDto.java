@@ -1,16 +1,16 @@
 package com.tgc.Sarafan.dto;
 
 import com.tgc.Sarafan.domain.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class CommentDto {
     private Long id;
 

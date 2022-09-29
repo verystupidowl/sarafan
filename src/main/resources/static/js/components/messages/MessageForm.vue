@@ -11,15 +11,15 @@
         Save
       </v-btn>
     </v-layout>
-    <div v-if="error">
-      <p style="color: red">Error {{ errorHandler.status }} {{ errorHandler.message }}</p>
+    <div v-if="errorHandler">
+      <error :error-handler="errorHandler"></error>
     </div>
   </div>
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
-
+import {mapActions} from "vuex";
+import Error from "../error/Error.vue";
 export default {
   name: "message-form",
   props: ['messageAttr'],
@@ -27,8 +27,10 @@ export default {
     return {
       text: '',
       id: '',
-      error: null
     }
+  },
+  components: {
+    Error
   },
   watch: {
     messageAttr(newVal) {
@@ -38,7 +40,6 @@ export default {
   },
   methods: {
     ...mapActions(['addMessageAction', 'updateMessageAction']),
-    ...mapGetters(['errorGetter']),
     save() {
       if (this.text.trim() !== '') {
         const message = {
@@ -49,8 +50,6 @@ export default {
           this.updateMessageAction(message);
         } else {
           this.addMessageAction(message);
-          this.error = this.errorGetter;
-          setTimeout(() => this.error = null, 5000);
         }
         this.text = '';
         this.id = '';
@@ -59,7 +58,7 @@ export default {
   },
   computed: {
     errorHandler() {
-      return this.$store.getters.errorGetter;
+      return this.$store.getters.messageErrorGetter;
     }
   }
 }

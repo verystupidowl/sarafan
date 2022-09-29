@@ -3,7 +3,7 @@ import messagesApi from "../../api/Messages";
 export default {
     state: {
         messages,
-        error: {}
+        messageError: null
     },
     getters: {
         sortedMessages: state => selected => {
@@ -18,8 +18,8 @@ export default {
                     return (state.messages || []).sort((a, b) => -(a.comments.length - b.comments.length) || -(a.id - b.id));
             }
         },
-        errorGetter: state => {
-            return state.error;
+        messageErrorGetter: state => {
+            return state.messageError;
         }
     },
     mutations: {
@@ -49,37 +49,51 @@ export default {
             }
         },
         errorMessageMutation: (state, err) => {
-            state.error = err;
+            state.messageError = err;
+            setTimeout(() => state.messageError = null, 3000);
         }
     },
     actions: {
         addMessageAction({commit, state}, message) {
-            messagesApi.add(message).then(result => {
-                result.json().then(data => {
-                    const index = state.messages.findIndex(item => item.id === data.id);
-                    if (index > -1) {
-                        commit('updateMessageMutation', data);
-                    } else {
-                        commit('addMessageMutation', data);
-                    }
+            messagesApi.add(message)
+                .then(result => {
+                    result.json()
+                        .then(data => {
+                            const index = state.messages.findIndex(item => item.id === data.id);
+                            if (index > -1) {
+                                commit('updateMessageMutation', data);
+                            } else {
+                                commit('addMessageMutation', data);
+                            }
+                        });
+                }, err => {
+                    err.json()
+                        .then(errorData => {
+                            commit('errorMessageMutation', {
+                                status: err.status,
+                                message: errorData.message,
+                                timestamp: errorData.timestamp
+                            });
+                        });
                 });
-            }, err => {
-                err.json().then(errorData => {
-                    commit('errorMessageMutation', {
-                        status: err.status,
-                        message: errorData.message,
-                        timestamp: errorData.timestamp
-                    });
-                })
-            });
-            setTimeout(() => state.error = null, 3000);
         },
-        async updateMessageAction({commit}, message) {
-            const result = await messagesApi.update(message);
-            if (result.ok) {
-                const data = await result.json();
-                commit('updateMessageMutation', data);
-            }
+        updateMessageAction({commit}, message) {
+            messagesApi.update(message)
+                .then(result =>
+                        result.json()
+                            .then(data =>
+                                commit('updateMessageMutation', data)
+                            ),
+                    err => {
+                        err.json()
+                            .then(errorData => {
+                                commit('errorMessageMutation', {
+                                    status: err.status,
+                                    message: errorData.message,
+                                    timestamp: errorData.timestamp
+                                });
+                            });
+                    });
         },
         async removeMessageAction({commit}, message) {
             const result = await messagesApi.remove(message.id);
