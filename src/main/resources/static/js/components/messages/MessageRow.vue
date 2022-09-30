@@ -15,6 +15,7 @@
       <v-btn icon @click="del" small>
         <v-icon>delete</v-icon>
       </v-btn>
+      <div v-if="message.edited" class="edited">Edited</div>
     </v-card-actions>
     <comment-list :comments="message.comments" :message-id="message.id"></comment-list>
   </v-card>
@@ -42,5 +43,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.edited {
+  margin-left: auto;
+  padding-right: 40px;
+  color: #7d7f7d;
+  display: flex;
+  text-align: right;
+}
 </style>

@@ -20,6 +20,7 @@ import java.util.List;
 @Getter
 @Setter
 public class Message {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView(Views.Id.class)
@@ -27,8 +28,11 @@ public class Message {
 
     @JsonView(Views.IdName.class)
     @NotEmpty(message = "Message text should not be empty!")
-    @Size(min = 1, max = 20, message = "Message text size should be between 1 and 20 characters!")
+    @Size(min = 1, max = 50, message = "Message text size should be between 1 and 50 characters!")
     private String text;
+
+    @JsonView(Views.FullMessage.class)
+    private Boolean edited;
 
     @Column(updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")

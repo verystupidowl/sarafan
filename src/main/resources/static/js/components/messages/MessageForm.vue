@@ -20,6 +20,7 @@
 <script>
 import {mapActions} from "vuex";
 import Error from "../error/Error.vue";
+
 export default {
   name: "message-form",
   props: ['messageAttr'],

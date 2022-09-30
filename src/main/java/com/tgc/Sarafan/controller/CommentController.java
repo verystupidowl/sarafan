@@ -35,7 +35,6 @@ public class CommentController {
     @PostMapping
     @JsonView(Views.FullComment.class)
     public CommentDto create(@RequestBody @Valid CommentDto comment, BindingResult bindingResult, @AuthenticationPrincipal User user) {
-        System.out.println(comment);
         if (!bindingResult.hasErrors())
             return commentService.create(comment, user);
         else {

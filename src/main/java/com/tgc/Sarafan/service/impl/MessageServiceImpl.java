@@ -63,19 +63,21 @@ public class MessageServiceImpl implements MessageService {
     @Override
     @Transactional
     public Message update(Message messageFromDb, Message message) throws IOException {
-        messageFromDb.setText(message.getText());
-        fillMeta(messageFromDb);
-        Message updatedMessage = messageRepository.save(messageFromDb);
+        String messageText = message.getText();
+        String messageFromDbText = messageFromDb.getText();
 
-        webSocketSender.accept(EventType.UPDATE, updatedMessage);
-
-        return updatedMessage;
+        if (messageText.equals(messageFromDbText)) {
+            return messageFromDb;
+        } else {
+            return getUpdatedMessage(messageFromDb, message);
+        }
     }
 
     @Override
     @Transactional
     public Message create(Message message, User user) throws IOException {
         message.setCreationDate(LocalDateTime.now());
+        message.setEdited(false);
         fillMeta(message);
         message.setAuthor(user);
         Hibernate.initialize(user.getSubscribers());
@@ -103,6 +105,16 @@ public class MessageServiceImpl implements MessageService {
                 pageable.getPageNumber(),
                 page.getTotalPages()
         );
+    }
+
+    private Message getUpdatedMessage(Message messageFromDb, Message message) throws IOException {
+        messageFromDb.setText(message.getText());
+        messageFromDb.setEdited(true);
+        fillMeta(messageFromDb);
+        Message updatedMessage = messageRepository.save(messageFromDb);
+
+        webSocketSender.accept(EventType.UPDATE, updatedMessage);
+        return updatedMessage;
     }
 
     private void fillMeta(Message message) throws IOException {

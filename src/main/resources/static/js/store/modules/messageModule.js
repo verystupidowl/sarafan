@@ -54,7 +54,7 @@ export default {
         }
     },
     actions: {
-        addMessageAction({commit, state}, message) {
+        addMessageAction: ({commit, state}, message) => {
             messagesApi.add(message)
                 .then(result => {
                     result.json()
@@ -77,7 +77,7 @@ export default {
                         });
                 });
         },
-        updateMessageAction({commit}, message) {
+        updateMessageAction: ({commit}, message) => {
             messagesApi.update(message)
                 .then(result =>
                         result.json()
