@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-toolbar app>
-      <v-toolbar-title>Sarafan</v-toolbar-title>
+      <v-toolbar-title @click="showRecommendations">Sarafan</v-toolbar-title>
       <v-btn v-if="profile" flat :disabled="$route.path === '/'" @click="showMessages">
         Messages
       </v-btn>
@@ -39,6 +39,9 @@ export default {
     showProfile() {
       this.$router.push('/user');
     },
+    showRecommendations() {
+      this.$router.push('/users');
+    }
   },
   created() {
     addHandler(data => {

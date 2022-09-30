@@ -15,4 +15,6 @@ public interface ProfileService {
 
     User findById(String id);
 
+    List<User> findAll();
+
 }

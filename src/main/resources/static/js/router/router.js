@@ -5,6 +5,7 @@ import Auth from "../pages/Auth.vue";
 import Profile from "../pages/Profile.vue";
 import Subscriptions from "../pages/Subscriptions.vue";
 import NotFound from "../pages/PageNotFound.vue";
+import AllUsers from "../pages/AllUsers.vue";
 
 Vue.use(VueRouter);
 
@@ -13,6 +14,7 @@ const routes = [
     {path: '/auth', component: Auth},
     {path: '/user/:id?', component: Profile},
     {path: '/subscriptions/:id', component: Subscriptions},
+    {path: '/users', component: AllUsers},
     {path: '*', component: NotFound},
 ];
 

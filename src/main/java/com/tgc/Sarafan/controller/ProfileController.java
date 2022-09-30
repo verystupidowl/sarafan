@@ -26,6 +26,12 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
+    @GetMapping("get-all")
+    @JsonView(Views.FullProfile.class)
+    public List<User> getUsers() {
+        return profileService.findAll();
+    }
+
     @GetMapping("{id}")
     @JsonView(Views.FullProfile.class)
     public User get(@PathVariable String id) {

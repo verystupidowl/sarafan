@@ -26,6 +26,12 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     @Transactional
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    @Transactional
     public User changeSubscription(User channel, User subscriber) {
         List<UserSubscription> subscriptions = channel.getSubscribers()
                 .stream()
