@@ -110,6 +110,7 @@ public class MessageServiceImpl implements MessageService {
     private Message getUpdatedMessage(Message messageFromDb, Message message) throws IOException {
         messageFromDb.setText(message.getText());
         messageFromDb.setEdited(true);
+        messageFromDb.setEditedDate(LocalDateTime.now());
         fillMeta(messageFromDb);
         Message updatedMessage = messageRepository.save(messageFromDb);
 

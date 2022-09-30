@@ -18,7 +18,7 @@
         </v-btn>
       </div>
     </v-card-actions>
-    <div v-if="message.edited" class="edited">Edited</div>
+    <div v-if="message.edited" class="edited" :title="'Edited At: ' + message.editedDate">Edited</div>
     <comment-list :comments="message.comments" :message-id="message.id"></comment-list>
   </v-card>
 </template>
@@ -50,7 +50,7 @@ export default {
 .edited {
   margin-left: auto;
   float: right;
-  padding-right: 40px;
+  padding-right: 50px;
   color: #7d7f7d;
   display: flex;
   text-align: right;
