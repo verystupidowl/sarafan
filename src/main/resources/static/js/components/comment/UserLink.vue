@@ -1,8 +1,5 @@
 <template>
-  <router-link style="text-decoration: none; color: rgba(0, 0, 0, 0.87)" :to="`/user/${user.id}`" class="px-3">
-    <!--        <v-avatar v-if="message.author && message.author.userpic" size="36px">-->
-    <!--          <img :src="message.author.userpic" :alt="authorName"/>-->
-    <!--        </v-avatar>-->
+  <router-link style="text-decoration: none; color: rgba(0, 0, 0, 0.87)" :to="`/user/${user.id}`" :class="`${className || 'px-3'}`">
     <v-avatar :color="avatarColor" :size="`${size || 36}px`">
       <v-icon dark>account_circle</v-icon>
     </v-avatar>
@@ -13,7 +10,7 @@
 <script>
 export default {
   name: "UserLink",
-  props: ['user', 'size'],
+  props: ['user', 'size', 'className'],
   computed: {
     userName() {
       return this.user ? this.user.name : 'Unknown';

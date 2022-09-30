@@ -18,37 +18,33 @@ import java.util.Set;
 @Table(name = "usr")
 @Getter
 @Setter
+@ToString
 public class User implements Serializable {
 
-    @ToString.Include
     @Id
     @Column(nullable = false)
     @JsonView(Views.IdName.class)
     private String id;
 
-    @ToString.Include
     @JsonView(Views.IdName.class)
     private String name;
 
-    @ToString.Include
     @JsonView(Views.IdName.class)
     private String userpic;
 
-    @ToString.Include
     private String email;
 
-    @ToString.Include
+
     @JsonView(Views.FullProfile.class)
     private String gender;
 
-    @ToString.Include
     @JsonView(Views.FullProfile.class)
     private String locale;
 
-    @ToString.Include
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonView(Views.FullProfile.class)
+    @ToString.Exclude
     private LocalDateTime lastVisit;
 
 
@@ -58,6 +54,7 @@ public class User implements Serializable {
             orphanRemoval = true,
             fetch = FetchType.EAGER
     )
+    @ToString.Exclude
     private Set<UserSubscription> subscriptions = new HashSet<>();
 
     @JsonView(Views.FullProfile.class)
@@ -67,6 +64,7 @@ public class User implements Serializable {
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
+    @ToString.Exclude
     private Set<UserSubscription> subscribers = new HashSet<>();
 
     @Override

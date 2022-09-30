@@ -11,7 +11,7 @@
 
 <script>
 import AllUsers from "../api/allUsers";
-import ProfileItem from "../components/recommendations/ProfileItem.vue";
+import ProfileItem from "../components/profile/ProfileItem.vue";
 
 export default {
   name: "AllUsers",

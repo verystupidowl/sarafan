@@ -6,9 +6,6 @@
             :user="profile"
             size="48"
         ></user-link>
-<!--        <div class="pt-3">-->
-<!--          {{ profile.name }}-->
-<!--        </div>-->
       </v-card-text>
     </v-card>
   </div>

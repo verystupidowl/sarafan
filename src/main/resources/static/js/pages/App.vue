@@ -19,15 +19,20 @@
     <v-content>
       <router-view></router-view>
     </v-content>
+    <notification v-if="notification" :notification="notification" :alert="alert"/>
   </v-app>
 </template>
 
 <script>
 import {mapMutations, mapState} from 'vuex';
 import {addHandler} from "../utils/ws";
+import Notification from "../components/Notification.vue";
 
 export default {
   computed: mapState(['profile']),
+  components: {
+    Notification
+  },
   methods: {
     ...mapMutations(['addCommentMutation',
       'addMessageMutation',
@@ -41,6 +46,12 @@ export default {
     },
     showRecommendations() {
       this.$router.push('/users');
+    }
+  },
+  data() {
+    return {
+      alert: false,
+      notification: null
     }
   },
   created() {
@@ -66,6 +77,21 @@ export default {
             break;
           default:
             console.error(`Looks like the event type if unknown "${data.wsEventType}"`);
+        }
+      } else if (data.objectType === 'NOTIFICATION') {
+        switch (data.wsEventType) {
+          case 'CREATE':
+            if (data.body.channelId === this.$store.state.profile.id) {
+              this.alert = true;
+              this.notification = data.body;
+              setTimeout(() => {
+                this.alert = false;
+                this.notification = null;
+              }, 10000);
+            }
+            break;
+          default:
+            console.error(`Looks like the event type if unknown "${data.wsEventType}"`)
         }
       } else {
         console.error(`Looks like the object type if unknown "${data.objectType}"`);
