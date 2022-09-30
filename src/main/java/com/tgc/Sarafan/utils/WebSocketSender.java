@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.tgc.Sarafan.dto.EventType;
 import com.tgc.Sarafan.dto.ObjectType;
 import com.tgc.Sarafan.dto.WsEventDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,7 @@ public class WebSocketSender {
     private final SimpMessagingTemplate template;
     private final ObjectMapper mapper;
 
-
+    @Autowired
     public WebSocketSender(SimpMessagingTemplate template, ObjectMapper mapper) {
         this.template = template;
         this.mapper = mapper;
@@ -38,7 +39,7 @@ public class WebSocketSender {
             }
 
             template.convertAndSend(
-                    "/topic/activity",
+                    "/messages-comments/activity",
                     new WsEventDto(objectType, eventType, value)
             );
         };
