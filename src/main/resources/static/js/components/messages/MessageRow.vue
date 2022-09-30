@@ -10,13 +10,15 @@
       </div>
     </v-card-text>
     <media v-if="message.link" :message="message"></media>
-    <v-card-actions v-if="message.author.id === this.$store.state.profile.id">
-      <v-btn value="Edit" @click="edit" small flat round>Edit</v-btn>
-      <v-btn icon @click="del" small>
-        <v-icon>delete</v-icon>
-      </v-btn>
-      <div v-if="message.edited" class="edited">Edited</div>
+    <v-card-actions>
+      <div v-if="message.author.id === this.$store.state.profile.id">
+        <v-btn value="Edit" @click="edit" small flat round>Edit</v-btn>
+        <v-btn icon @click="del" small>
+          <v-icon>delete</v-icon>
+        </v-btn>
+      </div>
     </v-card-actions>
+    <div v-if="message.edited" class="edited">Edited</div>
     <comment-list :comments="message.comments" :message-id="message.id"></comment-list>
   </v-card>
 </template>
@@ -44,11 +46,14 @@ export default {
 </script>
 
 <style scoped>
+
 .edited {
   margin-left: auto;
+  float: right;
   padding-right: 40px;
   color: #7d7f7d;
   display: flex;
   text-align: right;
 }
+
 </style>
