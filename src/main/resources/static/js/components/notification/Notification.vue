@@ -10,7 +10,7 @@
       >
         <v-flex>
           <strong>
-            <user-link :user="user" class-name="" size="24"></user-link>
+            <user-link :user="user" class-name="" size="24"/>
           </strong>
           <span style="color: rgba(0, 0, 0, 0.87)">{{ actionText }}</span>
           <v-btn @click="changeSubscription">{{ isSubscribed ? 'Dismiss' : 'Approve' }}</v-btn>

@@ -2,7 +2,7 @@
   <v-list-tile>
     <user-link
         :user="comment.author"
-    ></user-link>
+    />
     <v-list-tile-content class="pl-3">
       <v-list-tile-title>{{ comment.text }}</v-list-tile-title>
     </v-list-tile-content>

@@ -12,7 +12,7 @@
                    :key="message.id"
                    :message="message"
                    :editMessage="editMessage"/>
-      <lazy-loader></lazy-loader>
+      <lazy-loader/>
     </v-layout>
   </v-container>
 </template>

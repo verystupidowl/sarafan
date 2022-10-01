@@ -5,7 +5,7 @@
         <user-link
             :user="profile"
             size="48"
-        ></user-link>
+        />
       </v-card-text>
     </v-card>
   </div>

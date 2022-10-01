@@ -6,10 +6,10 @@
     <template v-for="(item, index) in comments">
       <v-divider v-if="index > 0" :key="item.id">
       </v-divider>
-      <comment-item :comment="item" :key="'item' + index"></comment-item>
+      <comment-item :comment="item" :key="'item' + index"/>
     </template>
 
-    <comment-form :message-id="messageId"></comment-form>
+    <comment-form :message-id="messageId"/>
   </v-list>
 </template>
 

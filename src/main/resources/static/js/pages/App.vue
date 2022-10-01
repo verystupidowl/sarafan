@@ -17,7 +17,7 @@
       </v-btn>
     </v-toolbar>
     <v-content>
-      <router-view></router-view>
+      <router-view/>
     </v-content>
     <notification-list
         :notification-action-text="notificationActionText"

@@ -4,12 +4,12 @@
       <user-link
           :user="message.author"
           size="48"
-      ></user-link>
+      />
       <div class="pt-3">
         {{ message.text }}
       </div>
     </v-card-text>
-    <media v-if="message.link" :message="message"></media>
+    <media v-if="message.link" :message="message"/>
     <v-card-actions>
       <div v-if="message.author.id === this.$store.state.profile.id">
         <v-btn value="Edit" @click="edit" small flat round>Edit</v-btn>
@@ -19,7 +19,7 @@
       </div>
     </v-card-actions>
     <div v-if="message.edited" class="edited" :title="'Edited At: ' + message.editedDate">Edited</div>
-    <comment-list :comments="message.comments" :message-id="message.id"></comment-list>
+    <comment-list :comments="message.comments" :message-id="message.id"/>
   </v-card>
 </template>
 
