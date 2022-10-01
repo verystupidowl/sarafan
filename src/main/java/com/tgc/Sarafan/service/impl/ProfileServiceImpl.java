@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.function.BiConsumer;
 
@@ -55,6 +56,7 @@ public class ProfileServiceImpl implements ProfileService {
             channel.getSubscribers().add(subscription);
 
             NotificationDto dto = new NotificationDto(
+                    new Date().getTime(),
                     subscriber.getName(),
                     channel.getId(),
                     subscriber.getId(),

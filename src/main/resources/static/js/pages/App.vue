@@ -19,25 +19,36 @@
     <v-content>
       <router-view></router-view>
     </v-content>
-    <notification v-if="notification" :notification="notification" :alert="alert"/>
+    <notification-list
+        :notification-action-text="notificationActionText"
+        :notifications="notifications"
+        @close-notification="closeNotification"
+    />
   </v-app>
 </template>
 
 <script>
-import {mapMutations, mapState} from 'vuex';
+import {mapGetters, mapMutations, mapState} from 'vuex';
 import {addHandler} from "../utils/ws";
-import Notification from "../components/Notification.vue";
+import NotificationList from "../components/notification/NotificationList.vue";
 
 export default {
-  computed: mapState(['profile']),
+  computed: {
+    ...mapState(['profile']),
+    ...mapGetters(['notificationsGetter']),
+    notifications() {
+      return this.notificationsGetter;
+    }
+  },
   components: {
-    Notification
+    NotificationList,
   },
   methods: {
     ...mapMutations(['addCommentMutation',
       'addMessageMutation',
       'updateMessageMutation',
       'removeMessageMutation']),
+    ...mapMutations(['addNotificationMutation', 'removeNotificationMutation']),
     showMessages() {
       this.$router.push('/');
     },
@@ -46,12 +57,14 @@ export default {
     },
     showRecommendations() {
       this.$router.push('/users');
-    }
+    },
+    closeNotification(notification) {
+      this.removeNotificationMutation(notification);
+    },
   },
   data() {
     return {
-      alert: false,
-      notification: null
+      notificationActionText: '',
     }
   },
   created() {
@@ -82,12 +95,10 @@ export default {
         switch (data.wsEventType) {
           case 'CREATE':
             if (data.body.channelId === this.$store.state.profile.id) {
-              this.alert = true;
-              this.notification = data.body;
-              setTimeout(() => {
-                this.alert = false;
-                this.notification = null;
-              }, 10000);
+              const notification = data.body;
+              this.addNotificationMutation(notification);
+              this.notificationActionText = 'subscribed to you';
+              setTimeout(() => this.closeNotification(notification), 10000);
             }
             break;
           default:

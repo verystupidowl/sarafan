@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 public class NotificationDto {
 
+    private Long creationDate;
     private String username;
     private String channelId;
-    private String subscriberId;
+    private String authorId;
     private String userpic;
-    private NotificationType type;
+    private NotificationType notificationType;
 }
