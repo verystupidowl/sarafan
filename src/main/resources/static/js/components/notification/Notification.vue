@@ -6,7 +6,11 @@
           class="alert"
           :value="notification"
           color="white"
-          :style="`bottom: ${20 * notificationsLength}px; ` + (!hover ? 'box-shadow: 3px 3px 3px darkgrey;' : 'box-shadow: 3px 3px 3px 3px darkgrey;')"
+          :style="
+          `bottom: ${20 + 20 * notificationsLength}px; `
+          + `right: ${notificationsLength === 0 ? '-250' : '50'}px; `
+          + (!hover ? 'box-shadow: 3px 3px 3px darkgrey;' : 'box-shadow: 3px 3px 3px 3px darkgrey;')"
+          id="alert"
       >
         <v-flex>
           <strong>
@@ -45,6 +49,10 @@ export default {
       },
     }
   },
+  mounted() {
+    const alert = document.getElementById('alert');
+    setTimeout(() => alert.classList.add('created'), 1);
+  },
   computed: {
     avatarColor() {
       const colors = ['pink', 'purple', 'deep-purple',
@@ -54,6 +62,7 @@ export default {
 
     notificationsLength() {
       const multiply = this.index === 0 ? 1 : 5;
+      console.log(this.index * multiply)
       return this.index * multiply;
     }
   },
@@ -76,7 +85,11 @@ export default {
   text-align: right;
   float: right;
   position: fixed;
-  right: 50px;
   box-shadow: 3px 3px 3px darkgrey;
+}
+
+.alert.created {
+  transform: translateX(-300px);
+  transition: all .3s ease-in-out;
 }
 </style>

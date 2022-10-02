@@ -7,12 +7,11 @@
               :user="item.subscriber"
               size="24"
           />
-          <v-btn
-              @click="changeSubscriptionStatus(item.subscriber.id)"
-          >
+          <v-btn @click="changeSubscriptionStatus(item.subscriber.id)">
             {{ item.active ? "Dismiss" : "Approve" }}
           </v-btn>
         </v-list-tile>
+        <h2 v-if="subscriptions.length === 0">You have no subscribers &#128532;</h2>
       </v-list>
     </v-layout>
   </v-container>
