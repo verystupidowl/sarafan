@@ -28,6 +28,7 @@
 <script>
 import profileApi from "../../api/profile";
 import UserLink from "../comment/UserLink.vue";
+
 export default {
   name: "Notification",
   props: [
@@ -50,7 +51,7 @@ export default {
     }
   },
   mounted() {
-    setTimeout(() => this.className = 'created', 1);
+    this.className = 'created'
   },
   computed: {
     avatarColor() {
@@ -62,7 +63,10 @@ export default {
       const multiply = this.index === 0 ? 1 : 5;
       console.log(this.index * multiply)
       return this.index * multiply;
-    }
+    },
+    async upName() {
+      return `up-${this.index + 1}`;
+    },
   },
   methods: {
     async changeSubscription() {
@@ -71,7 +75,7 @@ export default {
     },
     closeNotification(notification) {
       this.$emit('close-notification', notification);
-    }
+    },
   }
 }
 </script>
@@ -83,11 +87,61 @@ export default {
   text-align: right;
   float: right;
   position: fixed;
-  bottom: 20px;
   box-shadow: 3px 3px 3px darkgrey;
 }
+
 .alert.created {
   transform: translateX(-300px);
-  transition: all .3s ease-in-out;
+  transition: 1s ease-in-out;
+  -webkit-animation: fadein .3s ease-in-out;
+  -moz-animation: fadein .1s ease-in-out;
+  -ms-animation: fadein .1s ease-in-out;
+  -o-animation: fadein .1s ease-in-out;
+  animation: fadein .1s ease-in-out;
+}
+
+@keyframes fadein {
+  from {
+    opacity: .3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes fadein {
+  from {
+    opacity: .3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadein {
+  from {
+    opacity: .3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes fadein {
+  from {
+    opacity: .3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes fadein {
+  from {
+    opacity: .3;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>
