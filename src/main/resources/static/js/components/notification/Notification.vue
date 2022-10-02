@@ -3,7 +3,7 @@
     <v-hover>
       <v-alert
           slot-scope="{hover}"
-          class="alert"
+          :class="'alert ' + `${notificationsLength === 0 ? className : ''}`"
           :value="notification"
           color="white"
           :style="
@@ -28,7 +28,6 @@
 <script>
 import profileApi from "../../api/profile";
 import UserLink from "../comment/UserLink.vue";
-
 export default {
   name: "Notification",
   props: [
@@ -47,11 +46,11 @@ export default {
         id: this.notification.authorId,
         name: this.notification.username
       },
+      className: '',
     }
   },
   mounted() {
-    const alert = document.getElementById('alert');
-    setTimeout(() => alert.classList.add('created'), 1);
+    setTimeout(() => this.className = 'created', 1);
   },
   computed: {
     avatarColor() {
@@ -59,7 +58,6 @@ export default {
         'indigo', 'blue', 'cyan', 'teal', 'orange', 'yellow', 'amber'];
       return colors[Math.floor(Math.random() * (9 + 1))];
     },
-
     notificationsLength() {
       const multiply = this.index === 0 ? 1 : 5;
       console.log(this.index * multiply)
@@ -85,9 +83,9 @@ export default {
   text-align: right;
   float: right;
   position: fixed;
+  bottom: 20px;
   box-shadow: 3px 3px 3px darkgrey;
 }
-
 .alert.created {
   transform: translateX(-300px);
   transition: all .3s ease-in-out;
