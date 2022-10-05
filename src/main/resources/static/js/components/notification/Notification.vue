@@ -7,9 +7,7 @@
         color="white"
         :style="
           `bottom: ${20 + 20 * notificationsLength}px; `
-          // + `right: ${notificationsLength === 0 ? '-250' : '50'}px; `
           + (!hover ? 'box-shadow: 3px 3px 3px darkgrey;' : 'box-shadow: 3px 3px 3px 3px darkgrey;')"
-        id="alert"
     >
       <strong>
         <user-link :user="user" class-name="" size="24"/>
@@ -50,18 +48,9 @@ export default {
     this.notificationsLength === 0 ? this.className = 'created' : this.className = '';
     setTimeout(() => this.className = 'destroyed', 9700);
   },
-  beforeDestroy() {
-    this.className = 'destroyed';
-  },
   computed: {
-    avatarColor() {
-      const colors = ['pink', 'purple', 'deep-purple',
-        'indigo', 'blue', 'cyan', 'teal', 'orange', 'yellow', 'amber'];
-      return colors[Math.floor(Math.random() * (9 + 1))];
-    },
     notificationsLength() {
       const multiply = this.index === 0 ? 1 : 5;
-      console.log(this.index * multiply)
       return this.index * multiply;
     },
   },
@@ -89,8 +78,6 @@ export default {
 }
 
 .alert.created {
-  /*transform: translateX(-300px);*/
-  /*transition: 1s ease-in-out;*/
   -webkit-animation: fadein .3s ease-in-out;
   -moz-animation: fadein .3s ease-in-out;
   -ms-animation: fadein .3s ease-in-out;
@@ -108,7 +95,7 @@ export default {
 
 @keyframes fadein {
   from {
-    opacity: .3;
+    opacity: 0;
     right: -300px;
   }
   to {
@@ -119,7 +106,7 @@ export default {
 
 @-moz-keyframes fadein {
   from {
-    opacity: .3;
+    opacity: 0;
     right: -500px;
   }
   to {
@@ -130,7 +117,7 @@ export default {
 
 @-webkit-keyframes fadein {
   from {
-    opacity: .3;
+    opacity: 0;
     right: -300px;
   }
   to {
@@ -141,7 +128,7 @@ export default {
 
 @-ms-keyframes fadein {
   from {
-    opacity: .3;
+    opacity: 0;
     right: -300px;
   }
   to {
@@ -152,7 +139,7 @@ export default {
 
 @-o-keyframes fadein {
   from {
-    opacity: .3;
+    opacity: 0;
     right: -300px;
   }
   to {
@@ -168,8 +155,8 @@ export default {
     right: 50px;
   }
   to {
-    opacity: .3;
-    right: -500px;
+    opacity: 0;
+    right: -300px;
   }
 }
 
@@ -179,8 +166,8 @@ export default {
     right: 50px;
   }
   to {
-    opacity: .3;
-    right: -500px;
+    opacity: 0;
+    right: -300px;
   }
 }
 
@@ -190,8 +177,8 @@ export default {
     right: 50px;
   }
   to {
-    opacity: .3;
-    right: -500px;
+    opacity: 0;
+    right: -300px;
   }
 }
 
@@ -201,8 +188,8 @@ export default {
     right: 50px;
   }
   to {
-    opacity: .3;
-    right: -500px;
+    opacity: 0;
+    right: -300px;
   }
 }
 
@@ -212,8 +199,8 @@ export default {
     right: 50px;
   }
   to {
-    opacity: .3;
-    right: -500px;
+    opacity: 0;
+    right: -300px;
   }
 }
 </style>

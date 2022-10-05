@@ -1,16 +1,16 @@
 <template>
-  <div>
+  <v-layout>
     <v-list v-for="(notification, index) in notifications">
-      <notification
-          :key="notification.creationDate"
-          :action-text="notificationActionText"
-          @close-notification="closeNotification"
-          v-if="index <= 6"
-          :notification="notification"
-          :index="index"
-      />
+        <notification
+            :key="notification.creationDate"
+            :action-text="notificationActionText"
+            @close-notification="closeNotification"
+            v-if="index <= 6"
+            :notification="notification"
+            :index="index"
+        />
     </v-list>
-  </div>
+  </v-layout>
 </template>
 
 <script>
@@ -35,4 +35,66 @@ export default {
 
 <style scoped>
 
+.alert-destroyed {
+  -webkit-animation: fadeOut .3s ease-in-out;
+  -moz-animation: fadeOut .3s ease-in-out;
+  -ms-animation: fadeOut .3s ease-in-out;
+  -o-animation: fadeOut .3s ease-in-out;
+  animation: fadeOut .3s ease-in-out;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    right: 50px;
+  }
+  to {
+    opacity: 0;
+    right: -300px;
+  }
+}
+
+@-moz-keyframes fadeOut {
+  from {
+    opacity: 1;
+    right: 50px;
+  }
+  to {
+    opacity: 0;
+    right: -300px;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+    right: 50px;
+  }
+  to {
+    opacity: 0;
+    right: -300px;
+  }
+}
+
+@-ms-keyframes fadeOut {
+  from {
+    opacity: 1;
+    right: 50px;
+  }
+  to {
+    opacity: 0;
+    right: -300px;
+  }
+}
+
+@-o-keyframes fadeOut {
+  from {
+    opacity: 1;
+    right: 50px;
+  }
+  to {
+    opacity: 0;
+    right: -300px;
+  }
+}
 </style>
