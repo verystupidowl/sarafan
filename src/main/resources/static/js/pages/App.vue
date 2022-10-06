@@ -12,6 +12,9 @@
           {{ profile.name }}
         </v-btn>
       </div>
+      <v-btn flat :disabled="$route.path === '/settings'" v-if="profile" icon @click="showSettings">
+        <v-icon>settings</v-icon>
+      </v-btn>
       <v-btn v-if="profile" icon href="/logout">
         <v-icon>exit_to_app</v-icon>
       </v-btn>
@@ -61,6 +64,9 @@ export default {
     closeNotification(notification) {
       this.removeNotificationMutation(notification);
     },
+    showSettings() {
+      this.$router.push('/settings');
+    }
   },
   data() {
     return {
