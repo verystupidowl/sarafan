@@ -12,7 +12,7 @@ export default {
     mutations: {
         addNotificationMutation: (state, notification) => {
             const not = state.notifications.filter(n =>
-                n.channelId === notification.channelId && n.authorId === notification.authorId && n.notificationType === notification.notificationType
+                n.recipientId === notification.recipientId && n.senderId === notification.senderId && n.notificationType === notification.notificationType
             );
             if (not.length === 0)
                 state.notifications.push(notification);

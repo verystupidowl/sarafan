@@ -11,8 +11,8 @@ public class NotificationDto {
 
     private Long creationDate;
     private String username;
-    private String channelId;
-    private String authorId;
+    private String recipientId;
+    private String senderId;
     private String userpic;
     private NotificationType notificationType;
 }

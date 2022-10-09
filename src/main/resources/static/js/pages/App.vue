@@ -100,7 +100,7 @@ export default {
       } else if (data.objectType === 'NOTIFICATION') {
         switch (data.wsEventType) {
           case 'CREATE':
-            if (data.body.channelId === this.$store.state.profile.id) {
+            if (data.body.recipientId === this.$store.state.profile.id) {
               const notification = data.body;
               this.addNotificationMutation(notification);
               this.notificationActionText = 'subscribed to you';

@@ -38,7 +38,7 @@ export default {
     return {
       isSubscribed: false,
       user: {
-        id: this.notification.authorId,
+        id: this.notification.senderId,
         name: this.notification.username
       },
       className: '',
@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     async changeSubscription() {
-      await profileApi.changeSubscriptionStatus(this.notification.authorId);
+      await profileApi.changeSubscriptionStatus(this.notification.senderId);
       this.isSubscribed = !this.isSubscribed;
     },
     closeNotification(notification) {

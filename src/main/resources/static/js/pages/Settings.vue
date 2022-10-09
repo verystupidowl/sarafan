@@ -5,8 +5,15 @@
         <h2>Settings</h2>
         <v-layout row justify-space-between>
           <v-layout column>
-            <v-flex>First setting</v-flex>
-            <v-flex>Second setting</v-flex>
+            <v-flex>
+              <form>
+                <input type="checkbox" id="notification-subscription-checkbox" v-model="notificationSubscription">
+              </form>
+              Notification of subscriptions
+            </v-flex>
+            <v-flex>
+              <h4>Second setting</h4>
+            </v-flex>
           </v-layout>
         </v-layout>
       </v-flex>
@@ -16,10 +23,21 @@
 
 <script>
 export default {
-  name: "Settings"
+  name: "Settings",
+  data() {
+    return{
+      notificationSubscription: false
+    }
+  }
 }
 </script>
 
 <style scoped>
-
+#notification-subscription-checkbox {
+  margin-left: auto;
+  text-align: right;
+  float: right;
+  right: 100px;
+  box-shadow: 3px 3px 3px darkgrey;
+}
 </style>
