@@ -11,7 +11,7 @@
             {{ item.active ? "Dismiss" : "Approve" }}
           </v-btn>
         </v-list-tile>
-        <h2 v-if="subscriptions.length === 0">You have no subscribers &#128532;</h2>
+        <h2 v-if="subscriptions.length === 0">You have no subscribers &#128578;</h2>
       </v-list>
     </v-layout>
   </v-container>
