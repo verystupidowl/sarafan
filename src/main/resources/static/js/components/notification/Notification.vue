@@ -12,7 +12,7 @@
       <strong>
         <user-link :user="user" class-name="" size="24"/>
       </strong>
-      <span style="color: rgba(0, 0, 0, 0.87)">{{ notification.notificationType === 'SUBSCRIBE' ? 'subscribed to you' : 'posted a new message' }}</span>
+      <span style="color: rgba(0, 0, 0, 0.87)">{{ notificationText }}</span>
       <v-btn @click="clickAction">{{ bntText }}</v-btn>
       <v-btn class="shrink" fab small round @click="closeNotification">&#10006;</v-btn>
     </v-alert>
@@ -22,7 +22,6 @@
 <script>
 import profileApi from "../../api/profile";
 import UserLink from "../comment/UserLink.vue";
-import notifications from "../../api/notifications";
 
 export default {
   name: "Notification",
@@ -57,8 +56,17 @@ export default {
     bntText() {
       if (this.notification.notificationType === 'SUBSCRIBE') {
         return this.isSubscribed ? 'Dismiss' : 'Approve';
-      } else if (this.notification.notificationType === 'NEW_POSTS') {
+      } else if (this.notification.notificationType === 'NEW_POSTS' || this.notification.notificationType === 'COMMENT_ANSWER') {
         return 'Check';
+      }
+    },
+    notificationText() {
+      if (this.notification.notificationType === 'SUBSCRIBE') {
+        return 'subscribed to you';
+      } else if (this.notification.notificationType === 'NEW_POSTS') {
+        return 'posted a new message';
+      } else if (this.notification.notificationType === 'COMMENT_ANSWER') {
+        return 'replied to your message';
       }
     }
   },

@@ -22,8 +22,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public User findById(String id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new UserWithIdNotFoundException("User with this is not found"));
-        Hibernate.initialize(user.getSubscriptions());
-        return user;
+        return userRepository.findById(id).orElseThrow(() -> new UserWithIdNotFoundException("User with this is not found"));
     }
 }

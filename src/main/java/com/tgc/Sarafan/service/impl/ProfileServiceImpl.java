@@ -56,16 +56,7 @@ public class ProfileServiceImpl implements ProfileService {
             subscription.setChannel(channel);
             channel.getSubscribers().add(subscription);
 
-            NotificationDto dto = new NotificationDto(
-                    new Date().getTime(),
-                    subscriber.getName(),
-                    Collections.singletonList(channel.getId()),
-                    subscriber.getId(),
-                    subscriber.getUserpic(),
-                    NotificationType.SUBSCRIBE
-            );
-
-            wsSender.accept(EventType.CREATE, dto);
+            sendToWs(channel, subscriber);
         } else {
             subscriptions.forEach(channel.getSubscribers()::remove);
         }
@@ -98,5 +89,18 @@ public class ProfileServiceImpl implements ProfileService {
     public User changeNotifications(User user, User userFromDb) {
         userFromDb.setNotificationTypes(user.getNotificationTypes());
         return userRepository.save(userFromDb);
+    }
+
+    private void sendToWs(User channel, User subscriber) {
+        NotificationDto dto = new NotificationDto(
+                new Date().getTime(),
+                subscriber.getName(),
+                Collections.singletonList(channel.getId()),
+                subscriber.getId(),
+                subscriber.getUserpic(),
+                NotificationType.SUBSCRIBE
+        );
+
+        wsSender.accept(EventType.CREATE, dto);
     }
 }

@@ -30,7 +30,6 @@ export default {
     },
     actions: {
         async changeNotificationAction({state, commit}, notifications) {
-            console.log(notifications)
             const user = {
                 id: store.state.profile.id,
                 notificationTypes: notifications

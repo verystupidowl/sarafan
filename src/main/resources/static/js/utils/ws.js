@@ -21,6 +21,11 @@ export function connect(profile) {
                 handlers.forEach(handler => handler(JSON.parse(message.body)));
             });
         }
+        if (profile.notificationTypes.findIndex(type => type === 'COMMENT_ANSWER') !== -1) {
+            stompClient.subscribe('/notification-comment_answer/activity', message => {
+                handlers.forEach(handler => handler(JSON.parse(message.body)));
+            });
+        }
         stompClient.subscribe('/messages-comments/activity', message => {
             handlers.forEach(handler => handler(JSON.parse(message.body)));
         });

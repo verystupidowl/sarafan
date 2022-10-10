@@ -3,7 +3,6 @@
     <v-list v-for="(notification, index) in notifications">
         <notification
             :key="notification.creationDate"
-            :action-text="notificationActionText"
             @close-notification="closeNotification"
             v-if="index <= 6"
             :notification="notification"
@@ -20,7 +19,6 @@ export default {
   name: "NotificationList",
   props: [
     'notifications',
-    'notificationActionText',
   ],
   components: {
     Notification
@@ -34,14 +32,6 @@ export default {
 </script>
 
 <style scoped>
-
-.alert-destroyed {
-  -webkit-animation: fadeOut .3s ease-in-out;
-  -moz-animation: fadeOut .3s ease-in-out;
-  -ms-animation: fadeOut .3s ease-in-out;
-  -o-animation: fadeOut .3s ease-in-out;
-  animation: fadeOut .3s ease-in-out;
-}
 
 @keyframes fadeOut {
   from {

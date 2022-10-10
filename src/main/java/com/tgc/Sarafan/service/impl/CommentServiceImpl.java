@@ -4,28 +4,34 @@ import com.tgc.Sarafan.domain.Comment;
 import com.tgc.Sarafan.domain.Message;
 import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.domain.Views;
-import com.tgc.Sarafan.dto.CommentDto;
-import com.tgc.Sarafan.dto.EventType;
-import com.tgc.Sarafan.dto.ObjectType;
+import com.tgc.Sarafan.dto.*;
 import com.tgc.Sarafan.repositories.CommentRepository;
+import com.tgc.Sarafan.repositories.MessageRepository;
 import com.tgc.Sarafan.service.CommentService;
 import com.tgc.Sarafan.utils.WebSocketSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.function.BiConsumer;
+
 
 @Service
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final BiConsumer<EventType, CommentDto> wsSender;
+    private final BiConsumer<EventType, NotificationDto> wsSenderAnswer;
+    private final MessageRepository messageRepository;
 
     @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository, WebSocketSender webSocketSender) {
+    public CommentServiceImpl(CommentRepository commentRepository, WebSocketSender webSocketSender, WebSocketSender webSocketSenderAnswer, MessageRepository messageRepository) {
         this.wsSender = webSocketSender.getSender(ObjectType.COMMENT, Views.FullComment.class);
         this.commentRepository = commentRepository;
+        this.wsSenderAnswer = webSocketSenderAnswer.getSender(ObjectType.NOTIFICATION, Views.FullComment.class);
+        this.messageRepository = messageRepository;
     }
 
     @Override
@@ -63,9 +69,25 @@ public class CommentServiceImpl implements CommentService {
                 commentFromDb.getAuthor()
         );
 
-        wsSender.accept(EventType.CREATE, commentDtoFromDb);
-
+        sendToWs(user, message, commentDtoFromDb);
 
         return commentDtoFromDb;
+    }
+
+    private void sendToWs(User user, Message message, CommentDto commentDtoFromDb) {
+        List<String> singletonList = Collections.singletonList(messageRepository.findById(message.getId()).get().getAuthor().getId());
+        if (!singletonList.contains(user.getId())) {
+            NotificationDto notificationDto = new NotificationDto(
+                    System.currentTimeMillis(),
+                    user.getName(),
+                    singletonList,
+                    user.getId(),
+                    user.getUserpic(),
+                    NotificationType.COMMENT_ANSWER
+            );
+            wsSenderAnswer.accept(EventType.CREATE, notificationDto);
+        }
+
+        wsSender.accept(EventType.CREATE, commentDtoFromDb);
     }
 }

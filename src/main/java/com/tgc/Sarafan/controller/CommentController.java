@@ -26,17 +26,19 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService commentService;
+    private final ProfileController profileController;
 
     @Autowired
-    public CommentController(CommentServiceImpl commentService) {
+    public CommentController(CommentServiceImpl commentService, ProfileController profileController) {
         this.commentService = commentService;
+        this.profileController = profileController;
     }
 
     @PostMapping
     @JsonView(Views.FullComment.class)
     public CommentDto create(@RequestBody @Valid CommentDto comment, BindingResult bindingResult, @AuthenticationPrincipal User user) {
         if (!bindingResult.hasErrors())
-            return commentService.create(comment, user);
+            return commentService.create(comment, profileController.get(user.getId()));
         else {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
             String errorMessage = exceptionMsgBuilder(fieldErrors);
@@ -64,7 +66,6 @@ public class CommentController {
                     .append(error.getDefaultMessage())
                     .append(";");
         }
-        System.out.println(errorMsg);
         return errorMsg.toString();
     }
 }

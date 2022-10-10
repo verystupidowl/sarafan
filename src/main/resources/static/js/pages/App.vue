@@ -23,7 +23,6 @@
       <router-view/>
     </v-content>
     <notification-list
-        :notification-action-text="notificationActionText"
         :notifications="notifications"
         @close-notification="closeNotification"
     />
@@ -66,7 +65,7 @@ export default {
     },
     showSettings() {
       this.$router.push('/settings');
-    }
+    },
   },
   data() {
     return {
@@ -103,7 +102,6 @@ export default {
             if (data.body.recipientId.findIndex(id => id === this.$store.state.profile.id) !== -1) {
               const notification = data.body;
               this.addNotificationMutation(notification);
-              this.notificationActionText = notification.notificationType === 'SUBSCRIBE' ? 'subscribed to you' : 'posted a new message';
               setTimeout(() => this.closeNotification(notification), 10000);
             }
             break;

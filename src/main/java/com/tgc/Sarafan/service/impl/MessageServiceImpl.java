@@ -79,24 +79,8 @@ public class MessageServiceImpl implements MessageService {
         message.setEdited(false);
         fillMeta(message);
         message.setAuthor(user);
-        Hibernate.initialize(user.getSubscribers());
-        Hibernate.initialize(user.getSubscriptions());
         Message updatedMessage = messageRepository.save(message);
-        webSocketSenderMessage.accept(EventType.CREATE, updatedMessage);
-        List<String> collect = userSubscriptionRepository.findBySubscriber(user)
-                .stream()
-                .filter(UserSubscription::isActive)
-                .map(UserSubscription::getChannel)
-                .map(User::getId)
-                .collect(Collectors.toList());
-        webSocketSenderNotification.accept(EventType.CREATE, new NotificationDto(
-                System.currentTimeMillis(),
-                user.getName(),
-                collect,
-                user.getId(),
-                user.getUserpic(),
-                NotificationType.NEW_POSTS
-        ));
+        sendToWs(user, updatedMessage);
         return updatedMessage;
     }
 
@@ -170,5 +154,26 @@ public class MessageServiceImpl implements MessageService {
 
     private String getContent(Element element) {
         return element == null ? "" : element.attr("content");
+    }
+
+    private void sendToWs(User user, Message updatedMessage) {
+        webSocketSenderMessage.accept(EventType.CREATE, updatedMessage);
+        List<String> collect = userSubscriptionRepository.findByChannel(user)
+                .stream()
+                .filter(UserSubscription::isActive)
+                .map(UserSubscription::getSubscriber)
+                .map(User::getId)
+                .collect(Collectors.toList());
+
+        NotificationDto notificationDto = new NotificationDto(
+                System.currentTimeMillis(),
+                user.getName(),
+                collect,
+                user.getId(),
+                user.getUserpic(),
+                NotificationType.NEW_POSTS
+        );
+
+        webSocketSenderNotification.accept(EventType.CREATE, notificationDto);
     }
 }
