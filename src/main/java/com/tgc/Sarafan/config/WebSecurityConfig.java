@@ -1,6 +1,7 @@
 package com.tgc.Sarafan.config;
 
 import com.tgc.Sarafan.domain.User;
+import com.tgc.Sarafan.dto.NotificationType;
 import com.tgc.Sarafan.repositories.UserRepository;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Configuration
 @EnableWebSecurity
@@ -41,6 +43,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 newUser.setGender((String) map.get("gender"));
                 newUser.setLocale((String) map.get("locale"));
                 newUser.setUserpic((String) map.get("picture"));
+
+                Set<NotificationType> notificationTypes = Set.of(
+                        NotificationType.SUBSCRIBE, NotificationType.NEW_POSTS
+                );
+                newUser.setNotificationTypes(notificationTypes);
 
                 return newUser;
             });

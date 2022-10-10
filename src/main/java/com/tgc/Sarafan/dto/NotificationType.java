@@ -2,5 +2,5 @@ package com.tgc.Sarafan.dto;
 
 public enum NotificationType {
 
-    SUBSCRIBE
+    SUBSCRIBE, NEW_POSTS
 }

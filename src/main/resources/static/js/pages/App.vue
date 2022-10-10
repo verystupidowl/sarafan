@@ -119,6 +119,7 @@ export default {
     if (!this.profile) {
       this.$router.replace('/auth');
     }
+    console.log(this.profile)
   }
 }
 </script>

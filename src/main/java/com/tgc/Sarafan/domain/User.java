@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.tgc.Sarafan.dto.NotificationType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -66,6 +67,16 @@ public class User implements Serializable {
     )
     @ToString.Exclude
     private Set<UserSubscription> subscribers = new HashSet<>();
+
+    @ElementCollection(targetClass = NotificationType.class)
+    @CollectionTable(name = "user_notification_types", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    @JoinTable(
+            name = "user_notification_types",
+            joinColumns = @JoinColumn(name = "user_id")
+    )
+    @ToString.Exclude
+    private Set<NotificationType> notificationTypes = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
