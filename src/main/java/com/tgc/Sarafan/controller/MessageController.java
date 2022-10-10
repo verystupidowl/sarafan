@@ -32,13 +32,15 @@ import java.util.List;
 public class MessageController {
 
     private final MessageService messageService;
+    private final ProfileController profileController;
 
     public final static int MESSAGES_PER_PAGE = 5;
 
 
     @Autowired
-    public MessageController(MessageServiceImpl messageService) {
+    public MessageController(MessageServiceImpl messageService, ProfileController profileController) {
         this.messageService = messageService;
+        this.profileController = profileController;
     }
 
     @GetMapping
@@ -57,11 +59,11 @@ public class MessageController {
         return message;
     }
 
-    @PostMapping
+    @PostMapping("{id}")
     @JsonView(Views.FullMessage.class)
     public Message create(@AuthenticationPrincipal User user, @RequestBody @Valid Message message, BindingResult bindingResult) throws IOException {
         if (!bindingResult.hasErrors()) {
-            return messageService.create(message, user);
+            return messageService.create(message, profileController.get(user.getId()));
         } else {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
             String errorMessage = exceptionMsgBuilder(fieldErrors);

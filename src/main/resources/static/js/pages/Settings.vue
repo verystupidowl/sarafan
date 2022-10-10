@@ -7,8 +7,8 @@
           <v-layout column>
 <!--            <h5>Your notification types: {{ this.$store.state.profile.notificationTypes }}</h5>-->
             <h2>Notification settings:</h2>
-            <v-checkbox class="check" v-model="selected" label="SUBSCRIBE" value="SUBSCRIBE"></v-checkbox>
-            <v-checkbox class="check" v-model="selected" label="NEW_POSTS" value="NEW_POSTS"></v-checkbox>
+            <v-checkbox class="check" v-model="selected" label="New subscribers" value="SUBSCRIBE"></v-checkbox>
+            <v-checkbox class="check" v-model="selected" label="New messages" value="NEW_POSTS"></v-checkbox>
           </v-layout>
         </v-layout>
       </v-flex>

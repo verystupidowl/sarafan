@@ -12,7 +12,12 @@ export function connect(profile) {
     stompClient.connect({}, frame => {
         console.log('Connected: ' + frame);
         if (profile.notificationTypes.findIndex(type => type === 'SUBSCRIBE') !== -1) {
-            stompClient.subscribe('/subscribe-notification/activity', message => {
+            stompClient.subscribe('/notification-subscribe/activity', message => {
+                handlers.forEach(handler => handler(JSON.parse(message.body)));
+            });
+        }
+        if (profile.notificationTypes.findIndex(type => type === 'NEW_POSTS') !== -1) {
+            stompClient.subscribe('/notification-new_posts/activity', message => {
                 handlers.forEach(handler => handler(JSON.parse(message.body)));
             });
         }

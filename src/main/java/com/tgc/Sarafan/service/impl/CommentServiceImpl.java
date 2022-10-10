@@ -12,6 +12,7 @@ import com.tgc.Sarafan.service.CommentService;
 import com.tgc.Sarafan.utils.WebSocketSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.function.BiConsumer;
 
@@ -28,6 +29,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public CommentDto create(CommentDto commentDto, User user) {
         commentDto.setAuthor(user);
 

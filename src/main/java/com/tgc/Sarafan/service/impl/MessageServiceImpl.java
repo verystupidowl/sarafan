@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,22 +39,24 @@ public class MessageServiceImpl implements MessageService {
     private static final Pattern IMAGE_REGEX = Pattern.compile(IMAGE_PATTERN, Pattern.CASE_INSENSITIVE);
 
     private final MessageRepository messageRepository;
-    private final BiConsumer<EventType, Message> webSocketSender;
+    private final BiConsumer<EventType, Message> webSocketSenderMessage;
+    private final BiConsumer<EventType, NotificationDto> webSocketSenderNotification;
     private final UserSubscriptionRepository userSubscriptionRepository;
 
     @Autowired
-    public MessageServiceImpl(MessageRepository messageRepository, WebSocketSender webSocketSender,
-                              UserSubscriptionRepository userSubscriptionRepository) {
+    public MessageServiceImpl(MessageRepository messageRepository, WebSocketSender webSocketSenderMessage,
+                              UserSubscriptionRepository userSubscriptionRepository, WebSocketSender webSocketSenderNotification) {
         this.messageRepository = messageRepository;
-        this.webSocketSender = webSocketSender.getSender(ObjectType.MESSAGE, Views.FullMessage.class);
+        this.webSocketSenderMessage = webSocketSenderMessage.getSender(ObjectType.MESSAGE, Views.FullMessage.class);
         this.userSubscriptionRepository = userSubscriptionRepository;
+        this.webSocketSenderNotification = webSocketSenderNotification.getSender(ObjectType.NOTIFICATION, Views.FullMessage.class);
     }
 
     @Override
     @Transactional
     public void delete(Message message) {
         messageRepository.delete(message);
-        webSocketSender.accept(EventType.REMOVE, message);
+        webSocketSenderMessage.accept(EventType.REMOVE, message);
     }
 
     @Override
@@ -81,7 +82,21 @@ public class MessageServiceImpl implements MessageService {
         Hibernate.initialize(user.getSubscribers());
         Hibernate.initialize(user.getSubscriptions());
         Message updatedMessage = messageRepository.save(message);
-        webSocketSender.accept(EventType.CREATE, updatedMessage);
+        webSocketSenderMessage.accept(EventType.CREATE, updatedMessage);
+        List<String> collect = userSubscriptionRepository.findBySubscriber(user)
+                .stream()
+                .filter(UserSubscription::isActive)
+                .map(UserSubscription::getChannel)
+                .map(User::getId)
+                .collect(Collectors.toList());
+        webSocketSenderNotification.accept(EventType.CREATE, new NotificationDto(
+                System.currentTimeMillis(),
+                user.getName(),
+                collect,
+                user.getId(),
+                user.getUserpic(),
+                NotificationType.NEW_POSTS
+        ));
         return updatedMessage;
     }
 
@@ -112,7 +127,7 @@ public class MessageServiceImpl implements MessageService {
         fillMeta(messageFromDb);
         Message updatedMessage = messageRepository.save(messageFromDb);
 
-        webSocketSender.accept(EventType.UPDATE, updatedMessage);
+        webSocketSenderMessage.accept(EventType.UPDATE, updatedMessage);
         return updatedMessage;
     }
 

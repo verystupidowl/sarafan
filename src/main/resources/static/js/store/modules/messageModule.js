@@ -1,4 +1,5 @@
 import messagesApi from "../../api/Messages";
+import store from "../store";
 
 export default {
     state: {
@@ -55,7 +56,7 @@ export default {
     },
     actions: {
         addMessageAction: ({commit, state}, message) => {
-            messagesApi.add(message)
+            messagesApi.add(message, store.state.profile)
                 .then(result => {
                     result.json()
                         .then(data => {

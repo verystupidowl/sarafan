@@ -12,8 +12,8 @@
       <strong>
         <user-link :user="user" class-name="" size="24"/>
       </strong>
-      <span style="color: rgba(0, 0, 0, 0.87)">{{ actionText }}</span>
-      <v-btn @click="changeSubscription">{{ isSubscribed ? 'Dismiss' : 'Approve' }}</v-btn>
+      <span style="color: rgba(0, 0, 0, 0.87)">{{ notification.notificationType === 'SUBSCRIBE' ? 'subscribed to you' : 'posted a new message' }}</span>
+      <v-btn @click="clickAction">{{ bntText }}</v-btn>
       <v-btn class="shrink" fab small round @click="closeNotification">&#10006;</v-btn>
     </v-alert>
   </v-hover>
@@ -22,6 +22,7 @@
 <script>
 import profileApi from "../../api/profile";
 import UserLink from "../comment/UserLink.vue";
+import notifications from "../../api/notifications";
 
 export default {
   name: "Notification",
@@ -53,11 +54,22 @@ export default {
       const multiply = this.index === 0 ? 1 : 5;
       return this.index * multiply;
     },
+    bntText() {
+      if (this.notification.notificationType === 'SUBSCRIBE') {
+        return this.isSubscribed ? 'Dismiss' : 'Approve';
+      } else if (this.notification.notificationType === 'NEW_POSTS') {
+        return 'Check';
+      }
+    }
   },
   methods: {
-    async changeSubscription() {
-      await profileApi.changeSubscriptionStatus(this.notification.senderId);
-      this.isSubscribed = !this.isSubscribed;
+    async clickAction() {
+      if (this.notification.notificationType === 'SUBSCRIBE') {
+        await profileApi.changeSubscriptionStatus(this.notification.senderId);
+        this.isSubscribed = !this.isSubscribed;
+      } else if (this.notification.notificationType === 'NEW_POSTS') {
+        this.$router.push('/');
+      }
     },
     closeNotification(notification) {
       this.$emit('close-notification', notification);

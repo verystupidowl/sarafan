@@ -100,10 +100,10 @@ export default {
       } else if (data.objectType === 'NOTIFICATION') {
         switch (data.wsEventType) {
           case 'CREATE':
-            if (data.body.recipientId === this.$store.state.profile.id) {
+            if (data.body.recipientId.findIndex(id => id === this.$store.state.profile.id) !== -1) {
               const notification = data.body;
               this.addNotificationMutation(notification);
-              this.notificationActionText = 'subscribed to you';
+              this.notificationActionText = notification.notificationType === 'SUBSCRIBE' ? 'subscribed to you' : 'posted a new message';
               setTimeout(() => this.closeNotification(notification), 10000);
             }
             break;

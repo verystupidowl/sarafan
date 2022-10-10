@@ -5,9 +5,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.tgc.Sarafan.dto.NotificationType;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,6 +19,8 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable {
 
     @Id
@@ -77,6 +78,10 @@ public class User implements Serializable {
     )
     @ToString.Exclude
     private Set<NotificationType> notificationTypes;
+
+    public User(String id) {
+        this.id = id;
+    }
 
     @Override
     public boolean equals(Object o) {
