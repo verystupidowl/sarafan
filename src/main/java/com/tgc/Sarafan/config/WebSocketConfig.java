@@ -12,7 +12,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/messages-comments");
+        registry.enableSimpleBroker("/subscribe-notification", "/messages-comments");
         registry.setApplicationDestinationPrefixes("/app");
     }
 

@@ -91,4 +91,11 @@ public class ProfileServiceImpl implements ProfileService {
     public User findById(String id) {
         return userRepository.findById(id).orElseThrow(() -> new UserWithIdNotFoundException("User with id " + id + " not found!"));
     }
+
+    @Override
+    @Transactional
+    public User changeNotifications(User user, User userFromDb) {
+        userFromDb.setNotificationTypes(user.getNotificationTypes());
+        return userRepository.save(userFromDb);
+    }
 }

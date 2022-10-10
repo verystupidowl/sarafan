@@ -2,6 +2,7 @@ package com.tgc.Sarafan.service;
 
 import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.domain.UserSubscription;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface ProfileService {
 
     List<User> findAll();
 
+    @Transactional
+    User changeNotifications(User user, User userFromDb);
 }

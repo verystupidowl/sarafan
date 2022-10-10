@@ -1,3 +1,6 @@
+import store from "../store";
+import notificationApi from 'api/notifications'
+
 export default {
     state: {
         notifications: [],
@@ -20,6 +23,21 @@ export default {
         removeNotificationMutation: (state, notification) => {
             const index = state.notifications.findIndex(n => n.creationDate === notification.creationDate);
             state.notifications.splice(index, 1);
+        },
+        changeNotificationMutation: (state, user) => {
+            store.state.profile = user;
         }
     },
+    actions: {
+        async changeNotificationAction({state, commit}, notifications) {
+            console.log(notifications)
+            const user = {
+                id: store.state.profile.id,
+                notificationTypes: notifications
+            }
+            const response = await notificationApi.changeNotifications(user);
+            const data = await response.json();
+            commit('changeNotificationMutation', data);
+        }
+    }
 }

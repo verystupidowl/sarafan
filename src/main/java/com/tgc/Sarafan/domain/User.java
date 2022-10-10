@@ -68,7 +68,7 @@ public class User implements Serializable {
     @ToString.Exclude
     private Set<UserSubscription> subscribers = new HashSet<>();
 
-    @ElementCollection(targetClass = NotificationType.class)
+    @ElementCollection(targetClass = NotificationType.class, fetch = FetchType.LAZY)
     @CollectionTable(name = "user_notification_types", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     @JoinTable(
@@ -76,7 +76,7 @@ public class User implements Serializable {
             joinColumns = @JoinColumn(name = "user_id")
     )
     @ToString.Exclude
-    private Set<NotificationType> notificationTypes = new HashSet<>();
+    private Set<NotificationType> notificationTypes;
 
     @Override
     public boolean equals(Object o) {

@@ -38,10 +38,17 @@ public class WebSocketSender {
                 throw new RuntimeException(e);
             }
 
-            template.convertAndSend(
-                    "/messages-comments/activity",
-                    new WsEventDto(objectType, eventType, value)
-            );
+            if (objectType.equals(ObjectType.COMMENT) || objectType.equals(ObjectType.MESSAGE)) {
+                template.convertAndSend(
+                        "/messages-comments/activity",
+                        new WsEventDto(objectType, eventType, value)
+                );
+            } else if (objectType.equals(ObjectType.NOTIFICATION)) {
+                template.convertAndSend(
+                        "/subscribe-notification/activity",
+                        new WsEventDto(objectType, eventType, value)
+                );
+            }
         };
     }
 }
