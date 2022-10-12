@@ -4,7 +4,6 @@ import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.exceptions.UserWithIdNotFoundException;
 import com.tgc.Sarafan.repositories.UserRepository;
 import com.tgc.Sarafan.service.UserService;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

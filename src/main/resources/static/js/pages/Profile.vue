@@ -21,7 +21,12 @@
               <v-divider></v-divider>
               <v-flex>Last Visit: {{ profile.lastVisit }}</v-flex>
               <v-divider></v-divider>
-              <v-flex>{{ profile.subscriptions && profile.subscriptions.length }} subscriptions</v-flex>
+              <router-link style="text-decoration: none; color: rgba(0, 0, 0, 0.87)" v-if="isMyProfile"
+                           :to="`/subscribes/${profile.id}`"
+              >
+                {{ profile.subscriptions && profile.subscriptions.length }} subscriptions
+              </router-link>
+              <v-flex v-else>{{ profile.subscriptions && profile.subscriptions.length }} subscriptions</v-flex>
               <v-divider></v-divider>
               <router-link style="text-decoration: none; color: rgba(0, 0, 0, 0.87)" v-if="isMyProfile"
                            :to="`/subscriptions/${profile.id}`">

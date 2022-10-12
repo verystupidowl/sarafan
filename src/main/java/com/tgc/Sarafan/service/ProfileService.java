@@ -20,4 +20,6 @@ public interface ProfileService {
 
     @Transactional
     User changeNotifications(User user, User userFromDb);
+
+    List<UserSubscription> getSubscriptions(User subscriber);
 }

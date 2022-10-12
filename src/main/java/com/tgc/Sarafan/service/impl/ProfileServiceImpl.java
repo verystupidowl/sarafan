@@ -91,6 +91,12 @@ public class ProfileServiceImpl implements ProfileService {
         return userRepository.save(userFromDb);
     }
 
+    @Override
+    @Transactional
+    public List<UserSubscription> getSubscriptions(User subscriber) {
+        return userSubscriptionRepository.findBySubscriber(subscriber);
+    }
+
     private void sendToWs(User channel, User subscriber) {
         NotificationDto dto = new NotificationDto(
                 new Date().getTime(),

@@ -9,7 +9,6 @@ import com.tgc.Sarafan.repositories.MessageRepository;
 import com.tgc.Sarafan.repositories.UserSubscriptionRepository;
 import com.tgc.Sarafan.service.MessageService;
 import com.tgc.Sarafan.utils.WebSocketSender;
-import org.hibernate.Hibernate;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

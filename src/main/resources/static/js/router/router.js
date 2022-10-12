@@ -7,6 +7,7 @@ import Subscriptions from "../pages/Subscriptions.vue";
 import NotFound from "../pages/PageNotFound.vue";
 import AllUsers from "../pages/AllUsers.vue";
 import Settings from "../pages/Settings.vue";
+import Subscribes from "../pages/Subscribes.vue";
 
 Vue.use(VueRouter);
 
@@ -17,6 +18,7 @@ const routes = [
     {path: '/subscriptions/:id', component: Subscriptions},
     {path: '/users', component: AllUsers},
     {path: '/settings', component: Settings},
+    {path: '/subscribes/:id', component: Subscribes},
     {path: '*', component: NotFound},
 ];
 
