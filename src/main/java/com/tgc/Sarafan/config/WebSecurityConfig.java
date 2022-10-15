@@ -3,6 +3,7 @@ package com.tgc.Sarafan.config;
 import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.dto.NotificationType;
 import com.tgc.Sarafan.repositories.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import java.time.LocalDateTime;
 import java.util.Set;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @EnableOAuth2Sso
@@ -49,10 +51,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 );
                 newUser.setNotificationTypes(notificationTypes);
 
+                log.info("User {} has signed up", newUser.getName());
+
                 return newUser;
             });
 
             user.setLastVisit(LocalDateTime.now());
+
+            log.info("User {} has signed in", user.getName());
 
             return userRepository.save(user);
         };
