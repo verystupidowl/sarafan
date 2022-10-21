@@ -24,23 +24,28 @@ import java.util.Set;
 public class User implements Serializable {
 
     @Id
-    @Column(nullable = false)
+    @Column(name = "id", nullable = false)
     @JsonView(Views.IdName.class)
     private String id;
 
+    @Column(name = "name")
     @JsonView(Views.IdName.class)
     private String name;
 
+    @Column(name = "userpic")
     @JsonView(Views.IdName.class)
     private String userpic;
 
+    @Column(name = "email")
     @Email
     private String email;
 
 
+    @Column(name = "gender")
     @JsonView(Views.FullProfile.class)
     private String gender;
 
+    @Column(name = "locale")
     @JsonView(Views.FullProfile.class)
     private String locale;
 
@@ -48,6 +53,7 @@ public class User implements Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonView(Views.FullProfile.class)
     @ToString.Exclude
+    @Column(name = "last_visit")
     private LocalDateTime lastVisit;
 
 
