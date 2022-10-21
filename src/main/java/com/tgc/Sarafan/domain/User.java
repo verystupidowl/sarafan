@@ -8,6 +8,7 @@ import com.tgc.Sarafan.dto.NotificationType;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -33,6 +34,7 @@ public class User implements Serializable {
     @JsonView(Views.IdName.class)
     private String userpic;
 
+    @Email
     private String email;
 
 

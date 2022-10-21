@@ -8,7 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table
+@Table(name = "comment")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

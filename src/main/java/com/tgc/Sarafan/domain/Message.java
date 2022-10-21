@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "message")
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
