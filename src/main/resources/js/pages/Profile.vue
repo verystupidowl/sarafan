@@ -6,7 +6,8 @@
         <v-layout row justify-space-between>
           <v-flex class="px-1">
             <v-avatar :color="avatarColor" size="106px">
-              <v-icon dark>account_circle</v-icon>
+<!--              <v-icon dark>account_circle</v-icon>-->
+              <v-img :src="profile.userpic"/>
             </v-avatar>
           </v-flex>
           <v-flex class="px-1">

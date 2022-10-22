@@ -29,7 +29,7 @@ public class MainController {
     private final MessageService messageService;
     private final UserService userService;
 
-    @Value("${spring.profile.active}")
+    @Value("${spring.profile.active:prod}")
     private String profile;
     private final ObjectWriter messageWriter;
     private final ObjectWriter profileWriter;

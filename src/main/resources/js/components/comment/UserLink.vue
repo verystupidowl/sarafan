@@ -1,8 +1,12 @@
 <template>
-  <router-link style="text-decoration: none; color: rgba(0, 0, 0, 0.87)" :to="`/user/${user.id}`" :class="`${className || 'px-3'}`">
-    <v-avatar :color="avatarColor" :size="`${size || 36}px`">
-      <v-icon dark>account_circle</v-icon>
+  <router-link style="text-decoration: none; color: rgba(0, 0, 0, 0.87)" :to="`/user/${user.id}`"
+               :class="`${className || 'px-3'}`">
+    <v-avatar :size="`${size || 36}px`">
+      <v-img :src="user.userpic"/>
     </v-avatar>
+    <!--    <v-avatar :color="avatarColor" :size="`${size || 36}px`">-->
+    <!--      <v-icon dark>account_circle</v-icon>-->
+    <!--    </v-avatar>-->
     <span class="pl-3">{{ userName }}</span>
   </router-link>
 </template>
