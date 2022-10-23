@@ -9,6 +9,9 @@
       <div>
         <v-btn flat v-if="profile" :disabled="$route.path === '/user' || $route.path === `/user/${profile.id}`"
                @click="showProfile">
+          <v-avatar class="pr-4" size="24px" v-if="$route.path !== '/user' && $route.path !== `/user/${profile.id}`">
+            <v-img :src="profile.userpic"/>
+          </v-avatar>
           {{ profile.name }}
         </v-btn>
       </div>
@@ -33,6 +36,7 @@
 import {mapGetters, mapMutations, mapState} from 'vuex';
 import {addHandler} from "../utils/ws";
 import NotificationList from "../components/notification/NotificationList.vue";
+import UserLink from "../components/comment/UserLink.vue";
 
 export default {
   computed: {
@@ -43,6 +47,7 @@ export default {
     }
   },
   components: {
+    UserLink,
     NotificationList,
   },
   methods: {

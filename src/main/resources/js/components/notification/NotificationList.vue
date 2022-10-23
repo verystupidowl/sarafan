@@ -27,7 +27,7 @@ export default {
     closeNotification(notification) {
       this.$emit('close-notification', notification);
     }
-  }
+  },
 }
 </script>
 

@@ -39,7 +39,8 @@ export default {
       isSubscribed: false,
       user: {
         id: this.notification.senderId,
-        name: this.notification.username
+        name: this.notification.username,
+        userpic: this.notification.userpic
       },
       className: '',
     }

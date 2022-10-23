@@ -5,6 +5,7 @@ import com.tgc.Sarafan.domain.Message;
 import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.domain.Views;
 import com.tgc.Sarafan.dto.*;
+import com.tgc.Sarafan.exceptions.NotFoundException;
 import com.tgc.Sarafan.repositories.CommentRepository;
 import com.tgc.Sarafan.repositories.MessageRepository;
 import com.tgc.Sarafan.service.CommentService;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 
 
@@ -75,7 +77,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     private void sendToWs(User user, Message message, CommentDto commentDtoFromDb) {
-        List<String> singletonList = Collections.singletonList(messageRepository.findById(message.getId()).get().getAuthor().getId());
+        Optional<Message> optionalMessage = messageRepository.findById(message.getId());
+        Message messageToFindAuthorId = optionalMessage.orElseThrow(NotFoundException::new);
+        List<String> singletonList = Collections.singletonList(messageToFindAuthorId.getAuthor().getId());
         if (!singletonList.contains(user.getId())) {
             NotificationDto notificationDto = new NotificationDto(
                     System.currentTimeMillis(),

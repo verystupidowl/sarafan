@@ -1,6 +1,5 @@
 import commentApi from "../../api/comment";
 import messageModule from "./messageModule";
-import store from "../store";
 
 export default {
 
