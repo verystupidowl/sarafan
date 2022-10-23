@@ -81,7 +81,6 @@ export default {
     addHandler(data => {
       if (data.objectType === 'MESSAGE') {
         if (data.body.recipientId.findIndex(id => id === this.$store.state.profile.id) !== -1) {
-          console.log(data.body)
           switch (data.wsEventType) {
             case 'CREATE':
               this.addMessageMutation(data.body.message);
