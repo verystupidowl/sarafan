@@ -80,18 +80,23 @@ export default {
   created() {
     addHandler(data => {
       if (data.objectType === 'MESSAGE') {
-        switch (data.wsEventType) {
-          case 'CREATE':
-            this.addMessageMutation(data.body);
-            break;
-          case 'UPDATE':
-            this.updateMessageMutation(data.body);
-            break;
-          case 'REMOVE':
-            this.removeMessageMutation(data.body);
-            break;
-          default:
-            console.error(`Looks like the event type if unknown "${data.eventType}"`);
+        if (data.body.recipientId.findIndex(id => id === this.$store.state.profile.id) !== -1) {
+          console.log(data.body)
+          switch (data.wsEventType) {
+            case 'CREATE':
+              this.addMessageMutation(data.body.message);
+              break;
+            case
+            'UPDATE':
+              this.updateMessageMutation(data.body);
+              break;
+            case
+            'REMOVE':
+              this.removeMessageMutation(data.body);
+              break;
+            default:
+              console.error(`Looks like the event type if unknown "${data.eventType}"`);
+          }
         }
       } else if (data.objectType === 'COMMENT') {
         switch (data.wsEventType) {

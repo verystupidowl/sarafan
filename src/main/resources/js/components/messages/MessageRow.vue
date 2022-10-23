@@ -25,7 +25,7 @@
 
 <script>
 import {mapActions} from 'vuex';
-import Media from 'components/media/Media.vue';
+import Media from '../media/Media.vue';
 import CommentList from "../../pages/CommentList.vue";
 import UserLink from "../comment/UserLink.vue";
 
@@ -41,7 +41,7 @@ export default {
     del() {
       this.removeMessageAction(this.message);
     }
-  }
+  },
 }
 </script>
 

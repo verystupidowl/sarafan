@@ -38,7 +38,7 @@ public class MessageServiceImpl implements MessageService {
     private static final Pattern IMAGE_REGEX = Pattern.compile(IMAGE_PATTERN, Pattern.CASE_INSENSITIVE);
 
     private final MessageRepository messageRepository;
-    private final BiConsumer<EventType, Message> webSocketSenderMessage;
+    private final BiConsumer<EventType, MessageDto> webSocketSenderMessage;
     private final BiConsumer<EventType, NotificationDto> webSocketSenderNotification;
     private final UserSubscriptionRepository userSubscriptionRepository;
 
@@ -55,7 +55,8 @@ public class MessageServiceImpl implements MessageService {
     @Transactional
     public void delete(Message message) {
         messageRepository.delete(message);
-        webSocketSenderMessage.accept(EventType.REMOVE, message);
+        List<String> subscribers = getSubscribers(message.getAuthor());
+        webSocketSenderMessage.accept(EventType.REMOVE, new MessageDto(message, subscribers));
     }
 
     @Override
@@ -110,7 +111,8 @@ public class MessageServiceImpl implements MessageService {
         fillMeta(messageFromDb);
         Message updatedMessage = messageRepository.save(messageFromDb);
 
-        webSocketSenderMessage.accept(EventType.UPDATE, updatedMessage);
+        List<String> subscribers = getSubscribers(messageFromDb.getAuthor());
+        webSocketSenderMessage.accept(EventType.CREATE, new MessageDto(updatedMessage, subscribers));
         return updatedMessage;
     }
 
@@ -156,13 +158,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     private void sendToWs(User user, Message updatedMessage) {
-        webSocketSenderMessage.accept(EventType.CREATE, updatedMessage);
-        List<String> collect = userSubscriptionRepository.findByChannel(user)
-                .stream()
-                .filter(UserSubscription::isActive)
-                .map(UserSubscription::getSubscriber)
-                .map(User::getId)
-                .collect(Collectors.toList());
+        List<String> collect = getSubscribers(user);
+        webSocketSenderMessage.accept(EventType.CREATE, new MessageDto(updatedMessage, collect));
 
         NotificationDto notificationDto = new NotificationDto(
                 System.currentTimeMillis(),
@@ -174,5 +171,14 @@ public class MessageServiceImpl implements MessageService {
         );
 
         webSocketSenderNotification.accept(EventType.CREATE, notificationDto);
+    }
+
+    private List<String> getSubscribers(User user) {
+        return userSubscriptionRepository.findByChannel(user)
+                .stream()
+                .filter(UserSubscription::isActive)
+                .map(UserSubscription::getSubscriber)
+                .map(User::getId)
+                .collect(Collectors.toList());
     }
 }

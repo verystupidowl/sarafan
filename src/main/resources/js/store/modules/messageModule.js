@@ -26,8 +26,8 @@ export default {
     mutations: {
         addMessageMutation: (state, message) => {
             state.messages = [
-                ...state.messages,
-                message
+                message,
+                ...state.messages
             ];
         },
         updateMessageMutation: (state, message) => {
