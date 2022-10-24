@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import UserLink from "../comment/UserLink.vue";
+import UserLink from "../utils/UserLink.vue";
 export default {
   name: "ProfileItem",
   components: {

@@ -10,7 +10,10 @@
         <v-btn flat v-if="profile" :disabled="$route.path === '/user' || $route.path === `/user/${profile.id}`"
                @click="showProfile">
           <v-avatar class="pr-4" size="24px" v-if="$route.path !== '/user' && $route.path !== `/user/${profile.id}`">
-            <v-img :src="profile.userpic"/>
+            <v-img v-if="profile.userpic" onerror="console.log(profile.userpic)" :src="profile.userpic"/>
+            <v-avatar v-else :color="avatarColor" size="24px">
+              <v-icon dark>account_circle</v-icon>
+            </v-avatar>
           </v-avatar>
           {{ profile.name }}
         </v-btn>
@@ -36,7 +39,7 @@
 import {mapGetters, mapMutations, mapState} from 'vuex';
 import {addHandler} from "../utils/ws";
 import NotificationList from "../components/notification/NotificationList.vue";
-import UserLink from "../components/comment/UserLink.vue";
+import UserLink from "../components/utils/UserLink.vue";
 
 export default {
   computed: {
@@ -44,7 +47,12 @@ export default {
     ...mapGetters(['notificationsGetter']),
     notifications() {
       return this.notificationsGetter;
-    }
+    },
+    avatarColor() {
+      const colors = ['pink', 'purple', 'deep-purple',
+        'indigo', 'blue', 'cyan', 'teal', 'orange', 'yellow', 'amber'];
+      return colors[Math.floor(Math.random() * (9 + 1))];
+    },
   },
   components: {
     UserLink,
@@ -85,13 +93,11 @@ export default {
             case 'CREATE':
               this.addMessageMutation(data.body.message);
               break;
-            case
-            'UPDATE':
-              this.updateMessageMutation(data.body);
+            case 'UPDATE':
+              this.updateMessageMutation(data.body.message);
               break;
-            case
-            'REMOVE':
-              this.removeMessageMutation(data.body);
+            case 'REMOVE':
+              this.removeMessageMutation(data.body.message);
               break;
             default:
               console.error(`Looks like the event type if unknown "${data.eventType}"`);

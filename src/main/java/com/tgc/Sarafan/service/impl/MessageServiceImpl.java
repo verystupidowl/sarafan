@@ -68,7 +68,9 @@ public class MessageServiceImpl implements MessageService {
         if (messageText.equals(messageFromDbText)) {
             return messageFromDb;
         } else {
-            return getUpdatedMessage(messageFromDb, message);
+            Message updatedMessage = getUpdatedMessage(messageFromDb, message);
+            sendToWs(updatedMessage, EventType.UPDATE);
+            return updatedMessage;
         }
     }
 
@@ -80,7 +82,7 @@ public class MessageServiceImpl implements MessageService {
         fillMeta(message);
         message.setAuthor(user);
         Message updatedMessage = messageRepository.save(message);
-        sendToWs(user, updatedMessage);
+        sendToWs(updatedMessage, EventType.CREATE);
         return updatedMessage;
     }
 
@@ -109,11 +111,7 @@ public class MessageServiceImpl implements MessageService {
         messageFromDb.setEdited(true);
         messageFromDb.setEditedDate(LocalDateTime.now());
         fillMeta(messageFromDb);
-        Message updatedMessage = messageRepository.save(messageFromDb);
-
-        List<String> subscribers = getSubscribers(messageFromDb.getAuthor());
-        webSocketSenderMessage.accept(EventType.CREATE, new MessageDto(updatedMessage, subscribers));
-        return updatedMessage;
+        return messageRepository.save(messageFromDb);
     }
 
     private void fillMeta(Message message) throws IOException {
@@ -157,9 +155,10 @@ public class MessageServiceImpl implements MessageService {
         return element == null ? "" : element.attr("content");
     }
 
-    private void sendToWs(User user, Message updatedMessage) {
+    private void sendToWs(Message message, EventType type) {
+        User user = message.getAuthor();
         List<String> collect = getSubscribers(user);
-        webSocketSenderMessage.accept(EventType.CREATE, new MessageDto(updatedMessage, collect));
+        webSocketSenderMessage.accept(type, new MessageDto(message, collect));
 
         NotificationDto notificationDto = new NotificationDto(
                 System.currentTimeMillis(),

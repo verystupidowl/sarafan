@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 @Setter
 @ToString
 public class CommentDto {
+
     private Long id;
 
     @NotEmpty(message = "Comment text should not be empty!")

@@ -20,7 +20,7 @@
 
 <script>
 import profileApi from "../api/profile";
-import UserLink from "../components/comment/UserLink.vue";
+import UserLink from "../components/utils/UserLink.vue";
 
 export default {
   name: "Subscribers",

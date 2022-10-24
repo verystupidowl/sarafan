@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import profileApi from 'api/profile'
+import profileApi from '../api/profile'
 import ProfileNotFound from "./ProfileNotFound.vue";
 
 export default {

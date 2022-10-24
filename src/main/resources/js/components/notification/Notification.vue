@@ -21,7 +21,7 @@
 
 <script>
 import profileApi from "../../api/profile";
-import UserLink from "../comment/UserLink.vue";
+import UserLink from "../utils/UserLink.vue";
 
 export default {
   name: "Notification",

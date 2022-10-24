@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import UserLink from "./UserLink.vue";
+import UserLink from "../utils/UserLink.vue";
 
 export default {
   name: "CommentItem",
