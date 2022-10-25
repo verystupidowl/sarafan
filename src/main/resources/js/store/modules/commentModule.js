@@ -41,23 +41,20 @@ export default {
     },
     actions: {
         async addCommentAction({commit, state}, comment) {
-            commentApi.add(comment)
-                .then(response =>
-                        response.json()
-                            .then(data =>
-                                commit('addCommentMutation', data)
-                            ),
-                    err => {
-                        err.json()
-                            .then(errorData => {
-                                commit('errorCommentMutation', {
-                                    status: err.status,
-                                    message: errorData.message,
-                                    timestamp: errorData.timestamp
-                                });
-                            });
-                    }
-                );
+            try {
+                const response = await commentApi.add(comment);
+                const data = await response.json();
+
+                commit('addCommentMutation', data);
+            } catch (err) {
+                const errorData = await err.json();
+
+                commit('errorCommentMutation', {
+                    status: err.status,
+                    message: errorData.message,
+                    timestamp: errorData.timestamp
+                });
+            }
         },
     }
 }

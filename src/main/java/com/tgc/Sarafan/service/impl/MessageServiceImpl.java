@@ -55,8 +55,7 @@ public class MessageServiceImpl implements MessageService {
     @Transactional
     public void delete(Message message) {
         messageRepository.delete(message);
-        List<String> subscribers = getSubscribers(message.getAuthor());
-        webSocketSenderMessage.accept(EventType.REMOVE, new MessageDto(message, subscribers));
+        sendToWs(message, EventType.REMOVE);
     }
 
     @Override
@@ -158,7 +157,6 @@ public class MessageServiceImpl implements MessageService {
     private void sendToWs(Message message, EventType type) {
         User user = message.getAuthor();
         List<String> collect = getSubscribers(user);
-        webSocketSenderMessage.accept(type, new MessageDto(message, collect));
 
         NotificationDto notificationDto = new NotificationDto(
                 System.currentTimeMillis(),
@@ -169,7 +167,8 @@ public class MessageServiceImpl implements MessageService {
                 NotificationType.NEW_POSTS
         );
 
-        webSocketSenderNotification.accept(EventType.CREATE, notificationDto);
+        webSocketSenderMessage.accept(type, new MessageDto(message, collect));
+        webSocketSenderNotification.accept(type, notificationDto);
     }
 
     private List<String> getSubscribers(User user) {

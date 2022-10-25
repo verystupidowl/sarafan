@@ -10,7 +10,7 @@
         <v-btn flat v-if="profile" :disabled="$route.path === '/user' || $route.path === `/user/${profile.id}`"
                @click="showProfile">
           <v-avatar class="pr-4" size="24px" v-if="$route.path !== '/user' && $route.path !== `/user/${profile.id}`">
-            <v-img v-if="profile.userpic" onerror="console.log(profile.userpic)" :src="profile.userpic"/>
+            <v-img v-if="profile.userpic" :src="profile.userpic" onerror="console.log(profile.userpic)"/>
             <v-avatar v-else :color="avatarColor" size="24px">
               <v-icon dark>account_circle</v-icon>
             </v-avatar>
@@ -88,7 +88,10 @@ export default {
   created() {
     addHandler(data => {
       if (data.objectType === 'MESSAGE') {
-        if (data.body.recipientId.findIndex(id => id === this.$store.state.profile.id) !== -1) {
+        const recipientIds = data.body.recipientId;
+        const index = recipientIds.findIndex(id => id === this.$store.state.profile.id);
+
+        if (index !== -1) {
           switch (data.wsEventType) {
             case 'CREATE':
               this.addMessageMutation(data.body.message);
@@ -100,7 +103,7 @@ export default {
               this.removeMessageMutation(data.body.message);
               break;
             default:
-              console.error(`Looks like the event type if unknown "${data.eventType}"`);
+              console.error(`Looks like the event type is unknown "${data.eventType}"`);
           }
         }
       } else if (data.objectType === 'COMMENT') {
@@ -109,22 +112,29 @@ export default {
             this.addCommentMutation(data.body);
             break;
           default:
-            console.error(`Looks like the event type if unknown "${data.wsEventType}"`);
+            console.error(`Looks like the event type is unknown "${data.wsEventType}"`);
         }
       } else if (data.objectType === 'NOTIFICATION') {
         switch (data.wsEventType) {
           case 'CREATE':
-            if (data.body.recipientId.findIndex(id => id === this.$store.state.profile.id) !== -1) {
+            const recipientIds = data.body.recipientId;
+            const index = recipientIds.findIndex(id => id === this.$store.state.profile.id);
+
+            if (index !== -1) {
               const notification = data.body;
               this.addNotificationMutation(notification);
               setTimeout(() => this.closeNotification(notification), 10000);
             }
             break;
+          case 'UPDATE':
+            break;
+          case 'REMOVE':
+            break;
           default:
-            console.error(`Looks like the event type if unknown "${data.wsEventType}"`)
+            console.error(`Looks like the event type is unknown "${data.wsEventType}"`)
         }
       } else {
-        console.error(`Looks like the object type if unknown "${data.objectType}"`);
+        console.error(`Looks like the object type is unknown "${data.objectType}"`);
       }
     })
   },

@@ -55,19 +55,23 @@ export default {
       return this.index * multiply;
     },
     bntText() {
-      if (this.notification.notificationType === 'SUBSCRIBE')
+      const notificationType = this.notification.notificationType;
+      if (notificationType === 'SUBSCRIBE')
         return this.isSubscribed ? 'Dismiss' : 'Approve';
-      else if (this.notification.notificationType === 'NEW_POSTS' || this.notification.notificationType === 'COMMENT_ANSWER')
+      else if (notificationType === 'NEW_POSTS' || notificationType === 'COMMENT_ANSWER')
         return 'Check';
 
     },
     notificationText() {
-      if (this.notification.notificationType === 'SUBSCRIBE')
-        return 'subscribed to you';
-      else if (this.notification.notificationType === 'NEW_POSTS')
-        return 'posted a new message';
-      else if (this.notification.notificationType === 'COMMENT_ANSWER')
-        return 'replied to your message';
+      const notificationType = this.notification.notificationType;
+      switch (notificationType) {
+        case 'SUBSCRIBE':
+          return 'subscribed to you';
+        case 'NEW_POSTS':
+          return 'posted a new message';
+        case 'COMMENT_ANSWER':
+          return 'replied to your message';
+      }
 
     }
   },
@@ -78,6 +82,7 @@ export default {
         this.isSubscribed = !this.isSubscribed;
       } else if (this.notification.notificationType === 'NEW_POSTS') {
         this.$router.push('/');
+        this.closeNotification(this.notification);
       }
     },
     closeNotification(notification) {
