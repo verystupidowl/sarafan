@@ -37,7 +37,7 @@
             </v-layout>
           </v-flex>
         </v-layout>
-        <v-btn v-if="!isMyProfile" @click="changeSubscription">
+        <v-btn :color="isISubscribed ? 'white' : '#FFFAFA' " v-if="!isMyProfile" @click="changeSubscription">
           {{ isISubscribed ? 'Unsubscribe' : 'Subscribe' }}
         </v-btn>
       </v-flex>

@@ -55,53 +55,55 @@ export default {
         }
     },
     actions: {
-        addMessageAction: ({commit, state}, message) => {
-            messagesApi.add(message, store.state.profile)
-                .then(result => {
-                    result.json()
-                        .then(data => {
-                            const index = state.messages.findIndex(item => item.id === data.id);
-                            if (index > -1) {
-                                commit('updateMessageMutation', data);
-                            } else {
-                                commit('addMessageMutation', data);
-                            }
-                        });
-                }, err => {
-                    err.json()
-                        .then(errorData => {
-                            commit('errorMessageMutation', {
-                                status: err.status,
-                                message: errorData.message,
-                                timestamp: errorData.timestamp
-                            });
-                        });
+        async addMessageAction({commit, state}, message) {
+            try {
+                const result = await messagesApi.add(message, store.state.profile)
+                const data = await result.json()
+                const index = state.messages.findIndex(item => item.id === data.id);
+                if (index > -1) {
+                    commit('updateMessageMutation', data);
+                } else {
+                    commit('addMessageMutation', data);
+                }
+            } catch (err) {
+                const errorData = await err.json();
+                commit('errorMessageMutation', {
+                    status: err.status,
+                    message: errorData.message,
+                    timestamp: errorData.timestamp
                 });
-        },
-        updateMessageAction: ({commit}, message) => {
-            messagesApi.update(message)
-                .then(result =>
-                        result.json()
-                            .then(data =>
-                                commit('updateMessageMutation', data)
-                            ),
-                    err => {
-                        err.json()
-                            .then(errorData => {
-                                commit('errorMessageMutation', {
-                                    status: err.status,
-                                    message: errorData.message,
-                                    timestamp: errorData.timestamp
-                                });
-                            });
-                    });
-        },
-        async removeMessageAction({commit}, message) {
-            const result = await messagesApi.remove(message.id);
-
-            if (result.ok) {
-                commit('removeMessageMutation', message);
             }
         },
+        async updateMessageAction({commit}, message) {
+            try {
+                const result = await messagesApi.update(message)
+                const data = await result.json();
+
+                commit('updateMessageMutation', data);
+            } catch (err) {
+                const errorData = await err.json();
+
+                commit('errorMessageMutation', {
+                    status: err.status,
+                    message: errorData.message,
+                    timestamp: errorData.timestamp
+                });
+            }
+        },
+        async removeMessageAction({commit}, message) {
+            try {
+                await messagesApi.remove(message.id);
+
+                commit('removeMessageMutation', message);
+            } catch (err) {
+                const errorData = await err.json();
+                commit('errorMessageMutation', {
+                    status: err.status,
+                    massage: errorData.status,
+                    timestamp: errorData.timestamp
+                });
+            }
+        }
+        ,
     },
 }

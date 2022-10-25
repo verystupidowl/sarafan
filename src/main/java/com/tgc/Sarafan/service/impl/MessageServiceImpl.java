@@ -46,8 +46,8 @@ public class MessageServiceImpl implements MessageService {
     public MessageServiceImpl(MessageRepository messageRepository, WebSocketSender webSocketSenderMessage,
                               UserSubscriptionRepository userSubscriptionRepository, WebSocketSender webSocketSenderNotification) {
         this.messageRepository = messageRepository;
-        this.webSocketSenderMessage = webSocketSenderMessage.getSender(ObjectType.MESSAGE, Views.FullMessage.class);
         this.userSubscriptionRepository = userSubscriptionRepository;
+        this.webSocketSenderMessage = webSocketSenderMessage.getSender(ObjectType.MESSAGE, Views.FullMessage.class);
         this.webSocketSenderNotification = webSocketSenderNotification.getSender(ObjectType.NOTIFICATION, Views.FullMessage.class);
     }
 
