@@ -1,13 +1,13 @@
 <template>
   <v-layout>
     <v-list v-for="(notification, index) in notifications">
-        <notification
-            :key="notification.creationDate"
-            @close-notification="closeNotification"
-            v-if="index <= 6"
-            :notification="notification"
-            :index="index"
-        />
+      <notification
+          :key="notification.creationDate"
+          @close-notification="closeNotification"
+          v-if="index <= 6"
+          :notification="notification"
+          :index="index"
+      />
     </v-list>
   </v-layout>
 </template>

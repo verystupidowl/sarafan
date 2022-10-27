@@ -2,7 +2,7 @@ import messagesApi from "../../api/Messages";
 import messageModule from "./messageModule";
 
 export default {
-    state:{
+    state: {
         ...frontendData,
     },
     mutations: {

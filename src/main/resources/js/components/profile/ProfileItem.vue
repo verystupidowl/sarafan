@@ -13,6 +13,7 @@
 
 <script>
 import UserLink from "../utils/UserLink.vue";
+
 export default {
   name: "ProfileItem",
   components: {

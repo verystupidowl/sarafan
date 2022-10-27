@@ -6,7 +6,7 @@
         <v-divider/>
         <v-layout row justify-space-between>
           <v-layout column>
-<!--            <h5>Your notification types: {{ this.$store.state.profile.notificationTypes }}</h5>-->
+            <!--            <h5>Your notification types: {{ this.$store.state.profile.notificationTypes }}</h5>-->
             <h2>Notification settings:</h2>
             <v-checkbox v-model="selected" label="New subscribers" value="SUBSCRIBE"></v-checkbox>
             <v-checkbox class="mt-1" v-model="selected" label="New messages" value="NEW_POSTS"></v-checkbox>

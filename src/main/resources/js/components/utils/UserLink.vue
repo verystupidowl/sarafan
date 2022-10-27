@@ -8,6 +8,7 @@
 
 <script>
 import Avatar from "./Avatar.vue";
+
 export default {
   name: "UserLink",
   props: ['user', 'size', 'className'],
