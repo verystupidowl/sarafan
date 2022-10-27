@@ -9,12 +9,12 @@
       <div>
         <v-btn flat v-if="profile" :disabled="$route.path === '/user' || $route.path === `/user/${profile.id}`"
                @click="showProfile">
-          <v-avatar class="pr-4" size="24px" v-if="$route.path !== '/user' && $route.path !== `/user/${profile.id}`">
-            <v-img v-if="profile.userpic" :src="profile.userpic" onerror="console.log(profile.userpic)"/>
-            <v-avatar v-else :color="avatarColor" size="24px">
-              <v-icon dark>account_circle</v-icon>
-            </v-avatar>
-          </v-avatar>
+          <avatar
+              class="mr-2"
+              :userpic="profile.userpic"
+              size="24"
+              v-if="$route.path !== '/user' && $route.path !== `/user/${profile.id}`"
+          />
           {{ profile.name }}
         </v-btn>
       </div>
@@ -40,6 +40,7 @@ import {mapGetters, mapMutations, mapState} from 'vuex';
 import {addHandler} from "../utils/ws";
 import NotificationList from "../components/notification/NotificationList.vue";
 import UserLink from "../components/utils/UserLink.vue";
+import Avatar from "../components/utils/Avatar.vue";
 
 export default {
   computed: {
@@ -48,13 +49,9 @@ export default {
     notifications() {
       return this.notificationsGetter;
     },
-    avatarColor() {
-      const colors = ['pink', 'purple', 'deep-purple',
-        'indigo', 'blue', 'cyan', 'teal', 'orange', 'yellow', 'amber'];
-      return colors[Math.floor(Math.random() * (9 + 1))];
-    },
   },
   components: {
+    Avatar,
     UserLink,
     NotificationList,
   },

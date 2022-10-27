@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 public class MessageServiceImpl implements MessageService {
 
 
-    private final static String URL_PATTERN = "https?:\\/\\/?[\\w\\d\\._\\-%\\/\\?=&#]+";
+    private final static String URL_PATTERN = "https?://?[\\w\\d._\\-%/?=&#]+";
     private final static String IMAGE_PATTERN = "\\.(jpeg|jpg|gif|png)$";
 
     private static final Pattern URL_REGEX = Pattern.compile(URL_PATTERN, Pattern.CASE_INSENSITIVE);

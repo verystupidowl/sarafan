@@ -5,10 +5,7 @@
         <div class="title mb-3">User Profile</div>
         <v-layout row justify-space-between>
           <v-flex class="px-1">
-            <v-avatar :color="avatarColor" size="106px">
-<!--              <v-icon dark>account_circle</v-icon>-->
-              <v-img :src="profile.userpic"/>
-            </v-avatar>
+            <avatar :userpic="profile.userpic" size="106"/>
           </v-flex>
           <v-flex class="px-1">
             <v-layout column>
@@ -51,10 +48,11 @@
 <script>
 import profileApi from '../api/profile'
 import ProfileNotFound from "./ProfileNotFound.vue";
+import Avatar from "../components/utils/Avatar.vue";
 
 export default {
   name: "Profile",
-  components: {ProfileNotFound},
+  components: {ProfileNotFound, Avatar},
   computed: {
     isMyProfile() {
       return !this.$route.params.id || this.$store.state.profile.id === this.$route.params.id;
@@ -64,11 +62,6 @@ export default {
           this.profile.subscribers.find(subscriptions => {
             return subscriptions.subscriber === this.$store.state.profile.id;
           })
-    },
-    avatarColor() {
-      const colors = ['pink', 'purple', 'deep-purple',
-        'indigo', 'blue', 'cyan', 'teal', 'orange', 'yellow', 'amber'];
-      return colors[Math.floor(Math.random() * (9 + 1))];
     },
     isIApproved() {
       let value = -1;
@@ -111,7 +104,7 @@ export default {
   data() {
     return {
       profile: {},
-      error: null
+      error: null,
     }
   }
 
