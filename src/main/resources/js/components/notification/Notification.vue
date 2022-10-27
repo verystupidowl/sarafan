@@ -77,10 +77,11 @@ export default {
   },
   methods: {
     async clickAction() {
-      if (this.notification.notificationType === 'SUBSCRIBE') {
+      const notificationType = this.notification.notificationType;
+      if (notificationType === 'SUBSCRIBE') {
         await profileApi.changeSubscriptionStatus(this.notification.senderId);
         this.isSubscribed = !this.isSubscribed;
-      } else if (this.notification.notificationType === 'NEW_POSTS') {
+      } else if (notificationType === 'NEW_POSTS' || notificationType === 'COMMENT_ANSWER') {
         this.$router.push('/');
         this.closeNotification(this.notification);
       }

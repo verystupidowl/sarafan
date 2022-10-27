@@ -27,6 +27,7 @@ export default {
   data() {
     return {
       text: '',
+      rules: [v => v.trim().length <= 50 || 'Max size is 50 characters!'],
     }
   },
   components: {
@@ -40,8 +41,8 @@ export default {
           text: this.text,
           messageId: this.messageId,
         });
-        this.text = '';
       }
+      this.text = '';
     }
   },
   computed: {

@@ -25,7 +25,7 @@ public class Comment {
     @Column(name = "text")
     @JsonView(Views.IdName.class)
     @NotEmpty(message = "Message text should not be empty!")
-    @Size(min = 1, max = 20, message = "Message text size should be between 1 and 20 characters!")
+    @Size(min = 1, max = 50, message = "Message text size should be between 1 and 50 characters!")
     private String text;
 
     @ManyToOne

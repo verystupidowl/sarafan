@@ -4,6 +4,8 @@
       <v-text-field
           label="New message"
           placeholder="Write something"
+          counter
+          :rules="rules"
           v-model="text"
           @keyup.enter="save"
       />
@@ -28,6 +30,7 @@ export default {
     return {
       text: '',
       id: '',
+      rules: [v => v.trim().length <= 50 || 'Max size is 50 characters!'],
     }
   },
   components: {
@@ -45,16 +48,16 @@ export default {
       if (this.text.trim() !== '') {
         const message = {
           id: this.id,
-          text: this.text,
+          text: this.text.trim(),
         }
         if (this.id) {
           this.updateMessageAction(message);
         } else {
           this.addMessageAction(message);
         }
-        this.text = '';
-        this.id = '';
       }
+      this.text = '';
+      this.id = '';
     },
   },
   computed: {
