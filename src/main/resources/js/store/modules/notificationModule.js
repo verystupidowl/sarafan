@@ -1,5 +1,5 @@
 import store from "../store";
-import notificationApi from 'api/notifications'
+import notificationApi from '../../api/notifications';
 
 export default {
     state: {
