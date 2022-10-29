@@ -48,10 +48,7 @@ public class MainController {
     }
 
     @GetMapping
-    public String main(
-            Model model,
-            @AuthenticationPrincipal User user
-    ) throws JsonProcessingException {
+    public String main(Model model, @AuthenticationPrincipal User user) throws JsonProcessingException {
         Map<Object, Object> data = new HashMap<>();
 
         if (user != null) {
@@ -73,8 +70,7 @@ public class MainController {
         String serializedProfile = profileWriter.writeValueAsString(userFromDb);
         model.addAttribute("profile", serializedProfile);
 
-        Sort sort = Sort.by(Sort.Direction.DESC, "id");
-        PageRequest pageRequest = PageRequest.of(0, MessageController.MESSAGES_PER_PAGE, sort);
+        PageRequest pageRequest = getPageRequest();
         MessagePageDto messagePageDto = messageService.findForUser(pageRequest, user);
 
         String messages = messageWriter.writeValueAsString(messagePageDto.getMessages());
@@ -84,5 +80,10 @@ public class MainController {
         data.put("totalPages", messagePageDto.getTotalPage());
 
         return data;
+    }
+
+    private PageRequest getPageRequest() {
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        return PageRequest.of(0, MessageController.MESSAGES_PER_PAGE, sort);
     }
 }
