@@ -8,7 +8,7 @@
         <h3>You need to log in via Google</h3>
       </v-flex>
       <v-flex>
-        <v-btn href="/login">Log in</v-btn>
+        <v-btn class="my-3" href="/login">Log in</v-btn>
       </v-flex>
     </div>
     <div v-else style="text-align: center;">
