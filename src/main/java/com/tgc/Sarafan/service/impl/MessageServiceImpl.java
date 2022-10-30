@@ -78,8 +78,8 @@ public class MessageServiceImpl implements MessageService {
     public Message create(Message message, User user) throws IOException {
         message.setCreationDate(LocalDateTime.now());
         message.setEdited(false);
-        fillMeta(message);
         message.setAuthor(user);
+        fillMeta(message);
         Message updatedMessage = messageRepository.save(message);
         sendToWs(updatedMessage, EventType.CREATE);
         return updatedMessage;
