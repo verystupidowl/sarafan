@@ -3,7 +3,6 @@ package com.tgc.Sarafan.controller;
 import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,7 +17,7 @@ public class NotificationController {
     }
 
     @PutMapping("/change-notifications/{id}")
-    public User changeNotifications(@RequestBody @AuthenticationPrincipal User user, @PathVariable("id") User userFromDb) {
+    public User changeNotifications(@RequestBody User user, @PathVariable("id") User userFromDb) {
         return profileService.changeNotifications(user, userFromDb);
     }
 }
