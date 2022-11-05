@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class SarafanApplication {
 
-
     public static void main(String[] args) {
         SpringApplication.run(SarafanApplication.class, args);
     }
