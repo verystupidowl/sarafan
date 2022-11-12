@@ -1,11 +1,11 @@
-package com.tgc.Sarafan.exceptions;
+package com.tgc.Sarafan.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Data
 @AllArgsConstructor
-public class UserErrorResponse {
+@Data
+public class CommentErrorResponse {
 
     private String message;
     private long timestamp;

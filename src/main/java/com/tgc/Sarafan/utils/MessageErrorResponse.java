@@ -1,4 +1,4 @@
-package com.tgc.Sarafan.exceptions;
+package com.tgc.Sarafan.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

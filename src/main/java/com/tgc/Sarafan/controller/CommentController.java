@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.domain.Views;
 import com.tgc.Sarafan.dto.CommentDto;
-import com.tgc.Sarafan.exceptions.CommentErrorResponse;
+import com.tgc.Sarafan.utils.CommentErrorResponse;
 import com.tgc.Sarafan.exceptions.CommentNotCreatedException;
 import com.tgc.Sarafan.service.CommentService;
 import com.tgc.Sarafan.service.impl.CommentServiceImpl;

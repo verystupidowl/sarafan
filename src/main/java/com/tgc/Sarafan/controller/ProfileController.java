@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.domain.UserSubscription;
 import com.tgc.Sarafan.domain.Views;
-import com.tgc.Sarafan.exceptions.UserErrorResponse;
+import com.tgc.Sarafan.utils.UserErrorResponse;
 import com.tgc.Sarafan.exceptions.UserWithIdNotFoundException;
 import com.tgc.Sarafan.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
