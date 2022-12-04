@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.domain.Views;
 import com.tgc.Sarafan.dto.CommentDto;
+import com.tgc.Sarafan.service.ProfileService;
 import com.tgc.Sarafan.utils.CommentErrorResponse;
 import com.tgc.Sarafan.exceptions.CommentNotCreatedException;
 import com.tgc.Sarafan.service.CommentService;
@@ -26,20 +27,21 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService commentService;
-    private final ProfileController profileController;
+    private final ProfileService profileService;
 
     @Autowired
-    public CommentController(CommentServiceImpl commentService, ProfileController profileController) {
+    public CommentController(CommentServiceImpl commentService, ProfileService profileService) {
         this.commentService = commentService;
-        this.profileController = profileController;
+        this.profileService = profileService;
     }
 
     @PostMapping
     @JsonView(Views.FullComment.class)
     public CommentDto create(@RequestBody @Valid CommentDto comment, BindingResult bindingResult, @AuthenticationPrincipal User user) {
-        if (!bindingResult.hasErrors())
-            return commentService.create(comment, profileController.get(user.getId()));
-        else {
+        if (!bindingResult.hasErrors()) {
+            User userById = profileService.findById(user.getId());
+            return commentService.create(comment, userById);
+        } else {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
             String errorMessage = exceptionMsgBuilder(fieldErrors);
             throw new CommentNotCreatedException(errorMessage);
@@ -63,8 +65,7 @@ public class CommentController {
             errorMsg
                     .append(error.getField())
                     .append(" - ")
-                    .append(error.getDefaultMessage())
-                    .append(";");
+                    .append(error.getDefaultMessage());
         }
         return errorMsg.toString();
     }

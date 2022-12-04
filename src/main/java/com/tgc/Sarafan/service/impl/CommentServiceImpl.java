@@ -41,19 +41,7 @@ public class CommentServiceImpl implements CommentService {
     public CommentDto create(CommentDto commentDto, User user) {
         commentDto.setAuthor(user);
 
-        Message message = new Message(
-                commentDto.getMessageId(),
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
+        Message message = new Message(commentDto.getMessageId());
 
         Comment comment = new Comment(
                 commentDto.getId(),

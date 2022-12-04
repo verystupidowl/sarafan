@@ -82,6 +82,10 @@ public class Message {
     @Column(name = "link_cover")
     private String linkCover;
 
+    public Message(Long id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

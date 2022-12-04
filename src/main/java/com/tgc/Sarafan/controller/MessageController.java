@@ -6,6 +6,7 @@ import com.tgc.Sarafan.domain.Message;
 import com.tgc.Sarafan.domain.User;
 import com.tgc.Sarafan.domain.Views;
 import com.tgc.Sarafan.dto.MessagePageDto;
+import com.tgc.Sarafan.service.ProfileService;
 import com.tgc.Sarafan.utils.MessageErrorResponse;
 import com.tgc.Sarafan.exceptions.MessageNotCreatedException;
 import com.tgc.Sarafan.utils.UserErrorResponse;
@@ -32,15 +33,15 @@ import java.util.List;
 public class MessageController {
 
     private final MessageService messageService;
-    private final ProfileController profileController;
+    private final ProfileService profileService;
 
     public final static int MESSAGES_PER_PAGE = 5;
 
 
     @Autowired
-    public MessageController(MessageServiceImpl messageService, ProfileController profileController) {
+    public MessageController(MessageServiceImpl messageService, ProfileService profileService) {
         this.messageService = messageService;
-        this.profileController = profileController;
+        this.profileService = profileService;
     }
 
     @GetMapping
@@ -63,7 +64,8 @@ public class MessageController {
     @JsonView(Views.FullMessage.class)
     public Message create(@AuthenticationPrincipal User user, @RequestBody @Valid Message message, BindingResult bindingResult) throws IOException {
         if (!bindingResult.hasErrors()) {
-            return messageService.create(message, profileController.get(user.getId()));
+            User userById = profileService.findById(user.getId());
+            return messageService.create(message, userById);
         } else {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
             String errorMessage = exceptionMsgBuilder(fieldErrors);

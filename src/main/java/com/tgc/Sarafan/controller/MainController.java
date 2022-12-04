@@ -52,7 +52,7 @@ public class MainController {
         Map<Object, Object> data = new HashMap<>();
 
         if (user != null) {
-            data = extracted(model, user);
+            data = putData(model, user);
         } else {
             model.addAttribute("messages", "[]");
             model.addAttribute("profile", "null");
@@ -64,7 +64,7 @@ public class MainController {
         return "index";
     }
 
-    private Map<Object, Object> extracted(Model model, User user) throws JsonProcessingException {
+    private Map<Object, Object> putData(Model model, User user) throws JsonProcessingException {
         Map<Object, Object> data = new HashMap<>();
         User userFromDb = userService.findById(user.getId());
         String serializedProfile = profileWriter.writeValueAsString(userFromDb);
