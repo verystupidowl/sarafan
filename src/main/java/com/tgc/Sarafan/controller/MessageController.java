@@ -115,8 +115,7 @@ public class MessageController {
             errorMsg
                     .append(error.getField())
                     .append(" - ")
-                    .append(error.getDefaultMessage())
-                    .append(";");
+                    .append(error.getDefaultMessage());
         }
         return errorMsg.toString();
     }
