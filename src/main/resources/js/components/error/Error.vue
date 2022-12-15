@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p style="color: red">Error {{ errorHandler.status }} {{ errorHandler.message }}</p>
+    <p style="color: red; font-style: italic">Error {{ errorHandler.status }} {{ errorHandler.message }}</p>
   </div>
 </template>
 
