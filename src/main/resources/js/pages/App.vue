@@ -1,7 +1,9 @@
 <template>
   <v-app>
     <v-toolbar app>
-      <v-toolbar-title v-if="profile" @click="showRecommendations">Sarafan</v-toolbar-title>
+      <v-toolbar-title v-if="profile" @click="showRecommendations" style="cursor: pointer">
+        Sarafan
+      </v-toolbar-title>
       <v-btn v-if="profile" flat :disabled="$route.path === '/'" @click="showMessages">
         Messages
       </v-btn>
