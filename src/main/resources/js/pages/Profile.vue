@@ -13,7 +13,6 @@
               <v-divider></v-divider>
               <v-flex>Region: {{ profile.locale }}</v-flex>
               <v-divider></v-divider>
-              <v-flex>Gender: {{ profile.gender ? profile.gender : 'Not specified' }}</v-flex>
               <v-divider v-if="isMyProfile || isIApproved"></v-divider>
               <v-flex v-if="isMyProfile || isIApproved">Email: {{ profile.email }}</v-flex>
               <v-divider></v-divider>

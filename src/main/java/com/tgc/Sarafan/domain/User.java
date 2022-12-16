@@ -40,11 +40,6 @@ public class User implements Serializable {
     @Email
     private String email;
 
-
-    @Column(name = "gender")
-    @JsonView(Views.FullProfile.class)
-    private String gender;
-
     @Column(name = "locale")
     @JsonView(Views.FullProfile.class)
     private String locale;
