@@ -23,4 +23,16 @@ public class UserServiceImpl implements UserService {
     public User findById(String id) {
         return userRepository.findById(id).orElseThrow(() -> new UserWithIdNotFoundException("User with this is not found"));
     }
+
+    @Override
+    public boolean createUser(User user) {
+        String id = user.getId();
+        try {
+            findById(id);
+        } catch (UserWithIdNotFoundException e) {
+            return false;
+        }
+        userRepository.save(user);
+        return true;
+    }
 }
