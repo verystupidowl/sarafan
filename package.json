@@ -1,0 +1,39 @@
+{
+  "name": "Sarafan",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/verystupidowl/sarafan.git",
+  "author": "Alexey <amaklov2002@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "@sentry/tracing": "^7.13.0",
+    "@sentry/vue": "^7.13.0",
+    "@stomp/stompjs": "^6.1.2",
+    "sockjs-client": "^1.6.1",
+    "vue": "2.5.17",
+    "vue-resource": "1.5.1",
+    "vue-router": "3.0.2",
+    "vuetify": "1.3.5",
+    "vuex": "3.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.19.0",
+    "@babel/preset-env": "^7.19.0",
+    "@webpack-cli/serve": "^1.7.0",
+    "babel-loader": "^8.2.5",
+    "clean-webpack-plugin": "2.0.2",
+    "css-loader": "1.0.1",
+    "vue-loader": "15.4.1",
+    "vue-style-loader": "^4.1.3",
+    "vue-template-compiler": "2.5.17",
+    "webpack": "4.17.1",
+    "webpack-cli": "3.1.0",
+    "webpack-dev-server": "3.1.7",
+    "webpack-merge": "4.2.1"
+  }
+}
