@@ -16,7 +16,7 @@ public class NotificationController {
         this.profileService = profileService;
     }
 
-    @PutMapping("/change-notifications/{id}")
+    @PatchMapping("/change-notifications/{id}")
     public User changeNotifications(@RequestBody User user, @PathVariable("id") User userFromDb) {
         return profileService.changeNotifications(user, userFromDb);
     }
