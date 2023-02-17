@@ -73,7 +73,7 @@ public class MessageController {
         }
     }
 
-    @PatchMapping("{id}")
+    @PutMapping("{id}")
     @JsonView(Views.FullMessage.class)
     public Message update(@PathVariable("id") Message messageFromDb, @RequestBody @Valid Message message, BindingResult bindingResult) throws IOException {
         if (!bindingResult.hasErrors()) {
