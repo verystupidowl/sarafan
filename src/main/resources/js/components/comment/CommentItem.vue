@@ -22,8 +22,8 @@ export default {
         'indigo', 'blue', 'cyan', 'teal', 'orange', 'yellow', 'amber'];
       return colors[Math.floor(Math.random() * (9 + 1))];
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

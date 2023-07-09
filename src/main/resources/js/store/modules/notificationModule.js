@@ -33,10 +33,10 @@ export default {
             const user = {
                 id: store.state.profile.id,
                 notificationTypes: notifications
-            }
+            };
             const response = await notificationApi.changeNotifications(user);
             const data = await response.json();
             commit('changeNotificationMutation', data);
         }
     }
-}
+};

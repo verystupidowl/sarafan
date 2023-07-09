@@ -34,7 +34,7 @@ export default {
       message: null,
       selected: 'Newest',
       sortedMessages: [],
-    }
+    };
   },
   computed: {
     getSortedMessages() {
@@ -53,7 +53,7 @@ export default {
       this.message = message;
     },
   }
-}
+};
 </script>
 
 <style>

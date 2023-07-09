@@ -12,7 +12,7 @@ export default {
   data() {
     return {
       imgError: false,
-    }
+    };
   },
   methods: {
     errorImg() {
@@ -26,7 +26,7 @@ export default {
       return colors[Math.floor(Math.random() * (9 + 1))];
     },
   }
-}
+};
 </script>
 
 <style scoped>

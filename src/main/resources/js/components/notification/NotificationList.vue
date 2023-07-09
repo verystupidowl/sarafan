@@ -28,7 +28,7 @@ export default {
       this.$emit('close-notification', notification);
     }
   },
-}
+};
 </script>
 
 <style scoped>

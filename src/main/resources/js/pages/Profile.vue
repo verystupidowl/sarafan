@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import profileApi from '../api/profile'
+import profileApi from '../api/profile';
 import ProfileNotFound from "./ProfileNotFound.vue";
 import Avatar from "../components/utils/Avatar.vue";
 
@@ -60,7 +60,7 @@ export default {
       return this.profile.subscribers &&
           this.profile.subscribers.find(subscriptions => {
             return subscriptions.subscriber === this.$store.state.profile.id;
-          })
+          });
     },
     isIApproved() {
       let value = -1;
@@ -69,7 +69,7 @@ export default {
           if (s.subscriber === this.$store.state.profile.id && s.active === true) {
             value = 1;
           }
-        })
+        });
       }
       return value === 1;
     },
@@ -93,7 +93,7 @@ export default {
         status: err.status,
         message: errorBody.message,
         timestamp: errorBody.timestamp
-      }))
+      }));
       this.$forceUpdate();
     },
   },
@@ -104,10 +104,10 @@ export default {
     return {
       profile: {},
       error: null,
-    }
+    };
   }
 
-}
+};
 </script>
 
 <style scoped>

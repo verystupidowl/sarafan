@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions} from 'vuex';
 
 export default {
   name: 'LazyLoader',
@@ -15,12 +15,12 @@ export default {
       if (isBottomOfScreen) {
         this.loadPageAction();
       }
-    }
+    };
   },
   beforeDestroy() {
     window.onscroll = null;
   }
-}
+};
 </script>
 
 <style scoped>

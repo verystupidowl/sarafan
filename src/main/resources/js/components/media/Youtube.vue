@@ -17,7 +17,7 @@ export default {
       return `https://www.youtube.com/embed/${parts[parts.length - 1]}`;
     }
   }
-}
+};
 </script>
 
 <style scoped>

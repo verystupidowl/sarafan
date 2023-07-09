@@ -27,18 +27,18 @@ Sentry.configureScope(scope => {
     scope.setUser({
         id: profile && profile.id,
         username: profile && profile.name
-    })
-})
+    });
+});
 
 if (profile) {
     connect(profile);
 }
 
-Vue.use(Vuetify)
+Vue.use(Vuetify);
 
 new Vue({
     el: '#app',
     store,
     router,
     render: a => a(App)
-})
+});

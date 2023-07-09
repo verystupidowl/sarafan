@@ -10,7 +10,7 @@ export default {
             const targetMessages = messageModule.state.messages
                 .concat(messages)
                 .reduce((res, val) => {
-                    res[val.id] = val
+                    res[val.id] = val;
                     return res;
                 }, {});
 
@@ -32,5 +32,5 @@ export default {
             commit('updateTotalPagesMutation', data.totalPages);
             commit('updateCurrentPageMutation', data.currentPage, data.totalPages - 1);
         }
-    }
-}
+    },
+};

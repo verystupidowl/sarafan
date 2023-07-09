@@ -31,7 +31,7 @@ export default {
       text: '',
       id: '',
       rules: [v => v.trim().length <= 50 || 'Max size is 50 characters!'],
-    }
+    };
   },
   components: {
     Error
@@ -49,7 +49,7 @@ export default {
         const message = {
           id: this.id,
           text: this.text.trim(),
-        }
+        };
         if (this.id) {
           this.updateMessageAction(message);
         } else {
@@ -65,7 +65,7 @@ export default {
       return this.$store.getters.messageErrorGetter;
     }
   }
-}
+};
 </script>
 
 <style>

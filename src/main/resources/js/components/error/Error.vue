@@ -8,7 +8,7 @@
 export default {
   name: "Error",
   props: ['errorHandler'],
-}
+};
 </script>
 
 <style scoped>

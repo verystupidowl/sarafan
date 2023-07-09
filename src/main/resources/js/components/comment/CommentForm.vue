@@ -28,10 +28,10 @@ export default {
     return {
       text: '',
       rules: [v => v.trim().length <= 50 || 'Max size is 50 characters!'],
-    }
+    };
   },
   components: {
-    Error
+    Error,
   },
   methods: {
     ...mapActions(['addCommentAction']),
@@ -43,14 +43,14 @@ export default {
         });
       }
       this.text = '';
-    }
+    },
   },
   computed: {
     errorHandler() {
       return this.$store.getters.commentErrorGetter;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>

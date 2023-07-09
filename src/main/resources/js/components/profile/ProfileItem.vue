@@ -20,7 +20,7 @@ export default {
     UserLink
   },
   props: ['profile']
-}
+};
 </script>
 
 <style scoped>

@@ -42,7 +42,7 @@ export default {
       this.removeMessageAction(this.message);
     }
   },
-}
+};
 </script>
 
 <style scoped>

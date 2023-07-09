@@ -21,7 +21,7 @@ export default {
   name: "CommentList",
   components: {CommentForm, CommentItem},
   props: ['comments', 'messageId'],
-}
+};
 </script>
 
 <style scoped>

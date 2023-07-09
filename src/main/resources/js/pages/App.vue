@@ -82,7 +82,7 @@ export default {
   data() {
     return {
       notificationActionText: '',
-    }
+    };
   },
   created() {
     addHandler(data => {
@@ -130,19 +130,19 @@ export default {
           case 'REMOVE':
             break;
           default:
-            console.error(`Looks like the event type is unknown "${data.wsEventType}"`)
+            console.error(`Looks like the event type is unknown "${data.wsEventType}"`);
         }
       } else {
         console.error(`Looks like the object type is unknown "${data.objectType}"`);
       }
-    })
+    });
   },
   beforeMount() {
     if (!this.profile) {
       this.$router.replace('/auth');
     }
   }
-}
+};
 </script>
 
 <style>

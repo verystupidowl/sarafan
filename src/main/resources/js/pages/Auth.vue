@@ -23,9 +23,9 @@ export default {
   data() {
     return {
       profile: this.$store.state.profile
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>

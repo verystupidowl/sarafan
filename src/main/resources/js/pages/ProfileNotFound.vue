@@ -17,7 +17,7 @@
 export default {
   props: ['error'],
   name: "ProfileNotFound"
-}
+};
 </script>
 
 <style scoped>

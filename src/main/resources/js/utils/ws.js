@@ -8,7 +8,7 @@ export function connect(profile) {
     const socket = new SockJS('/sarafan-ws');
     stompClient = Stomp.over(socket);
     stompClient.debug = () => {
-    }
+    };
     stompClient.connect({}, frame => {
         console.log('Connected: ' + frame);
         if (profile.notificationTypes.findIndex(type => type === 'SUBSCRIBE') !== -1) {

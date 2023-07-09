@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       subscribes: [],
-    }
+    };
   },
   components: {
     UserLink,
@@ -57,7 +57,7 @@ export default {
   async beforeMount() {
     await this.getSubscriptionList();
   }
-}
+};
 </script>
 
 <style scoped>

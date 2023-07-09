@@ -43,7 +43,7 @@ export default {
         userpic: this.notification.userpic
       },
       className: '',
-    }
+    };
   },
   mounted() {
     this.notificationsLength === 0 ? this.className = 'created' : this.className = '';
@@ -90,7 +90,7 @@ export default {
       this.$emit('close-notification', notification);
     },
   }
-}
+};
 </script>
 
 <style scoped>

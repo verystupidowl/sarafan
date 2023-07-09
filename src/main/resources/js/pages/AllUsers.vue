@@ -21,7 +21,7 @@ export default {
   data() {
     return {
       profiles: [],
-    }
+    };
   },
   methods: {
     updateRecommendations() {
@@ -29,14 +29,14 @@ export default {
           .then(result => {
             result.json()
                 .then(data => this.profiles = data);
-          })
+          });
       this.$forceUpdate();
     }
   },
   beforeMount() {
     this.updateRecommendations();
   }
-}
+};
 </script>
 
 <style scoped>

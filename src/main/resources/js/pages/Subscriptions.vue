@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       subscriptions: [],
-    }
+    };
   },
   methods: {
     async changeSubscriptionStatus(subscriberId) {
@@ -50,7 +50,7 @@ export default {
     const response = await profileApi.subscriberList(this.$store.state.profile.id);
     this.subscriptions = await response.json();
   }
-}
+};
 </script>
 
 <style scoped>

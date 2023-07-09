@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       selected: []
-    }
+    };
   },
   methods: {
     ...mapActions(['changeNotificationAction']),
@@ -46,7 +46,7 @@ export default {
   beforeMount() {
     this.selected = this.getNotification();
   }
-}
+};
 </script>
 
 <style scoped>

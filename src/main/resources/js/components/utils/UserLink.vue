@@ -20,7 +20,7 @@ export default {
       return this.user ? this.user.name : 'Unknown';
     },
   },
-}
+};
 </script>
 
 <style scoped>

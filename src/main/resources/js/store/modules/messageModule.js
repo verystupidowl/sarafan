@@ -57,8 +57,8 @@ export default {
     actions: {
         async addMessageAction({commit, state}, message) {
             try {
-                const result = await messagesApi.add(message, store.state.profile)
-                const data = await result.json()
+                const result = await messagesApi.add(message, store.state.profile);
+                const data = await result.json();
                 const index = state.messages.findIndex(item => item.id === data.id);
                 if (index > -1) {
                     commit('updateMessageMutation', data);
@@ -76,7 +76,7 @@ export default {
         },
         async updateMessageAction({commit}, message) {
             try {
-                const result = await messagesApi.update(message)
+                const result = await messagesApi.update(message);
                 const data = await result.json();
 
                 commit('updateMessageMutation', data);
@@ -106,4 +106,4 @@ export default {
         }
         ,
     },
-}
+};

@@ -31,13 +31,13 @@ export default {
   name: "Media",
   components: {Youtube},
   comments: {
-    Youtube
+    Youtube,
   },
   props: ['message'],
   data() {
     return {
       type: 'href',
-    }
+    };
   },
   beforeMount() {
     if (this.message.link.indexOf('youtu') > -1) {
@@ -48,7 +48,7 @@ export default {
       this.type = 'href';
     }
   }
-}
+};
 </script>
 
 <style scoped>
